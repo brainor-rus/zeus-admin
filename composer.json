@@ -1,0 +1,40 @@
+{
+    "name": "brainor-rus/zeus-admin",
+    "description": "Admin's panel",
+    "keywords": ["Zeus", "Zeus admin", "laravel admin", "admin panel"],
+	"homepage": "https://github.com/brainor-rus/zeus",
+    "license": "MIT",
+    "type": "project",
+    "require": {
+		"php": ">=5.6.4",
+		"laravel/framework": "~5.5",
+        "cviebrock/eloquent-sluggable": "4.6",
+        "kalnoy/nestedset": "^4.3",
+        "intervention/image": "2.*"
+    },
+    "autoload": {
+		"psr-4": {
+		  "Zeus\\Admin\\": "src/"
+		}
+    },
+    "autoload-dev": {
+
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Zeus\\Admin\\Providers\\ZeusAdminServiceProvider"
+            ]
+        }
+    },
+    "scripts": {
+
+    },
+    "config": {
+        "preferred-install": "dist",
+        "sort-packages": true,
+        "optimize-autoloader": true
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
