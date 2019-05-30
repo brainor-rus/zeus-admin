@@ -35,7 +35,7 @@ class TemplatesHelper
                     }
                     if(isset($commentParams)) {
                         if (isset($commentParams['class'])) {
-                            if($commentParams['class'] == 'BR' . studly_case($type) . 'Template')
+                            if($commentParams['class'] == 'ZeusAdmin' . studly_case($type) . 'Template')
                             {
                                 $templates[basename($file, ".blade.php")] = $commentParams['title'];
                             }

@@ -4,7 +4,7 @@ namespace App\Http\Helpers\Posts\Helpers;
 
 namespace Zeus\Admin\Cms\Helpers;
 
-use Zeus\Admin\Cms\Models\BRPost;
+use Zeus\Admin\Cms\Models\ZeusAdminPost;
 
 class CMSHelper
 {
@@ -20,7 +20,7 @@ class CMSHelper
      */
     public static function getQueryBuilder($args)
     {
-        return BRPost::with(
+        return ZeusAdminPost::with(
             array(
                 'categories' => function ($query) {
                     $query->categories();
@@ -74,6 +74,6 @@ class CMSHelper
     }
 
     public static function getByUrl($url) {
-        return BRPost::where('url',$url)->first();
+        return ZeusAdminPost::where('url',$url)->first();
     }
 }

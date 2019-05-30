@@ -12,7 +12,7 @@ use Zeus\Admin\Section;
 use Zeus\Admin\SectionBuilder\Meta\Meta;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\View;
-use BRHelper;
+use ZeusAdminHelper;
 
 class DisplayTable
 {

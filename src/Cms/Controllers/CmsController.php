@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\View;
 
-use Zeus\Admin\Cms\Models\BRFile;
+use Zeus\Admin\Cms\Models\ZeusAdminFile;
 use Carbon\Carbon;
 use Image;
 use Zeus\Admin\Section;
@@ -149,7 +149,7 @@ class CmsController extends Controller
         if ($upload_success) {
             $url = $pathPart.'/'.$resultFileName;
             $base_url = $pathPart.'/'.$filename;
-            $newFile = new BRFile;
+            $newFile = new ZeusAdminFile;
 
             $newFile->mime = $fileMime;
             $newFile->url = $url;

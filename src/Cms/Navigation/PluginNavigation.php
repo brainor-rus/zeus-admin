@@ -17,32 +17,32 @@ class PluginNavigation
                 'noDirect' => true,
                 'nodes' => [
                     [
-                        'url' => '/'.config('zeusAdmin.admin_url').'/cms/BRPages',
+                        'url' => '/'.config('zeusAdmin.admin_url').'/cms/ZeusAdminPages',
                         'icon' => 'fas fa-users',
                         'text' => 'Страницы'
                     ],
                     [
-                        'url' => '/'.config('zeusAdmin.admin_url').'/cms/BRPosts',
+                        'url' => '/'.config('zeusAdmin.admin_url').'/cms/ZeusAdminPosts',
                         'icon' => 'fas fa-address-book',
                         'text' => 'Записи'
                     ],
                     [
-                        'url' => '/'.config('zeusAdmin.admin_url').'/cms/BRComments',
+                        'url' => '/'.config('zeusAdmin.admin_url').'/cms/ZeusAdminComments',
                         'icon' => 'fas fa-users',
                         'text' => 'Комментарии'
                     ],
                     [
-                        'url' => '/'.config('zeusAdmin.admin_url').'/cms/BRTerms',
+                        'url' => '/'.config('zeusAdmin.admin_url').'/cms/ZeusAdminTerms',
                         'icon' => 'fas fa-users',
                         'text' => 'Рубрики'
                     ],
                     [
-                        'url' => '/'.config('zeusAdmin.admin_url').'/cms/BRTags',
+                        'url' => '/'.config('zeusAdmin.admin_url').'/cms/ZeusAdminTags',
                         'icon' => 'fas fa-address-book',
                         'text' => 'Метки'
                     ],
                     [
-                        'url' => '/'.config('zeusAdmin.admin_url').'/cms/BRFiles',
+                        'url' => '/'.config('zeusAdmin.admin_url').'/cms/ZeusAdminFiles',
                         'icon' => 'fas fa-address-book',
                         'text' => 'Файлы'
                     ]
