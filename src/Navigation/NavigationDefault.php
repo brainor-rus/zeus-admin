@@ -15,17 +15,17 @@ class NavigationDefault
                 'noDirect' => true,
                 'nodes' => [
                     [
-                        'url' => '/zeusAdmin/Users',
+                        'url' => '/' . config('zeusAdmin.admin_url') . '/Users',
                         'icon' => 'fas fa-list',
                         'text' => 'Список'
                     ],
                     [
-                        'url' => '/zeusAdmin/Permissions',
+                        'url' => '/' . config('zeusAdmin.admin_url') . '/Permissions',
                         'icon' => 'fas fa-crown',
                         'text' => 'Привелегии'
                     ],
                     [
-                        'url' => '/zeusAdmin/Roles',
+                        'url' => '/' . config('zeusAdmin.admin_url') . '/Roles',
                         'icon' => 'fas fa-user-circle',
                         'text' => 'Роли'
                     ],
@@ -38,22 +38,22 @@ class NavigationDefault
                 'noDirect' => true,
                 'nodes' => [
                     [
-                        'url' => '/zeusAdmin/InterfaceLang',
+                        'url' => '/' . config('zeusAdmin.admin_url') . '/InterfaceLang',
                         'icon' => 'fas fa-window-maximize',
                         'text' => 'Интерфейс'
                     ],
                     [
-                        'url' => '/zeusAdmin/Commissions',
+                        'url' => '/' . config('zeusAdmin.admin_url') . '/Commissions',
                         'icon' => 'fas fa-percentage',
                         'text' => 'Коммиссии'
                     ],
                     [
-                        'url' => '/zeusAdmin/Currencies',
+                        'url' => '/' . config('zeusAdmin.admin_url') . '/Currencies',
                         'icon' => 'fas fa-dollar-sign',
                         'text' => 'Валюты'
                     ],
                     [
-                        'url' => '/zeusAdmin/ContactEmails',
+                        'url' => '/' . config('zeusAdmin.admin_url') . '/ContactEmails',
                         'icon' => 'fas fa-at',
                         'text' => 'Имейлы'
                     ],

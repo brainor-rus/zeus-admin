@@ -33,12 +33,12 @@ class ZeusAdminServiceProvider extends ServiceProvider
         $this->loadRoutesFrom(__DIR__.'/../../routes/web.php');
 
         // load view files
-        $this->loadViewsFrom(__DIR__.'/../../resources/views', 'zeusAdmin');
+        $this->loadViewsFrom(__DIR__.'/../../resources/views/zeusAdmin', 'zeusAdmin');
 
         // publish files
         $this->publishes([
-            __DIR__.'/../../resources/views' => resource_path('views/zeusAdmin'),
-            __DIR__.'/../../public/packages/zeusAdmin/js/ckeditor' => public_path('packages/zeusAdmin/js'),
+            __DIR__.'/../../resources/views/zeusAdmin' => resource_path('views/zeusAdmin'),
+            __DIR__.'/../../public/packages/zeusAdmin' => public_path('packages/zeusAdmin'),
         ]);
     }
 

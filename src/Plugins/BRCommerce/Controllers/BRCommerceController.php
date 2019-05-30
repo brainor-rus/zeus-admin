@@ -11,9 +11,14 @@ use Illuminate\Support\Facades\View;
 class BRCommerceController extends Controller
 {
     private $pluginData = [
-        'redirectUrl' => '/zeusAdmin/BRCommerce/{sectionName}',
+        'redirectUrl' => '',
         'sectionPath' => 'Zeus\Admin\Plugins\BRCommerce\Sections\\'
     ];
+
+    public function __construct()
+    {
+        $this->pluginData['redirectUrl'] = '/' . config('zeusAdmin.admin_url') . '/BRCommerce/{sectionName}';
+    }
 
     public function showRouteRedirect(Section $section, $sectionName, Request $request)
     {

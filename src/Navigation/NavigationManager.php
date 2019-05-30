@@ -18,7 +18,12 @@ class NavigationManager
 
     public function getDefaultNavigation()
     {
-        $navigation = NavigationDefault::getNavigationList();
+        if (class_exists('App\Admin\Navigation\NavigationList')) {
+            $navigation = \App\Admin\Navigation\NavigationList::getNavigationList();
+        }
+        else{
+            $navigation = NavigationDefault::getNavigationList();
+        }
 
         return $navigation;
     }

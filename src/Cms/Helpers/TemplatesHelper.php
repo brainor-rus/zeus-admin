@@ -17,7 +17,6 @@ class TemplatesHelper
         $templatesDirectory = $type == 'page' ? config('zeusAdmin.cms_pages_templates_path') : config('zeusAdmin.cms_posts_templates_path');
         $templatesDirectory = Config::get('view.paths')[0] . '/' . str_replace('.', '/', $templatesDirectory);
         $templates = [];
-
         if ($handle = opendir($templatesDirectory)) {
             while (false !== ($file = readdir($handle))) {
                 if(preg_match("|.php|",$file)){

@@ -20,12 +20,13 @@ class CmsController extends Controller
 {
     private $pluginData = [
         'sectionPath' => 'Zeus\Admin\Cms\Sections\\',
-        'redirectUrl' => '/zeusAdmin/cms/{sectionName}'
+        'redirectUrl' => ''
     ];
 
     public function __construct(\Illuminate\Contracts\Foundation\Application $app)
     {
         $this->app = $app;
+        $this->pluginData['redirectUrl'] = '/' . config('zeusAdmin.admin_url') . '/cms/{sectionName}';
     }
 
     public function showRouteRedirect(Section $section, $sectionName, Request $request)

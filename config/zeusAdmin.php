@@ -32,8 +32,8 @@ return [
     |
     */
 
-    'cms_pages_templates_path' => 'cms.templates.pages',
-    'cms_posts_templates_path' => 'cms.templates.posts',
+    'cms_pages_templates_path' => 'zeusAdmin.cms.templates.pages',
+    'cms_posts_templates_path' => 'zeusAdmin.cms.templates.posts',
     'cms_url_prefix' => 'cms',
     'cms_page_prefix' => 'page',
     'cms_post_prefix' => 'post',
@@ -60,7 +60,7 @@ return [
 
 
 //    'logo'      => '/images/user-logo.jpg',
-    'logo'      => 'zeusAdmin/images/brainor-logo.svg',
+    'logo'      => '/packages/zeusAdmin/images/brainor-logo.svg',
 
 //    'logo_mini' => '',
 

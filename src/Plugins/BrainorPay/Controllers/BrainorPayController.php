@@ -11,8 +11,13 @@ use Illuminate\Support\Facades\View;
 class BrainorPayController extends Controller
 {
     private $pluginData = [
-        'redirectUrl' => '/zeusAdmin/pay/{sectionName}'
+        'redirectUrl' => ''
     ];
+
+    public function __construct()
+    {
+        $this->pluginData['redirectUrl'] = '/' . config('zeusAdmin.admin_url') . '/pay/{sectionName}';
+    }
 
     public function showRouteRedirect(Section $section, $sectionName, Request $request)
     {
