@@ -61,7 +61,7 @@ class Hidden
         $name = $this->getName();
         $value = $this->getValue();
 
-        return View::make('bradmin::SectionBuilder/Form/Fields/hidden')
+        return View::make('zeusAdmin::SectionBuilder/Form/Fields/hidden')
             ->with(compact('name', 'value'));
     }
 }

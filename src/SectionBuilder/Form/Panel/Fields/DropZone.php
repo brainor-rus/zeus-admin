@@ -102,7 +102,7 @@ class DropZone
         $id = $this->getId();
         $url = $this->getUrl();
 
-        return View::make('bradmin::SectionBuilder/Form/Fields/dropZone')
+        return View::make('zeusAdmin::SectionBuilder/Form/Fields/dropZone')
             ->with(compact('name', 'label','id','url'));
     }
 }

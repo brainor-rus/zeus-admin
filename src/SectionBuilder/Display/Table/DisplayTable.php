@@ -113,7 +113,7 @@ class DisplayTable
         $filter = $this->getFilter();
 
         $response['data'] = $data;
-        $response['view'] = View::make('bradmin::SectionBuilder/Display/Table/table')->with(compact('data', 'columns', 'fields', 'firedSection', 'pluginData', 'nav', 'filter'));
+        $response['view'] = View::make('zeusAdmin::SectionBuilder/Display/Table/table')->with(compact('data', 'columns', 'fields', 'firedSection', 'pluginData', 'nav', 'filter'));
 
         return $response;
     }

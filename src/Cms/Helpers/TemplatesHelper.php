@@ -14,7 +14,7 @@ class TemplatesHelper
 {
     public static function getTemplates($type)
     {
-        $templatesDirectory = $type == 'page' ? config('bradmin.cms_pages_templates_path') : config('bradmin.cms_posts_templates_path');
+        $templatesDirectory = $type == 'page' ? config('zeusAdmin.cms_pages_templates_path') : config('zeusAdmin.cms_posts_templates_path');
         $templatesDirectory = Config::get('view.paths')[0] . '/' . str_replace('.', '/', $templatesDirectory);
         $templates = [];
 

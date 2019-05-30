@@ -36,19 +36,19 @@
                 <!-- Tab panes -->
                 <div class="tab-content">
                     <div class="tab-pane active" id="uploadFilesTab">
-                        @include('bradmin::SectionBuilder.Form.Fields.InsertMedia.InsertMediaTabs.uploadFiles',['id' => $id])
+                        @include('zeusAdmin::SectionBuilder.Form.Fields.InsertMedia.InsertMediaTabs.uploadFiles',['id' => $id])
                     </div>
 
                     <div class="tab-pane" id="singleImageTab">
-                        @include('bradmin::SectionBuilder.Form.Fields.InsertMedia.InsertMediaTabs.singleImage',['id' => $id])
+                        @include('zeusAdmin::SectionBuilder.Form.Fields.InsertMedia.InsertMediaTabs.singleImage',['id' => $id])
                     </div>
 
                     <div class="tab-pane" id="imageGalleryTab">
-                        @include('bradmin::SectionBuilder.Form.Fields.InsertMedia.InsertMediaTabs.gallery',['id' => $id])
+                        @include('zeusAdmin::SectionBuilder.Form.Fields.InsertMedia.InsertMediaTabs.gallery',['id' => $id])
                     </div>
 
                     <div class="tab-pane" id="thumbImageTab">
-                        @include('bradmin::SectionBuilder.Form.Fields.InsertMedia.InsertMediaTabs.thumbImage',['id' => $id])
+                        @include('zeusAdmin::SectionBuilder.Form.Fields.InsertMedia.InsertMediaTabs.thumbImage',['id' => $id])
                     </div>
                 </div>
             </div>

@@ -28,12 +28,12 @@ class BRCommerce extends ServiceProvider
 
     public function boot()
     {
-        $this->mergeConfigFrom(__DIR__.'/../../../../config/bradmin.php', 'bradmin');
+        $this->mergeConfigFrom(__DIR__.'/../../../../config/zeusAdmin.php', 'zeusAdmin');
         $this->loadRoutesFrom(__DIR__.'/../routes/web.php');
         $this->loadViewsFrom(__DIR__.'/../resources/views', 'BRCommerce');
         $this->publishes([
-            __DIR__.'/../resources/views' => resource_path('views/bradmin/BRCommerce'),
-            __DIR__.'/../resources/js' => public_path('packages/bradmin/js')
+            __DIR__.'/../resources/views' => resource_path('views/zeusAdmin/BRCommerce'),
+            __DIR__.'/../resources/js' => public_path('packages/zeusAdmin/js')
         ]);
         $this->loadMigrationsFrom(__DIR__.'/../Migrations');
     }

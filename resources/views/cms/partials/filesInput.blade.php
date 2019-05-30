@@ -7,12 +7,12 @@
         case 'png':
         case 'svg':
         case 'gif': $field['image'] = $file->url; break;
-        case 'txt': $field['image'] = '/bradmin/images/txt.png'; break;
+        case 'txt': $field['image'] = '/zeusAdmin/images/txt.png'; break;
         case 'doc':
-        case 'docx': $field['image'] = '/bradmin/images/doc.png'; break;
+        case 'docx': $field['image'] = '/zeusAdmin/images/doc.png'; break;
         case 'xlsx':
-        case 'xml': $field['image'] = '/bradmin/images/excel.png'; break;
-        default: $field['image'] = '/bradmin/images/file.png'; break;
+        case 'xml': $field['image'] = '/zeusAdmin/images/excel.png'; break;
+        default: $field['image'] = '/zeusAdmin/images/file.png'; break;
     }
 @endphp
 <div class="tiles-display br-display">

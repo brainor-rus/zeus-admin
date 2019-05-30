@@ -36,13 +36,13 @@ class Cms extends ServiceProvider
     {
 
         // load config
-        $this->mergeConfigFrom(__DIR__.'/../../../config/bradmin.php', 'bradmin');
+        $this->mergeConfigFrom(__DIR__.'/../../../config/zeusAdmin.php', 'zeusAdmin');
         // load routes
         $this->loadRoutesFrom(__DIR__.'/../routes/web.php');
         // load view files
         $this->loadViewsFrom(__DIR__.'/../resources/views', 'cms');
         // publish files
-        $this->publishes([__DIR__.'/../resources/views' => resource_path('views/bradmin/cms')]);
+        $this->publishes([__DIR__.'/../resources/views' => resource_path('views/zeusAdmin/cms')]);
         $this->loadMigrationsFrom(__DIR__.'/../Migrations');
 
         $this->app->bind(

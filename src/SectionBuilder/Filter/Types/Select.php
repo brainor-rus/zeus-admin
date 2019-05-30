@@ -78,6 +78,6 @@ class Select
         $name = $this->getName();
         $options = $this->getOptions();
 
-        return View::make('bradmin::SectionBuilder/Filter/select')->with(compact('name', 'options'));
+        return View::make('zeusAdmin::SectionBuilder/Filter/select')->with(compact('name', 'options'));
     }
 }

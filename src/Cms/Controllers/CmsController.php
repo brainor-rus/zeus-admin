@@ -20,7 +20,7 @@ class CmsController extends Controller
 {
     private $pluginData = [
         'sectionPath' => 'Zeus\Admin\Cms\Sections\\',
-        'redirectUrl' => '/bradmin/cms/{sectionName}'
+        'redirectUrl' => '/zeusAdmin/cms/{sectionName}'
     ];
 
     public function __construct(\Illuminate\Contracts\Foundation\Application $app)
@@ -83,7 +83,7 @@ class CmsController extends Controller
             abort(404, 'Страница не найдена');
         }
 
-        $templatePath = config('bradmin.cms_pages_templates_path') . '.' . $page->template;
+        $templatePath = config('zeusAdmin.cms_pages_templates_path') . '.' . $page->template;
         if(!View::exists($templatePath))
         {
             throw new \Exception('Шаблон ' . $templatePath . ' не найден');
@@ -109,7 +109,7 @@ class CmsController extends Controller
             abort(404, 'Запись не найдена');
         }
 
-        $templatePath = config('bradmin.cms_posts_templates_path') . '.' . $post->template;
+        $templatePath = config('zeusAdmin.cms_posts_templates_path') . '.' . $post->template;
         if(!View::exists($templatePath))
         {
             throw new \Exception('Шаблон ' . $templatePath . ' не найден');

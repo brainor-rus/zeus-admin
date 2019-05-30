@@ -148,7 +148,7 @@ class Input
         $type = $this->getType();
         $value = $value ?? $this->getValue();
 
-        return View::make('bradmin::SectionBuilder/Form/Fields/input')
+        return View::make('zeusAdmin::SectionBuilder/Form/Fields/input')
             ->with(compact('name', 'label', 'value', 'placeholder', 'required', 'readonly', 'type'));
     }
 }

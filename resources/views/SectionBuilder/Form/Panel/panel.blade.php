@@ -1,6 +1,6 @@
 <form @submit.prevent="$emit('fireAction',$event)"
       id="{{ $sectionName }}-edit-form"
-        action={{ $action == 'edit' ? "/bradmin/" . $sectionName . "/" . $id . "/edit-action" : "/bradmin/" . $sectionName . "/create-action"}}
+        action={{ $action == 'edit' ? "/zeusAdmin/" . $sectionName . "/" . $id . "/edit-action" : "/zeusAdmin/" . $sectionName . "/create-action"}}
         method="post">
     @csrf
     <input type="hidden" name="pluginData[deleteUrl]" value="{{ $pluginData['redirectUrl'] ?? null }}">
@@ -28,7 +28,7 @@
                 <div class="card">
                     <div class="card-body">
                         <button type="submit" class="btn btn-success">Сохранить</button>
-                        <a @click.prevent="$emit('redirectTo',$event)" href="{{ $pluginData['redirectUrl'] ?? '/bradmin/' . $sectionName}}" class="btn btn-secondary">Отмена</a>
+                        <a @click.prevent="$emit('redirectTo',$event)" href="{{ $pluginData['redirectUrl'] ?? '/zeusAdmin/' . $sectionName}}" class="btn btn-secondary">Отмена</a>
                     </div>
                 </div>
             </div>

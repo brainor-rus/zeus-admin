@@ -10,7 +10,7 @@ return [
     |
     */
 
-    'admin_url' => 'bradmin',
+    'admin_url' => 'admin',
 
     /*
     |--------------------------------------------------------------------------
@@ -60,7 +60,7 @@ return [
 
 
 //    'logo'      => '/images/user-logo.jpg',
-    'logo'      => '/bradmin/images/brainor-logo.svg',
+    'logo'      => 'zeusAdmin/images/brainor-logo.svg',
 
 //    'logo_mini' => '',
 

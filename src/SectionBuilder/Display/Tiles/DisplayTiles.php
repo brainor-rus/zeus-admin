@@ -95,7 +95,7 @@ class DisplayTiles
         $nav = self::getNav();
 
         $response['data'] = $data;
-        $response['view'] = View::make('bradmin::SectionBuilder/Display/Tiles/tiles')->with(compact('data', 'elements', 'fields', 'firedSection', 'pluginData', 'nav'));
+        $response['view'] = View::make('zeusAdmin::SectionBuilder/Display/Tiles/tiles')->with(compact('data', 'elements', 'fields', 'firedSection', 'pluginData', 'nav'));
 
         return $response;
     }

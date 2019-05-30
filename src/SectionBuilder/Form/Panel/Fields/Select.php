@@ -225,7 +225,7 @@ class Select
         $options = $this->getOptions();
         $defaultSelected = $this->getDefaultSelected();
 
-        return View::make('bradmin::SectionBuilder/Form/Fields/select')
+        return View::make('zeusAdmin::SectionBuilder/Form/Fields/select')
             ->with(compact('name', 'label', 'value', 'required', 'readonly', 'options', 'defaultSelected'));
     }
 }

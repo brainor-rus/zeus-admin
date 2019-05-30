@@ -25,14 +25,14 @@ class Section
 
     public function getSectionSettings($sectionName, $sectionPath = null)
     {
-        $section = ($sectionPath ?? config('bradmin.user_path').'\\Sections\\' ) . $sectionName;
+        $section = ($sectionPath ?? config('zeusAdmin.user_path').'\\Sections\\' ) . $sectionName;
 
         return get_object_vars(new $section($this->app));
     }
     
     public function getSectionByName($sectionName, $sectionPath = null){
 
-        $section =  ($sectionPath ?? config('bradmin.user_path').'\\Sections\\') . $sectionName;
+        $section =  ($sectionPath ?? config('zeusAdmin.user_path').'\\Sections\\') . $sectionName;
         return new $section($this->app);
     }
 
@@ -42,7 +42,7 @@ class Section
 //        if (! method_exists($this, 'onDisplay')) {
 //            return;
 //        }
-        $this->setClass(($sectionPath ?? config('bradmin.user_path').'\\Sections\\') . $sectionName);
+        $this->setClass(($sectionPath ?? config('zeusAdmin.user_path').'\\Sections\\') . $sectionName);
 
         if(!class_exists($this->getClass()))
         {
@@ -56,7 +56,7 @@ class Section
 
     public function fireCreate($sectionName, array $payload = [], $sectionPath = null)
     {
-        $this->setClass(($sectionPath ?? config('bradmin.user_path').'\\Sections\\') . $sectionName);
+        $this->setClass(($sectionPath ?? config('zeusAdmin.user_path').'\\Sections\\') . $sectionName);
 
         if(!class_exists($this->getClass()))
         {
@@ -70,7 +70,7 @@ class Section
 
     public function fireEdit($sectionName, array $payload = [], $sectionPath = null)
     {
-        $this->setClass(($sectionPath ?? config('bradmin.user_path').'\\Sections\\') . $sectionName);
+        $this->setClass(($sectionPath ?? config('zeusAdmin.user_path').'\\Sections\\') . $sectionName);
 
         if(!class_exists($this->getClass()))
         {
@@ -84,7 +84,7 @@ class Section
 
     public function fireDelete($sectionName, array $payload = [], $sectionPath = null)
     {
-        $this->setClass(($sectionPath ?? config('bradmin.user_path').'\\Sections\\') . $sectionName);
+        $this->setClass(($sectionPath ?? config('zeusAdmin.user_path').'\\Sections\\') . $sectionName);
         if(!class_exists($this->getClass()))
         {
             throw new \Exception('Section ' . $this->getClass() . ' not found.');
@@ -94,7 +94,7 @@ class Section
 
 //    public function getTitle($sectionName)
 //    {
-//        $this->setClass(($sectionPath ?? config('bradmin.user_path').'\\Sections\\') . $sectionName);
+//        $this->setClass(($sectionPath ?? config('zeusAdmin.user_path').'\\Sections\\') . $sectionName);
 //        $title = model
 //
 //        return $display;

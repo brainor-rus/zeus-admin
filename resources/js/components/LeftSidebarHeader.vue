@@ -2,7 +2,7 @@
 
 <template>
     <div class="align-items-center d-flex justify-content-between sidebar-header px-3 my-2">
-        <router-link to="/bradmin"><img class=" logo-img" :src="getLogoUrl" alt=""></router-link>
+        <router-link to="/zeusAdmin"><img class=" logo-img" :src="getLogoUrl" alt=""></router-link>
         <button class="sidebar-toggle-btn" @click="changeSidebarOpenCookie(sidebarOpenButtonAction)"><i :class="ico"></i></button>
     </div>
 </template>

@@ -99,7 +99,7 @@ class PanelForm
 
         $showButtons = self::isShowButtons();
 
-        $response = View::make('bradmin::SectionBuilder/Form/Panel/panel')
+        $response = View::make('zeusAdmin::SectionBuilder/Form/Panel/panel')
             ->with(compact('model', 'columns', 'sectionName', 'action', 'id', 'pluginData', 'showButtons'));
 
         return $response;

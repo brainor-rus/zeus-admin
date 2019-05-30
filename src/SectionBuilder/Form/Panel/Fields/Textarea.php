@@ -184,7 +184,7 @@ class Textarea
         $rows = $this->getRows();
         $maxlength = $this->getMaxlenght();
 
-        return View::make('bradmin::SectionBuilder/Form/Fields/textarea')
+        return View::make('zeusAdmin::SectionBuilder/Form/Fields/textarea')
             ->with(compact('name', 'label', 'value', 'placeholder', 'required', 'readonly', 'cols', 'rows', 'maxlength'));
     }
 }

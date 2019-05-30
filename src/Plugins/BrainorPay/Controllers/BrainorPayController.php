@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\View;
 class BrainorPayController extends Controller
 {
     private $pluginData = [
-        'redirectUrl' => '/bradmin/pay/{sectionName}'
+        'redirectUrl' => '/zeusAdmin/pay/{sectionName}'
     ];
 
     public function showRouteRedirect(Section $section, $sectionName, Request $request)

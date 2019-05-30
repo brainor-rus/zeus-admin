@@ -11,37 +11,37 @@ class PluginNavigation
     {
         $this->pluginNav = [
             [
-                'url' => '/'.config('bradmin.admin_url').'/pay',
+                'url' => '/'.config('zeusAdmin.admin_url').'/pay',
                 'icon' => 'fas fa-users',
                 'text' => 'Оплата',
                 'noDirect' => true,
                 'nodes' => [
                     [
-                        'url' => '/bradmin/pay/BrainorPayBanks',
+                        'url' => '/zeusAdmin/pay/BrainorPayBanks',
                         'icon' => 'fas fa-address-book',
                         'iconText' => 'Б',
                         'text' => 'Банки'
                     ],
                     [
-                        'url' => '/bradmin/pay/BrainorPayBankResponses',
+                        'url' => '/zeusAdmin/pay/BrainorPayBankResponses',
                         'icon' => 'fas fa-address-book',
                         'iconText' => 'ОБ',
                         'text' => 'Ответы банков',
                     ],
                     [
-                        'url' => '/bradmin/pay/BrainorPayCommissions',
+                        'url' => '/zeusAdmin/pay/BrainorPayCommissions',
                         'icon' => 'fas fa-address-book',
                         'iconText' => 'КБ',
                         'text' => 'Коммиссии банков'
                     ],
                     [
-                        'url' => '/bradmin/pay/BrainorPayStatistics',
+                        'url' => '/zeusAdmin/pay/BrainorPayStatistics',
                         'icon' => 'fas fa-address-book',
                         'iconText' => 'СБ',
                         'text' => 'Статистика'
                     ],
                     [
-                        'url' => '/bradmin/pay/BrainorPayStatisticParts',
+                        'url' => '/zeusAdmin/pay/BrainorPayStatisticParts',
                         'icon' => 'fas fa-address-book',
                         'iconText' => 'СД',
                         'text' => 'Статистика (доп)'

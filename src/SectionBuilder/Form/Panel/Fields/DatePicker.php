@@ -207,7 +207,7 @@ class DatePicker
         $minuteStep = $this->getMinuteStep();
         $readonly = $this->getReadonly();
 
-        return View::make('bradmin::SectionBuilder/Form/Fields/datePicker')
+        return View::make('zeusAdmin::SectionBuilder/Form/Fields/datePicker')
             ->with(compact('name', 'label', 'value', 'required', 'format', 'language', 'todayBtn', 'clearBtn', 'minuteStep', 'readonly'));
     }
 }

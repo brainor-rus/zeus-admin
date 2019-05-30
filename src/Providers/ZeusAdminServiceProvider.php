@@ -25,20 +25,20 @@ class ZeusAdminServiceProvider extends ServiceProvider
 
     public function boot()
     {
-        require(__DIR__ . '/../../vendor/autoload.php');
+//        require(__DIR__ . '/../../vendor/autoload.php');
         // load config
-        $this->mergeConfigFrom(__DIR__.'/../../config/bradmin.php', 'bradmin');
+        $this->mergeConfigFrom(__DIR__.'/../../config/zeusAdmin.php', 'zeusAdmin');
 
         // load routes
         $this->loadRoutesFrom(__DIR__.'/../../routes/web.php');
 
         // load view files
-        $this->loadViewsFrom(__DIR__.'/../../resources/views', 'bradmin');
+        $this->loadViewsFrom(__DIR__.'/../../resources/views', 'zeusAdmin');
 
         // publish files
         $this->publishes([
-            __DIR__.'/../../resources/views' => resource_path('views/bradmin'),
-            __DIR__.'/../../public/packages/bradmin/js/ckeditor' => public_path('packages/bradmin/js'),
+            __DIR__.'/../../resources/views' => resource_path('views/zeusAdmin'),
+            __DIR__.'/../../public/packages/zeusAdmin/js/ckeditor' => public_path('packages/zeusAdmin/js'),
         ]);
     }
 
@@ -50,7 +50,7 @@ class ZeusAdminServiceProvider extends ServiceProvider
     public function register()
     {
         // load config
-        $this->mergeConfigFrom(__DIR__.'/../../config/bradmin.php', 'bradmin');
+        $this->mergeConfigFrom(__DIR__.'/../../config/zeusAdmin.php', 'zeusAdmin');
 
         /*
         * Register the service provider for the dependency.

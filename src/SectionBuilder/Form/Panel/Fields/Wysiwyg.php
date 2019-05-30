@@ -166,7 +166,7 @@ class Wysiwyg
         $cols = $this->getCols();
         $rows = $this->getRows();
 
-        return View::make('bradmin::SectionBuilder/Form/Fields/wysiwyg')
+        return View::make('zeusAdmin::SectionBuilder/Form/Fields/wysiwyg')
             ->with(compact('name', 'label', 'value', 'placeholder', 'required', 'readonly', 'cols', 'rows'));
     }
 }

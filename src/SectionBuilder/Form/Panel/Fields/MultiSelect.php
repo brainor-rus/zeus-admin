@@ -196,7 +196,7 @@ class MultiSelect
         $readonly = $this->getReadonly();
         $options = $this->getOptions();
 
-        return View::make('bradmin::SectionBuilder/Form/Fields/multiselect')
+        return View::make('zeusAdmin::SectionBuilder/Form/Fields/multiselect')
             ->with(compact('name', 'label', 'value', 'required', 'readonly', 'options'));
     }
 }

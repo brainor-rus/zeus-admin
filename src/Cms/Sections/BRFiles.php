@@ -58,7 +58,7 @@ class BRFiles extends Section
             $display = Display::tiles($mergedFields)->setPagination(10);
         }
 
-        $display->setNav(view('bradmin::cms.partials.filesNav'));
+        $display->setNav(view('zeusAdmin::cms.partials.filesNav'));
 
         return $display;
     }
@@ -71,7 +71,7 @@ class BRFiles extends Section
                     'dropzone_files',
                     'Загрузка файлов',
                     'dropzone',
-                    '/'.config('bradmin.admin_url').'/cms/files/upload')
+                    '/'.config('zeusAdmin.admin_url').'/cms/files/upload')
             ]),
         ]);
 
@@ -91,7 +91,7 @@ class BRFiles extends Section
         ];
 
         $brFieldsRight = [
-            "0.01" => FormField::custom(view('bradmin::cms.partials.filesInput')->with(compact('file'))),
+            "0.01" => FormField::custom(view('zeusAdmin::cms.partials.filesInput')->with(compact('file'))),
         ];
 
 

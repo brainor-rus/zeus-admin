@@ -53,6 +53,6 @@ class Column
 
     public function render()
     {
-        return View::make('bradmin::SectionBuilder/Form/Panel/panel')->with(compact('data', 'columns', 'fields'));
+        return View::make('zeusAdmin::SectionBuilder/Form/Panel/panel')->with(compact('data', 'columns', 'fields'));
     }
 }

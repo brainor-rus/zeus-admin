@@ -101,7 +101,7 @@ class BRPosts extends Section
                     }
                 )
                 ->setDisplay('title'),
-            '0.07' => FormField::custom(view('bradmin::SectionBuilder.Form.Fields.InsertMedia.insertMedia')->with('id','input_content')),
+            '0.07' => FormField::custom(view('zeusAdmin::SectionBuilder.Form.Fields.InsertMedia.insertMedia')->with('id','input_content')),
             '0.08' => FormField::wysiwyg('content', 'Содержимое'),
         ];
         $brFieldsRight = [
@@ -128,7 +128,7 @@ class BRPosts extends Section
                 ->setTodayBtn(true)
                 ->setValue(Carbon::now())
                 ->setRequired(true),
-            '0.06' => FormField::custom(view('bradmin::cms.partials.thumb')->with(compact('cur_page'))),
+            '0.06' => FormField::custom(view('zeusAdmin::cms.partials.thumb')->with(compact('cur_page'))),
             '99.98' => FormField::hidden('thumb'),
             '99.99' => FormField::hidden('type')->setValue("post"),
         ];

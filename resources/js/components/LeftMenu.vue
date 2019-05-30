@@ -105,7 +105,7 @@
                 this.error = this.responseData = null;
                 this.classes = '';
                 axios
-                    .post('/bradmin/sidebar-menu')
+                    .post('/zeusAdmin/sidebar-menu')
                     .then(response => {
                         this.responseData = response.data;
                     })

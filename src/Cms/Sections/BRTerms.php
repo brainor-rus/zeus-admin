@@ -44,7 +44,7 @@ class BRTerms extends Section
 
         $terms_tree = BRTerm::where('type', 'category')->get()->toTree()->toArray();
         $cur_term = $id ? BRTerm::with('ancestors')->where('id', $id)->first()->toArray() : null;
-        $termsTreeView = view('bradmin::cms.partials.termsTree')->with(compact('terms_tree', 'cur_term'));
+        $termsTreeView = view('zeusAdmin::cms.partials.termsTree')->with(compact('terms_tree', 'cur_term'));
 
         $brFields = [
             '0.01' => FormField::input('title', 'Название')->setRequired(true),

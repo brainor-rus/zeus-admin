@@ -50,7 +50,7 @@ class BROffers extends Section
         ])->setScripts([
             'head' => [],
             'body' => [
-                'OffersAttrFormAdd' => ('/packages/bradmin/js/OffersAttrFormAdd.js')
+                'OffersAttrFormAdd' => ('/packages/zeusAdmin/js/OffersAttrFormAdd.js')
             ]
         ]);
 

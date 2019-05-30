@@ -9,51 +9,51 @@ class NavigationDefault
     {
         $navigation = [
             [
-                'url' => '/'.config('bradmin.admin_url').'/Users',
+                'url' => '/'.config('zeusAdmin.admin_url').'/Users',
                 'icon' => 'fas fa-users',
                 'text' => 'Пользователи',
                 'noDirect' => true,
                 'nodes' => [
                     [
-                        'url' => '/bradmin/Users',
+                        'url' => '/zeusAdmin/Users',
                         'icon' => 'fas fa-list',
                         'text' => 'Список'
                     ],
                     [
-                        'url' => '/bradmin/Permissions',
+                        'url' => '/zeusAdmin/Permissions',
                         'icon' => 'fas fa-crown',
                         'text' => 'Привелегии'
                     ],
                     [
-                        'url' => '/bradmin/Roles',
+                        'url' => '/zeusAdmin/Roles',
                         'icon' => 'fas fa-user-circle',
                         'text' => 'Роли'
                     ],
                 ]
             ],
             [
-                'url' => '/'.config('bradmin.admin_url').'/Settings',
+                'url' => '/'.config('zeusAdmin.admin_url').'/Settings',
                 'icon' => 'fas fa-cogs',
                 'text' => 'Настройки',
                 'noDirect' => true,
                 'nodes' => [
                     [
-                        'url' => '/bradmin/InterfaceLang',
+                        'url' => '/zeusAdmin/InterfaceLang',
                         'icon' => 'fas fa-window-maximize',
                         'text' => 'Интерфейс'
                     ],
                     [
-                        'url' => '/bradmin/Commissions',
+                        'url' => '/zeusAdmin/Commissions',
                         'icon' => 'fas fa-percentage',
                         'text' => 'Коммиссии'
                     ],
                     [
-                        'url' => '/bradmin/Currencies',
+                        'url' => '/zeusAdmin/Currencies',
                         'icon' => 'fas fa-dollar-sign',
                         'text' => 'Валюты'
                     ],
                     [
-                        'url' => '/bradmin/ContactEmails',
+                        'url' => '/zeusAdmin/ContactEmails',
                         'icon' => 'fas fa-at',
                         'text' => 'Имейлы'
                     ],

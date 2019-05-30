@@ -61,6 +61,6 @@ class Text
         $name = $this->getName();
         $placeholder = $this->getPlaceholder();
 
-        return View::make('bradmin::SectionBuilder/Filter/text')->with(compact('name', 'placeholder'));
+        return View::make('zeusAdmin::SectionBuilder/Filter/text')->with(compact('name', 'placeholder'));
     }
 }

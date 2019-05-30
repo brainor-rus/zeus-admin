@@ -23,13 +23,13 @@ class BrAdminController extends Controller
 
     public function getIndex()
     {
-        return view('bradmin::spa');
+        return view('zeusAdmin::spa');
     }
 
     public function getDashboard()
     {
         return response()->json([
-                'html' => View::make('bradmin::dashboard')->render(),
+                'html' => View::make('zeusAdmin::dashboard')->render(),
                 'meta' => [
                     'title' => 'Главная'
                 ]
@@ -54,7 +54,7 @@ class BrAdminController extends Controller
         if($display instanceof DisplayCustom) {
             $results = $display->render($firedSection, $pluginData);
         } else {
-            $results = $display->render($sectionModelSettings['model'] ?? config('bradmin.base_models_path') . studly_case(strtolower(str_singular($sectionName))), $firedSection, $pluginData, $request);
+            $results = $display->render($sectionModelSettings['model'] ?? config('zeusAdmin.base_models_path') . studly_case(strtolower(str_singular($sectionName))), $firedSection, $pluginData, $request);
         }
 
         $html = $results['view'];
@@ -90,7 +90,7 @@ class BrAdminController extends Controller
                 $meta = $display->getMeta();
                 $sectionModelSettings = $section->getSectionSettings(studly_case($sectionName), $pluginData['sectionPath'] ?? null);
 
-                $html = $display->render($sectionModelSettings['model'] ?? config('bradmin.base_models_path') . studly_case(strtolower(str_singular($sectionName))), $sectionName, $firedSection, null, $pluginData);
+                $html = $display->render($sectionModelSettings['model'] ?? config('zeusAdmin.base_models_path') . studly_case(strtolower(str_singular($sectionName))), $sectionName, $firedSection, null, $pluginData);
                 $meta = [
                     'title' => $sectionModelSettings['title'] . '| Новая запись',
                     'scripts' => $meta->getScripts(),
@@ -118,7 +118,7 @@ class BrAdminController extends Controller
                 $meta = $display->getMeta();
                 $sectionModelSettings = $section->getSectionSettings(studly_case($sectionName), $pluginData['sectionPath'] ?? null);
 
-                $html = $display->render($sectionModelSettings['model'] ?? config('bradmin.base_models_path') . studly_case(strtolower(str_singular($sectionName))), $sectionName, $firedSection, $id, $pluginData);
+                $html = $display->render($sectionModelSettings['model'] ?? config('zeusAdmin.base_models_path') . studly_case(strtolower(str_singular($sectionName))), $sectionName, $firedSection, $id, $pluginData);
                 $meta = [
                     'title' => $sectionModelSettings['title'] . '| Редактирование',
                     'scripts' => $meta->getScripts(),
@@ -136,12 +136,12 @@ class BrAdminController extends Controller
     public function createAction(Section $section, $sectionName, Request $request)
     {
         $class = $section->getSectionByName($sectionName, $request->pluginData['sectionPath'] ?? null);
-        $redirectUrl = $request->pluginData['deleteUrl'] ?? '/' . config('bradmin.admin_url') . '/' . $sectionName;
+        $redirectUrl = $request->pluginData['deleteUrl'] ?? '/' . config('zeusAdmin.admin_url') . '/' . $sectionName;
         if(!isset($class)) { abort(500); }
         if ($class->isEditable()) {
             $request->offsetUnset('_token');
             $sectionModelSettings = $section->getSectionSettings(studly_case($sectionName), $request->pluginData['sectionPath'] ?? null);
-            $modelPath = $sectionModelSettings['model'] ?? config('bradmin.base_models_path') . studly_case(strtolower(str_singular($sectionName)));
+            $modelPath = $sectionModelSettings['model'] ?? config('zeusAdmin.base_models_path') . studly_case(strtolower(str_singular($sectionName)));
             $request->offsetUnset('pluginData');
 
             $model = new $modelPath;
@@ -184,12 +184,12 @@ class BrAdminController extends Controller
     public function editAction(Section $section, $sectionName, Request $request, $id)
     {
         $class = $section->getSectionByName($sectionName, $request->pluginData['sectionPath'] ?? null);
-        $redirectUrl = $request->pluginData['deleteUrl'] ?? '/' . config('bradmin.admin_url') . '/' . $sectionName;
+        $redirectUrl = $request->pluginData['deleteUrl'] ?? '/' . config('zeusAdmin.admin_url') . '/' . $sectionName;
         if(!isset($class)) { abort(500); }
         if ($class->isEditable()) {
             $request->offsetUnset('_token');
             $sectionModelSettings = $section->getSectionSettings(studly_case($sectionName), $request->pluginData['sectionPath'] ?? null);
-            $modelPath = $sectionModelSettings['model'] ?? config('bradmin.base_models_path') . studly_case(strtolower(str_singular($sectionName)));
+            $modelPath = $sectionModelSettings['model'] ?? config('zeusAdmin.base_models_path') . studly_case(strtolower(str_singular($sectionName)));
             $request->offsetUnset('pluginData');
 
             $model = new $modelPath;
@@ -230,11 +230,11 @@ class BrAdminController extends Controller
     public function deleteAction(Section $section, $sectionName, $id, Request $request)
     {
         $sectionModelSettings = $section->getSectionSettings($sectionName, $request->pluginData['sectionPath'] ?? null);
-        $modelPath = $sectionModelSettings['model'] ?? config('bradmin.base_models_path') . studly_case(strtolower(str_singular($sectionName)));
+        $modelPath = $sectionModelSettings['model'] ?? config('zeusAdmin.base_models_path') . studly_case(strtolower(str_singular($sectionName)));
         $model = new $modelPath;
         $class = $section->getSectionByName($sectionName, $request->pluginData['sectionPath'] ?? null);
         if(!isset($class)) { abort(500); }
-        $redirectUrl = $request->pluginData['deleteUrl'] ?? '/'.config('bradmin.admin_url').'/'.$sectionName;
+        $redirectUrl = $request->pluginData['deleteUrl'] ?? '/'.config('zeusAdmin.admin_url').'/'.$sectionName;
         if($class->isDeletable()){
             $class->beforeDelete($request, $id);
             $model->where('id', $id)->delete();
@@ -268,7 +268,7 @@ class BrAdminController extends Controller
     public function render($html, $pagination=null, $meta=null)
     {
         return response()->json([
-                'html' => View::make('bradmin::content.general')->with(compact('html'))->render(),
+                'html' => View::make('zeusAdmin::content.general')->with(compact('html'))->render(),
                 'data' => [
                     'pagination' => $pagination ?? '',
                     ],
@@ -278,7 +278,7 @@ class BrAdminController extends Controller
     }
 
     public function getImage($path){
-        return response()->file(base_path() . '/bradmin/images/' . $path);
+        return response()->file(base_path() . '/zeusAdmin/images/' . $path);
     }
 
     public function postEdit()
@@ -302,10 +302,10 @@ class BrAdminController extends Controller
         $requestCount = $request->requestCount+1;
         $wrapperId = $request->wrapperId;
         if ($request->requestCount > 0){
-            return view('bradmin::SectionBuilder.Form.Fields.InsertMedia.imagesListElements')->with(compact('files','requestCount','wrapperId'));
+            return view('zeusAdmin::SectionBuilder.Form.Fields.InsertMedia.imagesListElements')->with(compact('files','requestCount','wrapperId'));
         }
         else{
-            return view('bradmin::SectionBuilder.Form.Fields.InsertMedia.imagesList')->with(compact('files','requestCount','wrapperId'));
+            return view('zeusAdmin::SectionBuilder.Form.Fields.InsertMedia.imagesList')->with(compact('files','requestCount','wrapperId'));
         }
     }
 
