@@ -39,6 +39,7 @@ class ZeusAdminServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__.'/../../resources/views/zeusAdmin' => resource_path('views/zeusAdmin'),
             __DIR__.'/../../public/packages/zeusAdmin' => public_path('packages/zeusAdmin'),
+            __DIR__.'/../assets/toPublish/Admin' => app_path('Admin'),
         ]);
     }
 
