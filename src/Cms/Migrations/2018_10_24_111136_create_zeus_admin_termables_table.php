@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateBRTermablesTable extends Migration
+class CreateZeusAdminTermablesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,10 @@ class CreateBRTermablesTable extends Migration
      */
     public function up()
     {
-        Schema::create('b_r_termables', function (Blueprint $table) {
-            $table->integer('b_r_term_id');
-            $table->integer('b_r_termable_id');
-            $table->string('b_r_termable_type');
+        Schema::create('zeus_admin_termables', function (Blueprint $table) {
+            $table->integer('zeus_admin_term_id');
+            $table->integer('zeus_admin_termable_id');
+            $table->string('zeus_admin_termable_type');
         });
     }
 
@@ -27,6 +27,6 @@ class CreateBRTermablesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('b_r_termables');
+        Schema::dropIfExists('zeus_admin_termables');
     }
 }

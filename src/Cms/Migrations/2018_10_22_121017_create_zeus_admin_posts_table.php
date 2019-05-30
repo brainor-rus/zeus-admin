@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateBRPostsTable extends Migration
+class CreateZeusAdminPostsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateBRPostsTable extends Migration
      */
     public function up()
     {
-        Schema::create('b_r_posts', function (Blueprint $table) {
+        Schema::create('zeus_admin_posts', function (Blueprint $table) {
             $table->increments('id');
             $table->string('type');
             $table->string('title');
@@ -42,6 +42,6 @@ class CreateBRPostsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('b_r_posts');
+        Schema::dropIfExists('zeus_admin_posts');
     }
 }

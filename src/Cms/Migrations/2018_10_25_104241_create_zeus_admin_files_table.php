@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateBRTermsTable extends Migration
+class CreateZeusAdminFilesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,17 @@ class CreateBRTermsTable extends Migration
      */
     public function up()
     {
-        Schema::create('b_r_terms', function (Blueprint $table) {
+        Schema::create('zeus_admin_files', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('type');
-            $table->string('title');
-            $table->string('slug');
+            $table->string('mime');
+            $table->string('extension');
+            $table->string('url');
+            $table->string('base_url');
+            $table->string('path');
+            $table->double('size');
+            $table->string('title')->nullable();
+            $table->string('alt')->nullable();
             $table->text('description')->nullable();
-            $table->integer('parent_id')->nullable();
-            $table->integer('_lft')->nullable();
-            $table->integer('_rgt')->nullable();
-            $table->integer('depth')->nullable();
             $table->timestamps();
         });
     }
@@ -34,6 +35,6 @@ class CreateBRTermsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('b_r_terms');
+        Schema::dropIfExists('zeus_admin_files');
     }
 }

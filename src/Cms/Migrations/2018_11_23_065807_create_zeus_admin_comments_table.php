@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateBRCommentsTable extends Migration
+class CreateZeusAdminCommentsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateBRCommentsTable extends Migration
      */
     public function up()
     {
-        Schema::create('b_r_comments', function (Blueprint $table) {
+        Schema::create('zeus_admin_comments', function (Blueprint $table) {
             $table->increments('id');
             $table->string('user_id')->nullable();
             $table->string('email')->nullable();
@@ -34,6 +34,6 @@ class CreateBRCommentsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('b_r_comments');
+        Schema::dropIfExists('zeus_admin_comments');
     }
 }
