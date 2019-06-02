@@ -4,7 +4,7 @@ namespace Zeus\Admin\Cms\Controllers;
 
 use Zeus\Admin\Cms\Helpers\CMSHelper;
 use Zeus\Admin\Cms\Providers\Cms;
-use Zeus\Admin\Controllers\BrAdminController;
+use Zeus\Admin\Controllers\ZeusAdminController;
 use http\Exception;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -31,41 +31,41 @@ class CmsController extends Controller
 
     public function showRouteRedirect(Section $section, $sectionName, Request $request)
     {
-        $mainController = new BrAdminController;
+        $mainController = new ZeusAdminController;
         return $mainController->getDisplay($section, $sectionName, $this->pluginData,  $request);
     }
 
     public function createRouteRedirect(Section $section, $sectionName)
     {
-        $mainController = new BrAdminController;
+        $mainController = new ZeusAdminController;
 
         return $mainController->getCreate($section, $sectionName, $this->pluginData);
     }
 
     public function editRouteRedirect(Section $section, $sectionName, $id)
     {
-        $mainController = new BrAdminController;
+        $mainController = new ZeusAdminController;
 
         return $mainController->getEdit($section, $sectionName, $id, $this->pluginData);
     }
 
     public function createActionRouteRedirect(Section $section, $sectionName, Request $request)
     {
-        $mainController = new BrAdminController;
+        $mainController = new ZeusAdminController;
 
         return $mainController->createAction($section, $sectionName, $request);
     }
 
     public function editActionRouteRedirect(Section $section, $sectionName, $id, Request $request)
     {
-        $mainController = new BrAdminController;
+        $mainController = new ZeusAdminController;
 
         return $mainController->editAction($section, $sectionName, $id, $request);
     }
 
     public function deleteActionRouteRedirect(Section $section, $sectionName, $id, Request $request)
     {
-        $mainController = new BrAdminController;
+        $mainController = new ZeusAdminController;
 
         return $mainController->deleteAction($section, $sectionName, $id, $request);
     }

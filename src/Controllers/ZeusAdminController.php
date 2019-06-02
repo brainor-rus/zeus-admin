@@ -18,7 +18,7 @@ use Zeus\Admin\Section;
 use Zeus\Admin\Navigation\NavigationManager;
 use Zeus\Admin\Cms\Models\ZeusAdminFile;
 
-class BrAdminController extends Controller
+class ZeusAdminController extends Controller
 {
 
     public function getIndex()
