@@ -59,17 +59,20 @@ class DisplayTable
             ->when(isset($relationData), function ($query) use ($relationData) {
                 $query->with($relationData);
             })
-            ->when(!empty($request->sortBy), function ($query) use ($request) {
-                $query->orderBy($request->sortBy, 'asc');
-            })
-            ->when(!empty($request->sortByDesc), function ($query) use ($request) {
-                $query->orderBy($request->sortByDesc, 'desc');
-            })
+//            ->when(!empty($request->sortBy), function ($query) use ($request) {
+//                $query->orderBy($request->sortBy, 'asc');
+//            })
+//            ->when(!empty($request->sortByDesc), function ($query) use ($request) {
+//                $query->orderBy($request->sortByDesc, 'desc');
+//            })
             ->when(!empty($request->sort), function ($query) use ($request) {
                 parse_str($request->sort, $sortArray);
                 foreach ($sortArray as $sortItem) {
                     $query = $query->orderBy($sortItem['by'], $sortItem['type']);
                 }
+            })
+            ->when(empty($request->sort), function ($query) use ($request) {
+                $query = $query->orderBy('id', 'desc');
             })
             ->when(!empty($request->filter), function ($query) use ($request) {
                 parse_str($request->filter, $filterArray);

@@ -13,9 +13,9 @@ use Illuminate\Support\Facades\View;
 
 class Select
 {
-    private $name, $label, $value, $required, $readonly, $options, $modelForOptions, $queryFunctionForModel, $display, $defaultSelected;
+    private $name, $label, $value, $description, $required, $readonly, $options, $modelForOptions, $queryFunctionForModel, $display, $defaultSelected;
 
-    public function __construct($name, $label)
+    public function __construct($name, $label, $description)
     {
         $this->setName($name);
         $this->setLabel($label);
@@ -44,6 +44,16 @@ class Select
     public function setValue($value)
     {
         $this->value = $value;
+        return $this;
+    }
+
+    /**
+     * @param mixed $description
+     * @return Select
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
         return $this;
     }
 
@@ -136,6 +146,14 @@ class Select
     /**
      * @return mixed
      */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * @return mixed
+     */
     public function getRequired()
     {
         return $this->required;
@@ -220,12 +238,13 @@ class Select
     {
         $name = $this->getName();
         $label = $this->getLabel();
+        $description = $this->getDescription();
         $required = $this->getRequired();
         $readonly = $this->getReadonly();
         $options = $this->getOptions();
         $defaultSelected = $this->getDefaultSelected();
 
         return View::make('zeusAdmin::SectionBuilder/Form/Fields/select')
-            ->with(compact('name', 'label', 'value', 'required', 'readonly', 'options', 'defaultSelected'));
+            ->with(compact('name', 'label', 'value', 'required', 'readonly', 'options', 'defaultSelected','description'));
     }
 }

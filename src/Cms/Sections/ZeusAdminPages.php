@@ -6,6 +6,7 @@ use Zeus\Admin\Cms\Models\ZeusAdminPost;
 use Zeus\Admin\Cms\Models\ZeusAdminTag;
 use Zeus\Admin\Cms\Models\ZeusAdminTerm;
 use Zeus\Admin\Cms\Helpers\TemplatesHelper;
+use Zeus\Admin\Cms\Helpers\CustomFieldsHelper;
 use Zeus\Admin\Section;
 use Zeus\Admin\SectionBuilder\Display\BaseDisplay\Display;
 use Zeus\Admin\SectionBuilder\Display\Table\Columns\BaseColumn\Column;
@@ -20,6 +21,7 @@ class ZeusAdminPages extends Section
 {
     protected $title = 'Страницы';
     protected $model = 'Zeus\Admin\Cms\Models\ZeusAdminPost';
+
 
     public static function onDisplay(){
         $pluginsFields = app()['PluginsData']['CmsData']['Pages']['DisplayField'] ?? [];
@@ -100,14 +102,33 @@ class ZeusAdminPages extends Section
             '0.07' => FormField::custom(view('zeusAdmin::SectionBuilder.Form.Fields.InsertMedia.insertMedia')->with('id','input_content')),
             '0.08' => FormField::wysiwyg('content', 'Содержимое'),
         ];
+        $customFieldsConditions = [
+            'condition_parameter'=>'post_type',
+            'condition_value'=>'page',
+            'customable_type'=>'Zeus\Admin\Cms\Models\ZeusAdminPost',
+            'customable_id'=>$id
+        ];
+        $customFieldGroups = CustomFieldsHelper::getCustomFieldGroupsByCondition($customFieldsConditions);
+        if($customFieldGroups->count()>0){
+            foreach ($customFieldGroups as $group){
+                foreach ($group->fields as $field){
+                    $brFieldsLeft[$field->order] = FormField::{$field->type}('custom_fields['.$field->id.']',$field->name);
+                    if($field->data->count()>0){
+                        $brFieldsLeft[$field->order] = $brFieldsLeft[$field->order]->setValue($field->data[0]->value);
+                    }
+                }
+            }
+        }
         $brFieldsRight = [
+            '0.001' => FormField::custom(view('zeusAdmin::cms.partials.showPostLink')->with(compact('cur_page'))),
             '0.01' => FormField::select('status', 'Статус')
                 ->setOptions([
                     'draft' => 'Черновик',
                     'published' => 'Опубликовано'
                 ])
                 ->setDefaultSelected('published')
-                ->setRequired(true),
+                ->setRequired(true)
+                ->setDescription('<a href="#">Статус страницы</a>'),
             '0.02' => FormField::select('template', 'Шаблон')
                 ->setOptions($templates),
             '0.03' => FormField::custom($pagesTreeView),

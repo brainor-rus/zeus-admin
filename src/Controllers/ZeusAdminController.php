@@ -136,7 +136,15 @@ class ZeusAdminController extends Controller
     public function createAction(Section $section, $sectionName, Request $request)
     {
         $class = $section->getSectionByName($sectionName, $request->pluginData['sectionPath'] ?? null);
-        $redirectUrl = $request->pluginData['deleteUrl'] ?? '/' . config('zeusAdmin.admin_url') . '/' . $sectionName;
+
+        if(isset($request->pluginData['redirectUrl']))
+        {
+            $params['{sectionName}'] = $sectionName;
+            $params['{action}'] = 'edit';
+            $pluginUrl = strtr($request->pluginData['redirectUrl'], $params);
+        }
+        $redirectUrl = $pluginUrl ?? '/' . config('zeusAdmin.admin_url') . '/' . $sectionName;
+
         if(!isset($class)) { abort(500); }
         if ($class->isEditable()) {
             $request->offsetUnset('_token');
@@ -165,7 +173,12 @@ class ZeusAdminController extends Controller
 
             $class->afterSave($request, $model);
 
-            //        return redirect()->back();
+            if(isset($pluginUrl))
+            {
+                $params['{id}'] = $model->id;
+                $pluginUrl = strtr($pluginUrl, $params);
+                $redirectUrl = $pluginUrl;
+            }
 
             return response()->json([
                     'data' => [
@@ -184,7 +197,13 @@ class ZeusAdminController extends Controller
     public function editAction(Section $section, $sectionName, Request $request, $id)
     {
         $class = $section->getSectionByName($sectionName, $request->pluginData['sectionPath'] ?? null);
-        $redirectUrl = $request->pluginData['deleteUrl'] ?? '/' . config('zeusAdmin.admin_url') . '/' . $sectionName;
+        if(isset($request->pluginData['redirectUrl']))
+        {
+            $params['{sectionName}'] = $sectionName;
+            $params['{action}'] = 'edit';
+            $pluginUrl = strtr($request->pluginData['redirectUrl'], $params);
+        }
+        $redirectUrl = $pluginUrl ?? '/' . config('zeusAdmin.admin_url') . '/' . $sectionName;
         if(!isset($class)) { abort(500); }
         if ($class->isEditable()) {
             $request->offsetUnset('_token');
@@ -207,12 +226,19 @@ class ZeusAdminController extends Controller
             FormAction::saveBelongsToRelations($model, $request);
             FormAction::saveBelongsToManyRelations($model, $request);
             FormAction::saveHasOneRelations($model, $request);
+            FormAction::saveCustomFields($model, $request);
 
 
             $class->afterSave($request, $model);
 
             //        $modelPath::where('id', $id)->update($request->all());
 
+            if(isset($pluginUrl))
+            {
+                $params['{id}'] = $model->id;
+                $pluginUrl = strtr($pluginUrl, $params);
+                $redirectUrl = $pluginUrl;
+            }
             return response()->json([
                     'data' => [
                         'code' => 0,
@@ -234,7 +260,13 @@ class ZeusAdminController extends Controller
         $model = new $modelPath;
         $class = $section->getSectionByName($sectionName, $request->pluginData['sectionPath'] ?? null);
         if(!isset($class)) { abort(500); }
-        $redirectUrl = $request->pluginData['deleteUrl'] ?? '/'.config('zeusAdmin.admin_url').'/'.$sectionName;
+
+        if(isset($request->pluginData['deleteUrl']))
+        {
+            $params['{sectionName}'] = $sectionName;
+            $pluginUrl = strtr($request->pluginData['deleteUrl'], $params);
+        }
+        $redirectUrl = $pluginUrl ?? '/'.config('zeusAdmin.admin_url').'/'.$sectionName;
         if($class->isDeletable()){
             $class->beforeDelete($request, $id);
             $model->where('id', $id)->delete();

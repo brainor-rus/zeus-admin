@@ -41,9 +41,9 @@ class FormField
         return new Wysiwyg($name, $label);
     }
 
-    public static function select($name, $label)
+    public static function select($name, $label, $description=null)
     {
-        return new Select($name, $label);
+        return new Select($name, $label, $description);
     }
 
     public static function multiselect($name, $label)

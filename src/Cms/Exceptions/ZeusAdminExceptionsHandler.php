@@ -37,6 +37,9 @@ class ZeusAdminExceptionsHandler extends ExceptionHandler
                     }
             }
             if(isset($method)){
+                if($postExistenceCheck->type !== 'published'){
+                    return response()->view('errors.404', [], 404);
+                }
                 $controllerData = CmsController::{$method}($postExistenceCheck->slug);
                 return response()->view($controllerData['view'], $controllerData['data']);
             }

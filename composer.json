@@ -10,7 +10,8 @@
 		"laravel/framework": "5.*",
         "cviebrock/eloquent-sluggable": "4.*",
         "kalnoy/nestedset": "4.*",
-        "intervention/image": "2.*"
+        "intervention/image": "2.*",
+        "artesaos/seotools": "^0.*"
     },
     "autoload": {
 		"psr-4": {
@@ -23,8 +24,12 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Zeus\\Admin\\Providers\\ZeusAdminServiceProvider"
-            ]
+                "Zeus\\Admin\\Providers\\ZeusAdminServiceProvider",
+                "Artesaos\\SEOTools\\Providers\\SEOToolsServiceProvider",
+            ],
+            "aliases": {
+                "SEO": "Artesaos\\SEOTools\\Facades\\SEOTools"
+            }
         }
     },
     "scripts": {

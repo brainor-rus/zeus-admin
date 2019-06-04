@@ -10,6 +10,7 @@ class Section
 {
     protected $model = null;
     protected $title = null;
+    protected $showTopButtons = null;
 
     private $class;
 

@@ -9,7 +9,10 @@
 namespace Zeus\Admin\SectionBuilder\Form\FormAction;
 
 
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Zeus\Admin\Helpers\ZeusAdminHelper;
+use Zeus\Admin\Cms\Helpers\CustomFieldsHelper;
+use Zeus\Admin\Cms\Models\ZeusAdminCustomFieldData;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -55,6 +58,28 @@ class FormAction
                 } else {
                     $related = $model->{$name}()->getModel();
                     $model->{$name}()->save($related::findOrFail($request->{$name}));
+                }
+            }
+        }
+    }
+
+    public static function saveCustomFields(Model $model, Request $request)
+    {
+        $modelRelations = ZeusAdminHelper::getModelRelationships($model);
+        if(array_key_exists('customFields',$modelRelations)){
+            if ($model->customFields() instanceof MorphMany && $request->has('custom_fields') && isset($request->custom_fields)) {
+                if (is_array($request->custom_fields) || $request->custom_fields instanceof \Traversable) {
+                    foreach ($request->custom_fields as $customFieldId=>$customFieldDataValue){
+                        $modelClass = get_class($model);
+                        ZeusAdminCustomFieldData::updateOrInsert(
+                            [
+                                'customable_type' => $modelClass,
+                                'customable_id' => $model->id,
+                                'field_id' => $customFieldId
+                            ],
+                            ['value' => $customFieldDataValue]
+                        );
+                    }
                 }
             }
         }

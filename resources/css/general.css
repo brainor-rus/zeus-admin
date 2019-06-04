@@ -13,3 +13,12 @@
     width: calc(100% - 100px);
     margin-left: auto;
 }
+.form-field-description a{
+    color: #cccccc!important;
+    border-bottom: 1px #cccccc dashed!important;;
+    text-decoration: none!important;;
+}
+.form-field-description a:hover{
+    color: #747474!important;;
+    border-bottom: 1px #747474 dashed!important;;
+}

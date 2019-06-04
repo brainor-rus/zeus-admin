@@ -31,4 +31,7 @@
             @endforeach
         @endif
     </select>
+    @if(null !== $description)
+    <small id="input_{{ $name }}_description" class="form-text text-muted form-field-description">{!! $description !!}</small>
+    @endif
 </div>

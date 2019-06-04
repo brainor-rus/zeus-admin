@@ -25,7 +25,6 @@ class ZeusAdminServiceProvider extends ServiceProvider
 
     public function boot()
     {
-//        require(__DIR__ . '/../../vendor/autoload.php');
         // load config
         $this->mergeConfigFrom(__DIR__.'/../../config/zeusAdmin.php', 'zeusAdmin');
 
@@ -33,14 +32,15 @@ class ZeusAdminServiceProvider extends ServiceProvider
         $this->loadRoutesFrom(__DIR__.'/../../routes/web.php');
 
         // load view files
-        $this->loadViewsFrom(__DIR__.'/../../resources/views/zeusAdmin', 'zeusAdmin');
+        $this->loadViewsFrom(__DIR__.'/../../resources/views', 'zeusAdmin');
 
         // publish files
         $this->publishes([
-            __DIR__.'/../../resources/views/zeusAdmin' => resource_path('views/zeusAdmin'),
+            __DIR__.'/../../resources/views' => resource_path('views/zeusAdmin'),
             __DIR__.'/../../public/packages/zeusAdmin' => public_path('packages/zeusAdmin'),
             __DIR__.'/../assets/toPublish/Admin' => app_path('Admin'),
         ]);
+
     }
 
     /**

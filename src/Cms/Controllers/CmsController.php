@@ -14,19 +14,23 @@ use Zeus\Admin\Cms\Models\ZeusAdminFile;
 use Carbon\Carbon;
 use Image;
 use Zeus\Admin\Section;
+use SEO;
 
 
 class CmsController extends Controller
 {
     private $pluginData = [
         'sectionPath' => 'Zeus\Admin\Cms\Sections\\',
-        'redirectUrl' => ''
+        'redirectUrl' => '',
+        'deleteUrl' => '',
     ];
 
     public function __construct(\Illuminate\Contracts\Foundation\Application $app)
     {
         $this->app = $app;
-        $this->pluginData['redirectUrl'] = '/' . config('zeusAdmin.admin_url') . '/cms/{sectionName}';
+        $this->pluginData['deleteUrl'] = '/' . config('zeusAdmin.admin_url') . '/cms/{sectionName}';
+        $this->pluginData['redirectUrl'] = '/' . config('zeusAdmin.admin_url') . '/cms/{sectionName}/{id}/{action}';
+
     }
 
     public function showRouteRedirect(Section $section, $sectionName, Request $request)
@@ -53,7 +57,7 @@ class CmsController extends Controller
     {
         $mainController = new ZeusAdminController;
 
-        return $mainController->createAction($section, $sectionName, $request);
+        return $mainController->createAction($section, $sectionName, $request, $this->pluginData);
     }
 
     public function editActionRouteRedirect(Section $section, $sectionName, $id, Request $request)
@@ -68,6 +72,50 @@ class CmsController extends Controller
         $mainController = new ZeusAdminController;
 
         return $mainController->deleteAction($section, $sectionName, $id, $request);
+    }
+    public function parseUrl($path)
+    {
+        if (strpos($path, '/') == false) {
+            $slug = $path;
+        } else {
+            $url_elements = explode("/", $path);
+            $slug = array_pop($url_elements);
+        }
+
+        $args = [
+            'slug' => $slug,
+        ];
+        $page = CMSHelper::getQueryBuilder($args);
+        $data = $page->first();
+
+        if(!$data)
+        {
+            abort(404, 'Страница не найдена');
+        }
+//        dd($data);
+        if($data->type == 'post'){
+            $teplate = 'post';
+            $teplateFolder = config('zeusAdmin.cms_posts_templates_path');
+        }elseif($data->type == 'page')
+        {
+            $teplate = 'page';
+            $teplateFolder = config('zeusAdmin.cms_pages_templates_path');
+        }
+        if($data->template){
+            $teplate = $data->template;
+        }
+
+        $templatePath = $teplateFolder . '.' . $teplate;
+        if(!View::exists($templatePath))
+        {
+            throw new \Exception('Шаблон ' . $templatePath . ' не найден');
+        }
+
+        SEO::setTitle('Home');
+        SEO::setDescription('This is my page description');
+        SEO::addKeyword(['key1', 'key2', 'key3']);
+        
+        return view($templatePath)->with(compact('data'));
     }
 
     public static function showPage($slug)
@@ -84,7 +132,12 @@ class CmsController extends Controller
             abort(404, 'Страница не найдена');
         }
 
-        $templatePath = config('zeusAdmin.cms_pages_templates_path') . '.' . $page->template;
+        if($page->template){
+            $teplate = $page->template;
+        }else{
+            $teplate = 'page';
+        }
+        $templatePath = config('zeusAdmin.cms_pages_templates_path') . '.' . $teplate;
         if(!View::exists($templatePath))
         {
             throw new \Exception('Шаблон ' . $templatePath . ' не найден');
@@ -109,8 +162,18 @@ class CmsController extends Controller
         {
             abort(404, 'Запись не найдена');
         }
+        if($post->status !== 'published')
+        {
+            abort(404, 'Запись не найдена');
+        }
 
-        $templatePath = config('zeusAdmin.cms_posts_templates_path') . '.' . $post->template;
+        if($page->template){
+            $teplate = $post->template;
+        }else{
+            $teplate = 'post';
+        }
+
+        $templatePath = config('zeusAdmin.cms_posts_templates_path') . '.' . $teplate;
         if(!View::exists($templatePath))
         {
             throw new \Exception('Шаблон ' . $templatePath . ' не найден');

@@ -15,7 +15,7 @@ use Zeus\Admin\Section;
 
 class PanelForm
 {
-    private $columns, $meta, $showButtons = true;
+    private $columns, $meta, $showButtons = true, $showTopButtons = false;
 
     public function __construct($columns)
     {
@@ -66,12 +66,30 @@ class PanelForm
     }
 
     /**
+     * @return bool
+     */
+    public function isShowTopButtons()
+    {
+        return $this->showTopButtons;
+    }
+
+    /**
      * @param bool $showButtons
      * @return PanelForm
      */
     public function setShowButtons($showButtons)
     {
         $this->showButtons = $showButtons;
+        return $this;
+    }
+
+    /**
+     * @param bool $showTopButtons
+     * @return PanelForm
+     */
+    public function setShowTopButtons($showTopButtons)
+    {
+        $this->showTopButtons = $showTopButtons;
         return $this;
     }
 
@@ -91,16 +109,24 @@ class PanelForm
             $action = 'edit';
         }
 
-        if(isset($pluginData['redirectUrl']))
+        if(isset($pluginData['editUrl']))
         {
+
             $rc = new \ReflectionClass($firedSection);
-            $pluginData['redirectUrl'] = strtr($pluginData['redirectUrl'], ['{sectionName}' => $rc->getShortName()]);
+            $params['{sectionName}'] = $rc->getShortName();
+            if(isset($id))
+            {
+                $params['{id}'] = $id;
+                $params['{action}'] = 'edit';
+            }
+            $pluginData['editUrl'] = strtr($pluginData['redirectUrl'], $params);
         }
 
         $showButtons = self::isShowButtons();
+        $showTopButtons = self::isShowTopButtons();
 
         $response = View::make('zeusAdmin::SectionBuilder/Form/Panel/panel')
-            ->with(compact('model', 'columns', 'sectionName', 'action', 'id', 'pluginData', 'showButtons'));
+            ->with(compact('model', 'columns', 'sectionName', 'action', 'id', 'pluginData', 'showButtons','showTopButtons'));
 
         return $response;
     }

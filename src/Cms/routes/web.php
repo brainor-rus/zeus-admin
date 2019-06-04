@@ -37,11 +37,14 @@ Route::post('/'.config('zeusAdmin.admin_url').'/cms/{sectionName}/{id}/delete', 
     'uses' => 'Zeus\Admin\Cms\Controllers\CmsController@deleteActionRouteRedirect',
 ]);
 
+//Route::get('/' .config('zeusAdmin.cms_url_prefix') . '/{path}' , [
+//    'as'   => 'zeusAdmin.cms.page.parseUrl',
+//    'uses' => 'Zeus\Admin\Cms\Controllers\CmsController@parseUrl',
+//])->where('path', '[a-zA-Z0-9/_-]+');
 Route::get(config('zeusAdmin.cms_url_prefix') . '/' .config('zeusAdmin.cms_page_prefix') . '/{slug}' , [
-    'as'   => 'zeusAdmin.cms.page.show',
-    'uses' => 'Zeus\Admin\Cms\Controllers\CmsController@showPage',
+    'as'   => 'zeusAdmin.cms.post.show',
+    'uses' => 'Zeus\Admin\Cms\Controllers\CmsController@showPost',
 ]);
-
 Route::get(config('zeusAdmin.cms_url_prefix') . '/' .config('zeusAdmin.cms_post_prefix') . '/{slug}' , [
     'as'   => 'zeusAdmin.cms.post.show',
     'uses' => 'Zeus\Admin\Cms\Controllers\CmsController@showPost',

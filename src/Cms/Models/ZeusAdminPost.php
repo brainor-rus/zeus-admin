@@ -87,6 +87,11 @@ class ZeusAdminPost extends Model
         return $this->morphToMany('Zeus\Admin\Cms\Models\ZeusAdminComment', 'zeus_admin_commentable', 'zeus_admin_commentables', 'zeus_admin_commentable_id', 'zeus_admin_comment_id');
     }
 
+    public function customFields()
+    {
+        return $this->morphMany('Zeus\Admin\Cms\Models\ZeusAdminCustomFieldData', 'customable', 'customable_type', 'customable_id', 'id');
+    }
+    
     public function scopePages($query)
     {
         return $query->where('type', 'page');
