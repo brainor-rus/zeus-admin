@@ -13,7 +13,7 @@ class PluginNavigation
             [
                 'url' => '/'.config('zeusAdmin.admin_url').'/BrainorCommerce',
                 'icon' => 'fas fa-users',
-                'text' => 'BRCommerce',
+                'text' => 'BrainorCommerce',
                 'noDirect' => true,
                 'nodes' => [
                     [

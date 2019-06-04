@@ -1,7 +1,7 @@
 <?php
 /**
- * class: BRCommerce
- * nameSpace: App\Admin\Plugins\BRCommerce\Providers
+ * class: BrainorCommerce
+ * nameSpace: App\Admin\Plugins\BrainorCommerce\Providers
  */
 namespace App\Admin\Plugins\BrainorCommerce\Providers;
 

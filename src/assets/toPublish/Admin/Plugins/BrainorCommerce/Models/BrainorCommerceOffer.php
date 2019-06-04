@@ -1,8 +1,8 @@
 <?php
 
-namespace Zeus\Admin\Plugins\BRCommerce\Models;
+namespace Zeus\Admin\Plugins\BrainorCommerce\Models;
 
-use Zeus\Admin\Cms\Models\BRTerm;
+use Zeus\Admin\Cms\Models\ZeusAdminTag;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Model;
 use Zeus\Admin\Cms\Models\ZeusAdminTerm;

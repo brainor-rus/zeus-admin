@@ -1,10 +1,10 @@
 <?php
 
-namespace Zeus\Admin\Plugins\BRCommerce\Sections;
+namespace Zeus\Admin\Plugins\BrainorCommerce\Sections;
 
 use Zeus\Admin\Cms\Models\ZeusAdminTag;
 use Zeus\Admin\Cms\Models\ZeusAdminTerm;
-use Zeus\Admin\Plugins\BRCommerce\Models\BrainorCommerceOffer;
+use Zeus\Admin\Plugins\BrainorCommerce\Models\BrainorCommerceOffer;
 use Zeus\Admin\Section;
 use Zeus\Admin\SectionBuilder\Display\BaseDisplay\Display;
 use Zeus\Admin\SectionBuilder\Display\Table\Columns\BaseColumn\Column;
