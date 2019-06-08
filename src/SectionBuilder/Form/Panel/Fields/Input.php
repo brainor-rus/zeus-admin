@@ -10,8 +10,9 @@ namespace Zeus\Admin\SectionBuilder\Form\Panel\Fields;
 
 
 use Illuminate\Support\Facades\View;
+use Zeus\Admin\SectionBuilder\Form\Panel\Fields\BaseField\FormFieldBase;
 
-class Input
+class Input extends FormFieldBase
 {
     private $name, $label, $value, $placeholder, $required, $readonly, $type, $pattern;
 
@@ -165,8 +166,19 @@ class Input
         $type = $this->getType();
         $value = $value ?? $this->getValue();
         $pattern = $this->getPattern();
+        $helpBlock = $this->getHelpBlock();
 
         return View::make('zeusAdmin::SectionBuilder/Form/Fields/input')
-            ->with(compact('name', 'label', 'value', 'placeholder', 'required', 'readonly', 'type', 'pattern'));
+            ->with(compact(
+                'name',
+                'label',
+                'value',
+                'placeholder',
+                'required',
+                'readonly',
+                'type',
+                'pattern',
+                'helpBlock'
+            ));
     }
 }

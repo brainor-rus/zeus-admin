@@ -10,8 +10,9 @@ namespace Zeus\Admin\SectionBuilder\Form\Panel\Fields;
 
 
 use Illuminate\Support\Facades\View;
+use Zeus\Admin\SectionBuilder\Form\Panel\Fields\BaseField\FormFieldBase;
 
-class Hidden
+class Hidden extends FormFieldBase
 {
     private $name, $value;
 

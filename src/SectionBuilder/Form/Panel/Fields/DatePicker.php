@@ -10,8 +10,9 @@ namespace Zeus\Admin\SectionBuilder\Form\Panel\Fields;
 
 
 use Illuminate\Support\Facades\View;
+use Zeus\Admin\SectionBuilder\Form\Panel\Fields\BaseField\FormFieldBase;
 
-class DatePicker
+class DatePicker extends FormFieldBase
 {
     private $name, $label, $value, $required, $format, $language, $todayBtn, $clearBtn, $minuteStep, $readonly;
 
@@ -206,8 +207,21 @@ class DatePicker
         $clearBtn = $this->getClearBtn();
         $minuteStep = $this->getMinuteStep();
         $readonly = $this->getReadonly();
+        $helpBlock = $this->getHelpBlock();
 
         return View::make('zeusAdmin::SectionBuilder/Form/Fields/datePicker')
-            ->with(compact('name', 'label', 'value', 'required', 'format', 'language', 'todayBtn', 'clearBtn', 'minuteStep', 'readonly'));
+            ->with(compact(
+                'name',
+                'label',
+                'value',
+                'required',
+                'format',
+                'language',
+                'todayBtn',
+                'clearBtn',
+                'minuteStep',
+                'readonly',
+                'helpBlock'
+            ));
     }
 }

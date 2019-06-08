@@ -10,8 +10,9 @@ namespace Zeus\Admin\SectionBuilder\Form\Panel\Fields;
 
 
 use Illuminate\Support\Facades\View;
+use Zeus\Admin\SectionBuilder\Form\Panel\Fields\BaseField\FormFieldBase;
 
-class DropZone
+class DropZone extends FormFieldBase
 {
     private $name, $label, $id, $url;
 
@@ -101,8 +102,15 @@ class DropZone
         $label = $this->getLabel();
         $id = $this->getId();
         $url = $this->getUrl();
+        $helpBlock = $this->getHelpBlock();
 
         return View::make('zeusAdmin::SectionBuilder/Form/Fields/dropZone')
-            ->with(compact('name', 'label','id','url'));
+            ->with(compact(
+                'name',
+                'label',
+                'id',
+                'url',
+                'helpBlock'
+            ));
     }
 }

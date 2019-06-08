@@ -17,4 +17,5 @@
             @endforeach
         @endif
     </select>
+    {!! $helpBlock !!}
 </div>

@@ -8,4 +8,5 @@
               @if($required) required @endif
               @if($readonly) readonly @endif
               placeholder="{{ $placeholder ?? null }}">{!! htmlspecialchars($value) ?? null !!}</textarea>
+    {!! $helpBlock !!}
 </div>

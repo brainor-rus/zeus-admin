@@ -13,4 +13,5 @@
            data-datepicker-minuteStep="{{ $minuteStep }}"
            @if($readonly) disabled @endif
            @if($required) required @endif>
+    {!! $helpBlock !!}
 </div>

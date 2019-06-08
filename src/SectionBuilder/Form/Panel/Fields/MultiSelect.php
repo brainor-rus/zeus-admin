@@ -10,8 +10,9 @@ namespace Zeus\Admin\SectionBuilder\Form\Panel\Fields;
 
 
 use Illuminate\Support\Facades\View;
+use Zeus\Admin\SectionBuilder\Form\Panel\Fields\BaseField\FormFieldBase;
 
-class MultiSelect
+class MultiSelect extends FormFieldBase
 {
     private $name, $label, $value, $required, $readonly, $options, $modelForOptions, $queryFunctionForModel, $display;
 
@@ -195,8 +196,17 @@ class MultiSelect
         $required = $this->getRequired();
         $readonly = $this->getReadonly();
         $options = $this->getOptions();
+        $helpBlock = $this->getHelpBlock();
 
         return View::make('zeusAdmin::SectionBuilder/Form/Fields/multiselect')
-            ->with(compact('name', 'label', 'value', 'required', 'readonly', 'options'));
+            ->with(compact(
+                'name',
+                'label',
+                'value',
+                'required',
+                'readonly',
+                'options',
+                'helpBlock'
+            ));
     }
 }

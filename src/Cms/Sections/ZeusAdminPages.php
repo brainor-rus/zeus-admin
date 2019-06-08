@@ -128,7 +128,7 @@ class ZeusAdminPages extends Section
                 ])
                 ->setDefaultSelected('published')
                 ->setRequired(true)
-                ->setDescription('<a href="#">Статус страницы</a>'),
+                ->setHelpBlock('<a href="#">Статус страницы</a>'),
             '0.02' => FormField::select('template', 'Шаблон')
                 ->setOptions($templates),
             '0.03' => FormField::custom($pagesTreeView),

@@ -10,8 +10,9 @@ namespace Zeus\Admin\SectionBuilder\Form\Panel\Fields;
 
 
 use Illuminate\Support\Facades\View;
+use Zeus\Admin\SectionBuilder\Form\Panel\Fields\BaseField\FormFieldBase;
 
-class Textarea
+class Textarea extends FormFieldBase
 {
     private $name, $label, $value, $placeholder, $required, $readonly, $cols = 30, $rows = 10, $maxlength;
 
@@ -183,8 +184,20 @@ class Textarea
         $cols = $this->getCols();
         $rows = $this->getRows();
         $maxlength = $this->getMaxlenght();
+        $helpBlock = $this->getHelpBlock();
 
         return View::make('zeusAdmin::SectionBuilder/Form/Fields/textarea')
-            ->with(compact('name', 'label', 'value', 'placeholder', 'required', 'readonly', 'cols', 'rows', 'maxlength'));
+            ->with(compact(
+                'name',
+                'label',
+                'value',
+                'placeholder',
+                'required',
+                'readonly',
+                'cols',
+                'rows',
+                'maxlength',
+                'helpBlock'
+            ));
     }
 }

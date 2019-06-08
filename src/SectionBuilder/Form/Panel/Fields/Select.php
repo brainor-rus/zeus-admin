@@ -10,8 +10,9 @@ namespace Zeus\Admin\SectionBuilder\Form\Panel\Fields;
 
 
 use Illuminate\Support\Facades\View;
+use Zeus\Admin\SectionBuilder\Form\Panel\Fields\BaseField\FormFieldBase;
 
-class Select
+class Select extends FormFieldBase
 {
     private $name, $field, $label, $value, $required, $readonly, $options, $modelForOptions, $queryFunctionForModel, $display, $defaultSelected;
 
@@ -251,8 +252,18 @@ class Select
         $readonly = $this->getReadonly();
         $options = $this->getOptions();
         $defaultSelected = $this->getDefaultSelected();
+        $helpBlock = $this->getHelpBlock();
 
         return View::make('zeusAdmin::SectionBuilder/Form/Fields/select')
-            ->with(compact('name', 'label', 'value', 'required', 'readonly', 'options', 'defaultSelected'));
+            ->with(compact(
+                'name',
+                'label',
+                'value',
+                'required',
+                'readonly',
+                'options',
+                'defaultSelected',
+                'helpBlock'
+            ));
     }
 }

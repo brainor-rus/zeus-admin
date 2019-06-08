@@ -9,4 +9,5 @@
            @if($readonly) readonly @endif
            @if(!empty($pattern)) pattern="{{ $pattern }}" @endif
            placeholder="{{ $placeholder ?? null }}">
+    {!! $helpBlock !!}
 </div>
