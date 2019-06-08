@@ -5,21 +5,33 @@
  * Date: 04.12.2018
  * Time: 12:28
  */
-
 namespace Zeus\Admin\SectionBuilder\Filter\Types;
-
 use Illuminate\Support\Facades\View;
-
 class Text
 {
-    private $name, $placeholder;
-
-    public function __construct($name, $placeholder)
+    private $name, $placeholder, $isLike;
+    public function __construct($name, $placeholder, $isLike = true)
     {
         $this->setName($name);
+        $this->setIsLike($isLike);
         $this->setPlaceholder($placeholder);
     }
-
+    /**
+     * @return mixed
+     */
+    public function isLike()
+    {
+        return $this->isLike;
+    }
+    /**
+     * @param mixed $isLike
+     * @return Text
+     */
+    public function setIsLike($isLike): Text
+    {
+        $this->isLike = $isLike;
+        return $this;
+    }
     /**
      * @return mixed
      */
@@ -27,7 +39,6 @@ class Text
     {
         return $this->name;
     }
-
     /**
      * @param mixed $name
      * @return Text
@@ -37,7 +48,6 @@ class Text
         $this->name = $name;
         return $this;
     }
-
     /**
      * @return mixed
      */
@@ -45,7 +55,6 @@ class Text
     {
         return $this->placeholder;
     }
-
     /**
      * @param mixed $placeholder
      * @return Text
@@ -55,12 +64,11 @@ class Text
         $this->placeholder = $placeholder;
         return $this;
     }
-
     public function render()
     {
         $name = $this->getName();
         $placeholder = $this->getPlaceholder();
-
-        return View::make('zeusAdmin::SectionBuilder/Filter/text')->with(compact('name', 'placeholder'));
+        $isLike = $this->isLike();
+        return View::make('zeusAdmin::SectionBuilder/Filter/text')->with(compact('name', 'placeholder', 'isLike'));
     }
 }

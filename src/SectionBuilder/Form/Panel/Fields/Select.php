@@ -13,12 +13,29 @@ use Illuminate\Support\Facades\View;
 
 class Select
 {
-    private $name, $label, $value, $description, $required, $readonly, $options, $modelForOptions, $queryFunctionForModel, $display, $defaultSelected;
+    private $name, $field, $label, $value, $required, $readonly, $options, $modelForOptions, $queryFunctionForModel, $display, $defaultSelected;
 
-    public function __construct($name, $label, $description)
+    public function __construct($name, $label)
     {
         $this->setName($name);
         $this->setLabel($label);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getField()
+    {
+        return $this->field;
+    }
+    /**
+     * @param mixed $field
+     * @return Select
+     */
+    public function setField($field): Select
+    {
+        $this->field = $field;
+        return $this;
     }
 
     /**
@@ -44,16 +61,6 @@ class Select
     public function setValue($value)
     {
         $this->value = $value;
-        return $this;
-    }
-
-    /**
-     * @param mixed $description
-     * @return Select
-     */
-    public function setDescription($description)
-    {
-        $this->description = $description;
         return $this;
     }
 
@@ -180,6 +187,8 @@ class Select
      */
     public function getOptions()
     {
+        $field = $this->getField();
+
         if(isset($this->options))
         {
             return $this->options;
@@ -191,7 +200,7 @@ class Select
                     !empty($this->getQueryFunctionForModel()),
                     $this->getQueryFunctionForModel()
                 )->get() as $row) {
-                    $this->options[$row->id] = $row->{$this->getDisplay()};
+                    $this->options[$row->{$field}] = $row->{$this->getDisplay()};
                 }
             }
 
@@ -238,13 +247,12 @@ class Select
     {
         $name = $this->getName();
         $label = $this->getLabel();
-        $description = $this->getDescription();
         $required = $this->getRequired();
         $readonly = $this->getReadonly();
         $options = $this->getOptions();
         $defaultSelected = $this->getDefaultSelected();
 
         return View::make('zeusAdmin::SectionBuilder/Form/Fields/select')
-            ->with(compact('name', 'label', 'value', 'required', 'readonly', 'options', 'defaultSelected','description'));
+            ->with(compact('name', 'label', 'value', 'required', 'readonly', 'options', 'defaultSelected'));
     }
 }

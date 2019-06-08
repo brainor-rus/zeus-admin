@@ -13,12 +13,29 @@ use Illuminate\Support\Facades\View;
 
 class Input
 {
-    private $name, $label, $value, $placeholder, $required, $readonly, $type;
+    private $name, $label, $value, $placeholder, $required, $readonly, $type, $pattern;
 
     public function __construct($name, $label)
     {
         $this->setName($name);
         $this->setLabel($label);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPattern()
+    {
+        return $this->pattern;
+    }
+    /**
+     * @param mixed $pattern
+     * @return Input
+     */
+    public function setPattern($pattern): Input
+    {
+        $this->pattern = $pattern;
+        return $this;
     }
 
     /**
@@ -147,8 +164,9 @@ class Input
         $readonly = $this->getReadonly();
         $type = $this->getType();
         $value = $value ?? $this->getValue();
+        $pattern = $this->getPattern();
 
         return View::make('zeusAdmin::SectionBuilder/Form/Fields/input')
-            ->with(compact('name', 'label', 'value', 'placeholder', 'required', 'readonly', 'type'));
+            ->with(compact('name', 'label', 'value', 'placeholder', 'required', 'readonly', 'type', 'pattern'));
     }
 }
