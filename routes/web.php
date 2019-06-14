@@ -1,7 +1,7 @@
 <?php
 Route::group(['middleware' => config('zeusAdmin.middleware')], function () {
 
-    Route::get('/'.config('zeusAdmin.admin_url'), [
+    Route::any('/'.config('zeusAdmin.admin_url'), [
         'as'   => 'zeusAdmin.index',
         'uses' => 'Zeus\Admin\Controllers\ZeusAdminController@getIndex',
     ]);
