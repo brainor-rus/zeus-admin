@@ -71,14 +71,22 @@ class FormAction
                 if (is_array($request->custom_fields) || $request->custom_fields instanceof \Traversable) {
                     foreach ($request->custom_fields as $customFieldId=>$customFieldDataValue){
                         $modelClass = get_class($model);
-                        ZeusAdminCustomFieldData::updateOrInsert(
-                            [
-                                'customable_type' => $modelClass,
-                                'customable_id' => $model->id,
-                                'field_id' => $customFieldId
-                            ],
-                            ['value' => $customFieldDataValue]
-                        );
+                        if(empty($customFieldDataValue)) {
+                            ZeusAdminCustomFieldData::where([
+                                ['customable_type', $modelClass],
+                                ['customable_id', $model->id],
+                                ['field_id', $customFieldId]
+                            ])->delete();
+                        } else {
+                            ZeusAdminCustomFieldData::updateOrInsert(
+                                [
+                                    'customable_type' => $modelClass,
+                                    'customable_id' => $model->id,
+                                    'field_id' => $customFieldId
+                                ],
+                                ['value' => $customFieldDataValue]
+                            );
+                        }
                     }
                 }
             }
