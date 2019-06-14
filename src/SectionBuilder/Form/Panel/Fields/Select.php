@@ -20,6 +20,7 @@ class Select extends FormFieldBase
     {
         $this->setName($name);
         $this->setLabel($label);
+        $this->setField('id');
     }
 
     /**
