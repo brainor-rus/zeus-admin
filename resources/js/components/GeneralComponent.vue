@@ -216,7 +216,10 @@
 
                 let ajaxUrl = '';
 
-                if(this.$route.path === '/'+this.$store.state.options.adminUrl){
+                if(
+                    this.$route.path === '/'+this.$store.state.options.adminUrl ||
+                    this.$route.path === '/'+this.$store.state.options.adminUrl+'/'
+                ){
                     ajaxUrl = '/' + this.$store.state.options.adminUrl +'/dashboard';
                 }
                 else{
