@@ -170,6 +170,7 @@ class ZeusAdminController extends Controller
             FormAction::saveBelongsToRelations($model, $request);
             FormAction::saveBelongsToManyRelations($model, $request);
             FormAction::saveHasOneRelations($model, $request);
+            FormAction::saveCustomFields($model, $request);
 
             $class->afterSave($request, $model);
 
