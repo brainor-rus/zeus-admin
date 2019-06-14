@@ -19,7 +19,7 @@
 
 <div class="row">
     <div class="col-12">
-        <div class="tiles-display br-display" data-delete-redirect="{{ $pluginData['redirectUrl'] ?? null }}" data-section-path="{{ $pluginData['sectionPath'] ?? null }}">
+        <div class="tiles-display br-display" data-delete-redirect="{{ $pluginData['deleteUrl'] ?? null }}" data-section-path="{{ $pluginData['sectionPath'] ?? null }}">
             <div class="row">
                 @foreach($fields as $field)
                     <div class="col-lg-2 col-sm-6 col-12 mb-3">

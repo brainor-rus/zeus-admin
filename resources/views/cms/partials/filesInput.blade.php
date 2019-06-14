@@ -35,7 +35,7 @@
                 </tr>
                 <tr>
                     <td>Путь</td>
-                    <td>{{ $file->path }}</td>
+                    <td style="word-break: break-all;">{{ $file->path }}</td>
                 </tr>
                 <tr>
                     <td>Создан</td>
