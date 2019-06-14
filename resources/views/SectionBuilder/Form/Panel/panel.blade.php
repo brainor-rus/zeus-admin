@@ -41,7 +41,7 @@
                 <div class="card">
                     <div class="card-body">
                         <button type="submit" class="btn btn-success">Сохранить</button>
-                        <a @click.prevent="$emit('redirectTo',$event)" href="{{ $pluginData['redirectUrl'] ?? '/'.config("zeusAdmin.admin_url").'/' . $sectionName}}" class="btn btn-secondary">Отмена</a>
+                        <a @click.prevent="$emit('redirectTo',$event)" href="{{ $pluginData['cancelUrl'] ?? '/'.config("zeusAdmin.admin_url").'/' . $sectionName}}" class="btn btn-secondary">Отмена</a>
                     </div>
                 </div>
             </div>
