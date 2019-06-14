@@ -99,8 +99,7 @@ class PanelForm
         $model = new $modelPath();
         $action = 'create';
 
-        if(isset($id))
-        {
+        if(isset($id)) {
             $model = $model->where('id', $id)->first();
             if(!isset($model))
             {
@@ -109,9 +108,7 @@ class PanelForm
             $action = 'edit';
         }
 
-        if(isset($pluginData['editUrl']))
-        {
-
+        if(!empty($pluginData)) {
             $rc = new \ReflectionClass($firedSection);
             $params['{sectionName}'] = $rc->getShortName();
             if(isset($id))
@@ -119,8 +116,27 @@ class PanelForm
                 $params['{id}'] = $id;
                 $params['{action}'] = 'edit';
             }
-            $pluginData['editUrl'] = strtr($pluginData['redirectUrl'], $params);
+
+            $pluginData = array_map(function ($datum) use ($params) {
+                return strtr($datum, $params);
+            }, $pluginData);
         }
+
+//        if(isset($pluginData['editUrl'])) {
+//
+//            $rc = new \ReflectionClass($firedSection);
+//            $params['{sectionName}'] = $rc->getShortName();
+//            if(isset($id))
+//            {
+//                $params['{id}'] = $id;
+//                $params['{action}'] = 'edit';
+//            }
+//            $pluginData['editUrl'] = strtr($pluginData['redirectUrl'], $params);
+//        }
+//
+//        if(isset($pluginData['editUrl'])) {
+//
+//        }
 
         $showButtons = self::isShowButtons();
         $showTopButtons = self::isShowTopButtons();

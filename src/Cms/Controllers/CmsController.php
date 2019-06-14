@@ -23,6 +23,7 @@ class CmsController extends Controller
         'sectionPath' => 'Zeus\Admin\Cms\Sections\\',
         'redirectUrl' => '',
         'deleteUrl' => '',
+        'cancelUrl' => '',
     ];
 
     public function __construct(\Illuminate\Contracts\Foundation\Application $app)
@@ -30,6 +31,7 @@ class CmsController extends Controller
         $this->app = $app;
         $this->pluginData['deleteUrl'] = '/' . config('zeusAdmin.admin_url') . '/cms/{sectionName}';
         $this->pluginData['redirectUrl'] = '/' . config('zeusAdmin.admin_url') . '/cms/{sectionName}/{id}/{action}';
+        $this->pluginData['cancelUrl'] = '/' . config('zeusAdmin.admin_url') . '/cms/{sectionName}';
 
     }
 
