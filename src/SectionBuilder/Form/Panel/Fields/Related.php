@@ -12,13 +12,15 @@ use Zeus\Admin\SectionBuilder\Form\Panel\Fields\BaseField\FormFieldBase;
 
 class Related extends FormFieldBase
 {
-    private $name, $label, $columns;
+    private $name, $label, $columns, $relatedForeignKey, $relatedForeignModel;
 
-    public function __construct($name, $label, $columns)
+    public function __construct($name, $label, $model, $columns)
     {
         $this->setName($name);
         $this->setLabel($label);
+        $this->setRelatedForeignModel($model);
         $this->setColumns($columns);
+        $this->setRelatedForeignKey('id');
     }
 
     /**
@@ -72,12 +74,48 @@ class Related extends FormFieldBase
         return $this;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getRelatedForeignKey()
+    {
+        return $this->relatedForeignKey;
+    }
+
+    /**
+     * @param mixed $relatedForeignKey
+     */
+    public function setRelatedForeignKey($relatedForeignKey)
+    {
+        $this->relatedForeignKey = $relatedForeignKey;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getRelatedForeignModel()
+    {
+        return $this->relatedForeignModel;
+    }
+
+    /**
+     * @param mixed $relatedForeignModel
+     */
+    public function setRelatedForeignModel($relatedForeignModel)
+    {
+        $this->relatedForeignModel = $relatedForeignModel;
+        return $this;
+    }
+
     public function render($relatedRows = [])
     {
         $name = $this->getName();
         $label = $this->getLabel();
         $columns = $this->getColumns();
         $relatedName = $this->getRelatedName();
+        $relatedForeignKey = $this->getRelatedForeignKey();
+        $relatedForeignModel = $this->getRelatedForeignModel();
 
         return View::make('zeusAdmin::SectionBuilder/Form/Fields/related')
             ->with(compact(
@@ -85,7 +123,9 @@ class Related extends FormFieldBase
                 'label',
                 'columns',
                 'relatedRows',
-                'relatedName'
+                'relatedName',
+                'relatedForeignModel',
+                'relatedForeignKey'
             ));
     }
 }

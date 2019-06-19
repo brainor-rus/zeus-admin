@@ -4,7 +4,11 @@
     @endif
     <input
            @if(empty($relatedName)) id="input_{{ $name }}" @endif
-           name="{{ $relatedName ?? $name }}"
+           @if($formIgnore)
+             data-name="{{ $relatedName ?? $name }}"
+           @else
+             name="{{ $relatedName ?? $name }}"
+           @endif
            type="text"
            class="form-control datepicker"
            value="{{ $value }}"
@@ -15,6 +19,6 @@
            data-datepicker-clearBtn="{{ $clearBtn }}"
            data-datepicker-minuteStep="{{ $minuteStep }}"
            @if($readonly) disabled @endif
-           @if($required) required @endif>
+           @if($required) {{ $formIgnore ? 'data-required' : 'required' }} @endif>
     {!! $helpBlock !!}
 </div>

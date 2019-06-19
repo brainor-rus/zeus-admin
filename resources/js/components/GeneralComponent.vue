@@ -346,6 +346,7 @@
                     data:formData
                 })
                 .then(function (response) {
+                    console.log(response);
                     if (typeof response.data.data !== 'undefined') {
                         vm.actionResponseData = response.data.data;
 

@@ -67,7 +67,7 @@ class FormField
         return new DropZone($label, $name, $id, $url);
     }
 
-    public static function related($name, $label, $columns) {
-        return new Related($name, $label, $columns);
+    public static function related($name, $label, $model, $columns) {
+        return new Related($name, $label, $model, $columns);
     }
 }

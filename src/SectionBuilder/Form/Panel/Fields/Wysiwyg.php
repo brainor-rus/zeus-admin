@@ -168,6 +168,7 @@ class Wysiwyg extends FormFieldBase
         $rows = $this->getRows();
         $helpBlock = $this->getHelpBlock();
         $relatedName = $this->getRelatedName();
+        $formIgnore = $this->getFormIgnore();
 
         return View::make('zeusAdmin::SectionBuilder/Form/Fields/wysiwyg')
             ->with(compact(
@@ -180,7 +181,8 @@ class Wysiwyg extends FormFieldBase
                 'cols',
                 'rows',
                 'helpBlock',
-                'relatedName'
+                'relatedName',
+                'formIgnore'
             ));
     }
 }

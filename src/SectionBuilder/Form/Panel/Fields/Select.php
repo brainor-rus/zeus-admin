@@ -255,6 +255,7 @@ class Select extends FormFieldBase
         $defaultSelected = $this->getDefaultSelected();
         $helpBlock = $this->getHelpBlock();
         $relatedName = $this->getRelatedName();
+        $formIgnore = $this->getFormIgnore();
 
         return View::make('zeusAdmin::SectionBuilder/Form/Fields/select')
             ->with(compact(
@@ -266,7 +267,8 @@ class Select extends FormFieldBase
                 'options',
                 'defaultSelected',
                 'helpBlock',
-                'relatedName'
+                'relatedName',
+                'formIgnore'
             ));
     }
 }

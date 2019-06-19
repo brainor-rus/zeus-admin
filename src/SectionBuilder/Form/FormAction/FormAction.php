@@ -9,6 +9,7 @@
 namespace Zeus\Admin\SectionBuilder\Form\FormAction;
 
 
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Zeus\Admin\Helpers\ZeusAdminHelper;
 use Zeus\Admin\Cms\Helpers\CustomFieldsHelper;
@@ -90,6 +91,53 @@ class FormAction
                     }
                 }
             }
+        }
+    }
+
+    public static function saveRelated(Model $model, $relatedRows = []) {
+        if(!isset($relatedRows)) {
+            return;
+        }
+
+        foreach($relatedRows as $relation => $datas) {
+            $foreignModel = $datas['foreignModel'];
+            $foreignKey = $datas['foreignKey'];
+
+            if($model->{$relation}() instanceof HasMany) {
+                $existsRows = $model->{$relation};
+                $newRowsForeignKeys = [];
+
+                if(isset($datas['rows'])) {
+                    foreach($datas['rows'] as $row) {
+                        if(isset($row[$foreignKey])) {
+                            $relatedModel = $foreignModel::where($foreignKey, $row[$foreignKey])->first();
+                        }
+
+                        if(!isset($relatedModel)) {
+                            $relatedModel = new $foreignModel();
+                        }
+
+                        foreach($row as $field => $value) {
+                            if($field === $foreignKey) {
+                                continue;
+                            }
+
+                            $relatedModel->{$field} = $value;
+                        }
+
+                        $model->{$relation}()->save($relatedModel);
+
+                        $newRowsForeignKeys[] = $relatedModel->{$foreignKey};
+                    }
+                }
+
+//                $diffs = array_diff($newRowsForeignKeys, $existsRows->pluck($foreignKey)->toArray());
+//                if(count($diffs)) {
+//                    $model->{$relation}()->whereIn($foreignKey, $diffs)->delete();
+//                }
+            }
+
+            // todo Другие типы связей?
         }
     }
 }

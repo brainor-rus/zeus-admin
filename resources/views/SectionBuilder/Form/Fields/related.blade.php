@@ -1,7 +1,9 @@
 <div class="form-group">
     <label>{{ $label }}</label>
     <div class="table-responsive">
-        <table class="table table-hover related-table" data-current-index="{{ count($relatedRows) }}">
+        <input type="hidden" name="{{ "related[$name][foreignModel]" }}" value="{{ $relatedForeignModel }}">
+        <input type="hidden" name="{{ "related[$name][foreignKey]" }}" value="{{ $relatedForeignKey }}">
+        <table class="table table-hover table-bordered related-table" data-current-index="{{ count($relatedRows) }}">
             <thead class="thead-light">
                 <tr>
                     @foreach($columns as $column)
@@ -23,6 +25,7 @@
                             @php
                                 $field = $column;
                                 $currentRow = null;
+                                $field->setFormIgnore(1);
                             @endphp
 
                             @if($field instanceof \Zeus\Admin\SectionBuilder\Form\Panel\Fields\Related)
@@ -37,7 +40,7 @@
 
                                     $index = '@pattern@';
                                     $currentName = $field->getName();
-                                    $field->setRelatedName("related[$name][$index][$currentName]");
+                                    $field->setRelatedName("related[$name][rows][$index][$currentName]");
                                 @endphp
                                 {!! $field->render($value) !!}
                             @endif
@@ -52,6 +55,7 @@
                 </tr>
                 @foreach($relatedRows as $relatedRow)
                     <tr>
+                        <input type="hidden" name="{{ "related[$name][rows][$loop->index][$relatedForeignKey]" }}" value="{{ $relatedRow->{$relatedForeignKey} }}">
                         @foreach($columns as $column)
                             <td class="align-middle">
                                 @php
@@ -71,7 +75,7 @@
 
                                         $index = $loop->parent->index;
                                         $currentName = $field->getName();
-                                        $field->setRelatedName("related[$name][$index][$currentName]");
+                                        $field->setRelatedName("related[$name][rows][$index][$currentName]");
                                     @endphp
                                     {!! $field->render($value) !!}
                                 @endif

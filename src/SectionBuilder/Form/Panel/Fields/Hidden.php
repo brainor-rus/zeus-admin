@@ -62,8 +62,9 @@ class Hidden extends FormFieldBase
         $name = $this->getName();
         $value = $this->getValue();
         $relatedName = $this->getRelatedName();
+        $formIgnore = $this->getFormIgnore();
 
         return View::make('zeusAdmin::SectionBuilder/Form/Fields/hidden')
-            ->with(compact('name', 'value', 'relatedName'));
+            ->with(compact('name', 'value', 'relatedName', 'formIgnore'));
     }
 }

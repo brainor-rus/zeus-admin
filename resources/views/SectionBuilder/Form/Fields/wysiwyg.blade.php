@@ -4,10 +4,14 @@
     @endif
     <textarea class="form-control wysiwyg_editor"
               @if(empty($relatedName)) id="input_{{ $name }}" @endif
-              name="{{ $relatedName ?? $name }}"
+              @if($formIgnore)
+                data-name="{{ $relatedName ?? $name }}"
+              @else
+                name="{{ $relatedName ?? $name }}"
+              @endif
               cols="{{ $cols }}"
               rows="{{ $rows }}"
-              @if($required) required @endif
+              @if($required) {{ $formIgnore ? 'data-required' : 'required' }} @endif
               @if($readonly) readonly @endif
               placeholder="{{ $placeholder ?? null }}">{!! htmlspecialchars($value) ?? null !!}</textarea>
     {!! $helpBlock !!}

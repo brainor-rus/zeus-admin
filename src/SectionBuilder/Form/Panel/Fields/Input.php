@@ -168,6 +168,7 @@ class Input extends FormFieldBase
         $pattern = $this->getPattern();
         $helpBlock = $this->getHelpBlock();
         $relatedName = $this->getRelatedName();
+        $formIgnore = $this->getFormIgnore();
 
         return View::make('zeusAdmin::SectionBuilder/Form/Fields/input')
             ->with(compact(
@@ -180,7 +181,8 @@ class Input extends FormFieldBase
                 'type',
                 'pattern',
                 'helpBlock',
-                'relatedName'
+                'relatedName',
+                'formIgnore'
             ));
     }
 }

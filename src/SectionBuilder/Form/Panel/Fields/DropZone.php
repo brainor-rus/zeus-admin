@@ -104,6 +104,7 @@ class DropZone extends FormFieldBase
         $url = $this->getUrl();
         $helpBlock = $this->getHelpBlock();
         $relatedName = $this->getRelatedName();
+        $formIgnore = $this->getFormIgnore();
 
         return View::make('zeusAdmin::SectionBuilder/Form/Fields/dropZone')
             ->with(compact(
@@ -112,7 +113,8 @@ class DropZone extends FormFieldBase
                 'id',
                 'url',
                 'helpBlock',
-                'relatedName'
+                'relatedName',
+                'formIgnore'
             ));
     }
 }

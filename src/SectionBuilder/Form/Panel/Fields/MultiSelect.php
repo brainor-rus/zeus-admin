@@ -198,6 +198,7 @@ class MultiSelect extends FormFieldBase
         $options = $this->getOptions();
         $helpBlock = $this->getHelpBlock();
         $relatedName = $this->getRelatedName();
+        $formIgnore = $this->getFormIgnore();
 
         return View::make('zeusAdmin::SectionBuilder/Form/Fields/multiselect')
             ->with(compact(
@@ -208,7 +209,8 @@ class MultiSelect extends FormFieldBase
                 'readonly',
                 'options',
                 'helpBlock',
-                'relatedName'
+                'relatedName',
+                'formIgnore'
             ));
     }
 }

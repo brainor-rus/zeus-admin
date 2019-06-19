@@ -9,7 +9,11 @@ $(document).ready(function () {
         let patternRow = table.find('tr.pattern-row');
 
         patternRow = patternRow.clone().removeClass('d-none');
-        table.find('tbody').append(patternRow.prop("outerHTML").replace(/@pattern@/g, currentIndex));
+        patternRow = patternRow.prop("outerHTML").replace(/@pattern@/g, currentIndex);
+        patternRow = patternRow.replace(/data-name/g, 'name');
+        patternRow = patternRow.replace(/data-required/g, 'required');
+
+        table.find('tbody').append(patternRow);
         table.data('current-index', currentIndex + 1);
     });
 });
