@@ -21,6 +21,7 @@ class Related extends FormFieldBase
         $this->setRelatedForeignModel($model);
         $this->setColumns($columns);
         $this->setRelatedForeignKey('id');
+        $this->setFormIgnore(false);
     }
 
     /**

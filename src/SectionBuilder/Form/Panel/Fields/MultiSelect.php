@@ -20,6 +20,7 @@ class MultiSelect extends FormFieldBase
     {
         $this->setName($name);
         $this->setLabel($label);
+        $this->setFormIgnore(false);
     }
 
     /**

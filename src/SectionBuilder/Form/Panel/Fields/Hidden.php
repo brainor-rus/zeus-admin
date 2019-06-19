@@ -19,6 +19,7 @@ class Hidden extends FormFieldBase
     public function __construct($name)
     {
         $this->setName($name);
+        $this->setFormIgnore(false);
     }
 
     /**

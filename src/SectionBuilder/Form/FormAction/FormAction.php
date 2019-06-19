@@ -104,18 +104,11 @@ class FormAction
             $foreignKey = $datas['foreignKey'];
 
             if($model->{$relation}() instanceof HasMany) {
-                $existsRows = $model->{$relation};
-                $newRowsForeignKeys = [];
+                $newModels = [];
 
                 if(isset($datas['rows'])) {
                     foreach($datas['rows'] as $row) {
-                        if(isset($row[$foreignKey])) {
-                            $relatedModel = $foreignModel::where($foreignKey, $row[$foreignKey])->first();
-                        }
-
-                        if(!isset($relatedModel)) {
-                            $relatedModel = new $foreignModel();
-                        }
+                        $relatedModel = new $foreignModel();
 
                         foreach($row as $field => $value) {
                             if($field === $foreignKey) {
@@ -125,16 +118,12 @@ class FormAction
                             $relatedModel->{$field} = $value;
                         }
 
-                        $model->{$relation}()->save($relatedModel);
-
-                        $newRowsForeignKeys[] = $relatedModel->{$foreignKey};
+                        $newModels[] = $relatedModel;
                     }
                 }
 
-//                $diffs = array_diff($newRowsForeignKeys, $existsRows->pluck($foreignKey)->toArray());
-//                if(count($diffs)) {
-//                    $model->{$relation}()->whereIn($foreignKey, $diffs)->delete();
-//                }
+                $model->{$relation}()->delete();
+                $model->{$relation}()->saveMany($newModels);
             }
 
             // todo Другие типы связей?

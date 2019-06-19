@@ -22,6 +22,7 @@ class DatePicker extends FormFieldBase
         $this->setLabel($label);
         $this->setFormat($format);
         $this->setMinuteStep($minuteStep);
+        $this->setFormIgnore(false);
     }
 
     /**

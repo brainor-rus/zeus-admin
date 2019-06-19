@@ -22,6 +22,7 @@ class DropZone extends FormFieldBase
         $this->setLabel($label);
         $this->setId($id);
         $this->setUrl($url);
+        $this->setFormIgnore(false);
     }
 
     /**

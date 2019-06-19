@@ -16,6 +16,13 @@ class Textarea extends FormFieldBase
 {
     private $name, $label, $value, $placeholder, $required, $readonly, $cols = 30, $rows = 10, $maxlength;
 
+    public function __construct($name, $label)
+    {
+        $this->setName($name);
+        $this->setLabel($label);
+        $this->setFormIgnore(false);
+    }
+
     /**
      * @return mixed
      */
@@ -31,12 +38,6 @@ class Textarea extends FormFieldBase
     {
         $this->maxlength = $maxlength;
         return $this;
-    }
-
-    public function __construct($name, $label)
-    {
-        $this->setName($name);
-        $this->setLabel($label);
     }
 
     /**

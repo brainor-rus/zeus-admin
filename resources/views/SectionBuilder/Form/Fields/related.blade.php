@@ -23,7 +23,7 @@
                     @foreach($columns as $column)
                         <td class="align-middle">
                             @php
-                                $field = $column;
+                                $field = clone $column;
                                 $currentRow = null;
                                 $field->setFormIgnore(1);
                             @endphp
