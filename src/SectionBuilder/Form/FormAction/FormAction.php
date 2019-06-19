@@ -9,6 +9,7 @@
 namespace Zeus\Admin\SectionBuilder\Form\FormAction;
 
 
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Zeus\Admin\Helpers\ZeusAdminHelper;
 use Zeus\Admin\Cms\Helpers\CustomFieldsHelper;
@@ -90,6 +91,42 @@ class FormAction
                     }
                 }
             }
+        }
+    }
+
+    public static function saveRelated(Model $model, $relatedRows = []) {
+        if(!isset($relatedRows)) {
+            return;
+        }
+
+        foreach($relatedRows as $relation => $datas) {
+            $foreignModel = $datas['foreignModel'];
+            $foreignKey = $datas['foreignKey'];
+
+            if($model->{$relation}() instanceof HasMany) {
+                $newModels = [];
+
+                if(isset($datas['rows'])) {
+                    foreach($datas['rows'] as $row) {
+                        $relatedModel = new $foreignModel();
+
+                        foreach($row as $field => $value) {
+                            if($field === $foreignKey) {
+                                continue;
+                            }
+
+                            $relatedModel->{$field} = $value;
+                        }
+
+                        $newModels[] = $relatedModel;
+                    }
+                }
+
+                $model->{$relation}()->delete();
+                $model->{$relation}()->saveMany($newModels);
+            }
+
+            // todo Другие типы связей?
         }
     }
 }

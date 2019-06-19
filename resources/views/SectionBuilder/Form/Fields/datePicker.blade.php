@@ -1,7 +1,14 @@
 <div class="form-group date">
-    <label for="input_{{ $name }}">{{ $label }} @if($required) <span class="text-danger">*</span> @endif </label>
-    <input id="input_{{ $name }}"
-           name="{{ $name }}"
+    @if(empty($relatedName))
+        <label for="input_{{ $name }}">{{ $label }} @if($required) <span class="text-danger">*</span> @endif </label>
+    @endif
+    <input
+           @if(empty($relatedName)) id="input_{{ $name }}" @endif
+           @if($formIgnore)
+             data-name="{{ $relatedName ?? $name }}"
+           @else
+             name="{{ $relatedName ?? $name }}"
+           @endif
            type="text"
            class="form-control datepicker"
            value="{{ $value }}"
@@ -12,6 +19,6 @@
            data-datepicker-clearBtn="{{ $clearBtn }}"
            data-datepicker-minuteStep="{{ $minuteStep }}"
            @if($readonly) disabled @endif
-           @if($required) required @endif>
+           @if($required) {{ $formIgnore ? 'data-required' : 'required' }} @endif>
     {!! $helpBlock !!}
 </div>

@@ -38,5 +38,6 @@
 <script src="{{ asset('packages/zeusAdmin/js/dropzone/dropzone.min.js') }}"></script>
 <script src="{{ asset('packages/zeusAdmin/js/app.js') }}"></script>
 <script src="{{ asset('packages/zeusAdmin/js/insertMedia/insertMedia.js') }}"></script>
+<script src="{{ asset('packages/zeusAdmin/js/relatedTable/related-table.js') }}"></script>
 </body>
 </html>

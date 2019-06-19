@@ -108,7 +108,6 @@ class ZeusAdminController extends Controller
         }
     }
 
-
     public function getEdit(Section $section, $sectionName, $id, $pluginData = null)
     {
         $firedSection = $section->getSectionByName($sectionName, $pluginData['sectionPath'] ?? null);
@@ -146,23 +145,28 @@ class ZeusAdminController extends Controller
         $redirectUrl = $pluginUrl ?? '/' . config('zeusAdmin.admin_url') . '/' . $sectionName;
 
         if(!isset($class)) { abort(500); }
-        if ($class->isEditable()) {
+        if ($class->isCreatable()) {
+            $relatedRows = $request->get('related');
+
             $request->offsetUnset('_token');
+            $request->offsetUnset('related');
             $sectionModelSettings = $section->getSectionSettings(studly_case($sectionName), $request->pluginData['sectionPath'] ?? null);
             $modelPath = $sectionModelSettings['model'] ?? config('zeusAdmin.base_models_path') . studly_case(strtolower(str_singular($sectionName)));
             $request->offsetUnset('pluginData');
 
             $model = new $modelPath;
             $attrFields = Schema::getColumnListing($model->getTable());
-//            $relationFields = array_diff_key($request->all(), array_flip($attrFields));
 
             $class->beforeSave($request, $model);
 
             $model = $model::create($request->only($attrFields));
+
+            $relationFields = array_keys(ZeusAdminHelper::getModelRelationships($model));
+            $relationFields = array_diff($relationFields, $model->zeusAdminIgnore);
             $model = $model->where('id', $model->id)
-//                ->when(isset($relationFields), function ($query) use ($relationFields) {
-//                    $query->with(array_keys($relationFields));
-//                })
+                ->when(isset($relationFields), function ($query) use ($relationFields) {
+                    $query->with($relationFields);
+                })
                 ->first();
 
 
@@ -170,6 +174,7 @@ class ZeusAdminController extends Controller
             FormAction::saveBelongsToRelations($model, $request);
             FormAction::saveBelongsToManyRelations($model, $request);
             FormAction::saveHasOneRelations($model, $request);
+            FormAction::saveRelated($model, $relatedRows);
             FormAction::saveCustomFields($model, $request);
 
             $class->afterSave($request, $model);
@@ -207,13 +212,17 @@ class ZeusAdminController extends Controller
         $redirectUrl = $pluginUrl ?? '/' . config('zeusAdmin.admin_url') . '/' . $sectionName;
         if(!isset($class)) { abort(500); }
         if ($class->isEditable()) {
+            $relatedRows = $request->get('related');
+
             $request->offsetUnset('_token');
+            $request->offsetUnset('related');
             $sectionModelSettings = $section->getSectionSettings(studly_case($sectionName), $request->pluginData['sectionPath'] ?? null);
             $modelPath = $sectionModelSettings['model'] ?? config('zeusAdmin.base_models_path') . studly_case(strtolower(str_singular($sectionName)));
             $request->offsetUnset('pluginData');
 
             $model = new $modelPath;
             $relationFields = array_keys(ZeusAdminHelper::getModelRelationships($model));
+            $relationFields = array_diff($relationFields, $model->zeusAdminIgnore);
 
             $model = $model->where('id', $id)
                 ->when(isset($relationFields), function ($query) use ($relationFields) {
@@ -227,6 +236,7 @@ class ZeusAdminController extends Controller
             FormAction::saveBelongsToRelations($model, $request);
             FormAction::saveBelongsToManyRelations($model, $request);
             FormAction::saveHasOneRelations($model, $request);
+            FormAction::saveRelated($model, $relatedRows);
             FormAction::saveCustomFields($model, $request);
 
 

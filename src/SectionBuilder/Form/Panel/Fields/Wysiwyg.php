@@ -20,12 +20,13 @@ class Wysiwyg extends FormFieldBase
     {
         $this->setName($name);
         $this->setLabel($label);
+        $this->setFormIgnore(false);
     }
 
     /**
      * @param mixed $name
      */
-    private function setName($name): void
+    public function setName($name): void
     {
         $this->name = $name;
     }
@@ -167,6 +168,8 @@ class Wysiwyg extends FormFieldBase
         $cols = $this->getCols();
         $rows = $this->getRows();
         $helpBlock = $this->getHelpBlock();
+        $relatedName = $this->getRelatedName();
+        $formIgnore = $this->getFormIgnore();
 
         return View::make('zeusAdmin::SectionBuilder/Form/Fields/wysiwyg')
             ->with(compact(
@@ -178,7 +181,9 @@ class Wysiwyg extends FormFieldBase
                 'readonly',
                 'cols',
                 'rows',
-                'helpBlock'
+                'helpBlock',
+                'relatedName',
+                'formIgnore'
             ));
     }
 }

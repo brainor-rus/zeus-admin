@@ -20,12 +20,13 @@ class MultiSelect extends FormFieldBase
     {
         $this->setName($name);
         $this->setLabel($label);
+        $this->setFormIgnore(false);
     }
 
     /**
      * @param mixed $name
      */
-    private function setName($name): void
+    public function setName($name): void
     {
         $this->name = $name;
     }
@@ -197,6 +198,8 @@ class MultiSelect extends FormFieldBase
         $readonly = $this->getReadonly();
         $options = $this->getOptions();
         $helpBlock = $this->getHelpBlock();
+        $relatedName = $this->getRelatedName();
+        $formIgnore = $this->getFormIgnore();
 
         return View::make('zeusAdmin::SectionBuilder/Form/Fields/multiselect')
             ->with(compact(
@@ -206,7 +209,9 @@ class MultiSelect extends FormFieldBase
                 'required',
                 'readonly',
                 'options',
-                'helpBlock'
+                'helpBlock',
+                'relatedName',
+                'formIgnore'
             ));
     }
 }

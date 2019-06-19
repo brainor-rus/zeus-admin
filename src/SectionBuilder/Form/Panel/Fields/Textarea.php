@@ -16,6 +16,13 @@ class Textarea extends FormFieldBase
 {
     private $name, $label, $value, $placeholder, $required, $readonly, $cols = 30, $rows = 10, $maxlength;
 
+    public function __construct($name, $label)
+    {
+        $this->setName($name);
+        $this->setLabel($label);
+        $this->setFormIgnore(false);
+    }
+
     /**
      * @return mixed
      */
@@ -33,16 +40,10 @@ class Textarea extends FormFieldBase
         return $this;
     }
 
-    public function __construct($name, $label)
-    {
-        $this->setName($name);
-        $this->setLabel($label);
-    }
-
     /**
      * @param mixed $name
      */
-    private function setName($name): void
+    public function setName($name): void
     {
         $this->name = $name;
     }
@@ -185,6 +186,8 @@ class Textarea extends FormFieldBase
         $rows = $this->getRows();
         $maxlength = $this->getMaxlenght();
         $helpBlock = $this->getHelpBlock();
+        $relatedName = $this->getRelatedName();
+        $formIgnore = $this->getFormIgnore();
 
         return View::make('zeusAdmin::SectionBuilder/Form/Fields/textarea')
             ->with(compact(
@@ -197,7 +200,9 @@ class Textarea extends FormFieldBase
                 'cols',
                 'rows',
                 'maxlength',
-                'helpBlock'
+                'helpBlock',
+                'relatedName',
+                'formIgnore'
             ));
     }
 }
