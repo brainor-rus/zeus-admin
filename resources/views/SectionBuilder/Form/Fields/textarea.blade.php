@@ -1,8 +1,10 @@
 <div class="form-group">
-    <label for="input_{{ $name }}">{{ $label }} @if($required) <span class="text-danger">*</span> @endif</label>
+    @if(empty($relatedName))
+        <label for="input_{{ $name }}">{{ $label }} @if($required) <span class="text-danger">*</span> @endif</label>
+    @endif
     <textarea class="form-control"
-              id="input_{{ $name }}"
-              name="{{ $name }}"
+              @if(empty($relatedName)) id="input_{{ $name }}" @endif
+              name="{{ $relatedName ?? $name }}"
               cols="{{ $cols }}"
               rows="{{ $rows }}"
               @if($required) required @endif

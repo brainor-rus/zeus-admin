@@ -1,9 +1,11 @@
 <div class="form-group">
-    <label for="input_{{ $name }}">{{ $label }} @if($required) <span class="text-danger">*</span> @endif</label>
+    @if(empty($relatedName))
+        <label for="input_{{ $name }}">{{ $label }} @if($required) <span class="text-danger">*</span> @endif</label>
+    @endif
     <input type="{{$type ?? 'text'}}"
            class="form-control"
-           id="input_{{ $name }}"
-           name="{{ $name }}"
+           @if(empty($relatedName)) id="input_{{ $name }}" @endif
+           name="{{ $relatedName ?? $name }}"
            value="{{ $value ?? null }}"
            @if($required) required @endif
            @if($readonly) readonly @endif

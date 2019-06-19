@@ -43,7 +43,7 @@ class Select extends FormFieldBase
     /**
      * @param mixed $name
      */
-    private function setName($name): void
+    public function setName($name): void
     {
         $this->name = $name;
     }
@@ -254,6 +254,7 @@ class Select extends FormFieldBase
         $options = $this->getOptions();
         $defaultSelected = $this->getDefaultSelected();
         $helpBlock = $this->getHelpBlock();
+        $relatedName = $this->getRelatedName();
 
         return View::make('zeusAdmin::SectionBuilder/Form/Fields/select')
             ->with(compact(
@@ -264,7 +265,8 @@ class Select extends FormFieldBase
                 'readonly',
                 'options',
                 'defaultSelected',
-                'helpBlock'
+                'helpBlock',
+                'relatedName'
             ));
     }
 }

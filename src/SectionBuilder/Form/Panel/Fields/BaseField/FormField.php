@@ -14,6 +14,7 @@ use Zeus\Admin\SectionBuilder\Form\Panel\Fields\DatePicker;
 use Zeus\Admin\SectionBuilder\Form\Panel\Fields\Hidden;
 use Zeus\Admin\SectionBuilder\Form\Panel\Fields\Input;
 use Zeus\Admin\SectionBuilder\Form\Panel\Fields\MultiSelect;
+use Zeus\Admin\SectionBuilder\Form\Panel\Fields\Related;
 use Zeus\Admin\SectionBuilder\Form\Panel\Fields\Select;
 use Zeus\Admin\SectionBuilder\Form\Panel\Fields\Textarea;
 use Zeus\Admin\SectionBuilder\Form\Panel\Fields\Wysiwyg;
@@ -64,5 +65,9 @@ class FormField
     public static function dropZone($label, $name, $id, $url)
     {
         return new DropZone($label, $name, $id, $url);
+    }
+
+    public static function related($name, $label, $columns) {
+        return new Related($name, $label, $columns);
     }
 }

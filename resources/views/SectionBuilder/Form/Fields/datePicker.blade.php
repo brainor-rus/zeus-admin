@@ -1,7 +1,10 @@
 <div class="form-group date">
-    <label for="input_{{ $name }}">{{ $label }} @if($required) <span class="text-danger">*</span> @endif </label>
-    <input id="input_{{ $name }}"
-           name="{{ $name }}"
+    @if(empty($relatedName))
+        <label for="input_{{ $name }}">{{ $label }} @if($required) <span class="text-danger">*</span> @endif </label>
+    @endif
+    <input
+           @if(empty($relatedName)) id="input_{{ $name }}" @endif
+           name="{{ $relatedName ?? $name }}"
            type="text"
            class="form-control datepicker"
            value="{{ $value }}"

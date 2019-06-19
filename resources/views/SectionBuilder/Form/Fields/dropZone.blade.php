@@ -1,5 +1,9 @@
 <div class="form-group">
-    <label for="input_{{ $name }}">{{ $label }} </label>
-    <div class="dropzone" id="{{ $id }}" data-dropzone-url="{{ $url }}"></div>
+    @if(empty($relatedName))
+        <label for="input_{{ $name }}">{{ $label }} </label>
+    @endif
+    <div class="dropzone"
+         @if(empty($relatedName)) id="input_{{ $name }}" @endif
+         data-dropzone-url="{{ $url }}"></div>
     {!! $helpBlock !!}
 </div>

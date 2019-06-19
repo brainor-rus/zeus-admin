@@ -24,7 +24,7 @@ class Hidden extends FormFieldBase
     /**
      * @param mixed $name
      */
-    private function setName($name): void
+    public function setName($name): void
     {
         $this->name = $name;
     }
@@ -61,8 +61,9 @@ class Hidden extends FormFieldBase
     {
         $name = $this->getName();
         $value = $this->getValue();
+        $relatedName = $this->getRelatedName();
 
         return View::make('zeusAdmin::SectionBuilder/Form/Fields/hidden')
-            ->with(compact('name', 'value'));
+            ->with(compact('name', 'value', 'relatedName'));
     }
 }

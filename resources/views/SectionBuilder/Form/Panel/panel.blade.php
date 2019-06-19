@@ -24,13 +24,24 @@
             <div class="{{ $column->getClass() }}">
                 @foreach($column->getFields() as $field)
                     @php
-                        $value = $model->{ $field->getName() } ?? null;
-                        if($value instanceof Countable)
-                        {
-                            $value = $value->pluck('id')->toArray();
-                        }
+                        $currentRow = method_exists($field, 'getRow') && !empty($field->getRow()) ? $field->getRow() : $model;
                     @endphp
-                    {!! $field->render($value) !!}
+
+                    @if($field instanceof \Zeus\Admin\SectionBuilder\Form\Panel\Fields\Related)
+                        @php
+                            $relatedRows = $currentRow->{ $field->getName() } ?? null;
+                        @endphp
+                        {!! $field->render($relatedRows) !!}
+                    @else
+                        @php
+                            $value = $currentRow->{ $field->getName() } ?? null;
+                            if($value instanceof Countable)
+                            {
+                                $value = $value->pluck('id')->toArray();
+                            }
+                        @endphp
+                        {!! $field->render($value) !!}
+                    @endif
                 @endforeach
             </div>
         @endforeach

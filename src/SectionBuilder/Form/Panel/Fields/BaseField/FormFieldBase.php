@@ -11,7 +11,7 @@ namespace Zeus\Admin\SectionBuilder\Form\Panel\Fields\BaseField;
 
 class FormFieldBase
 {
-    protected $helpBlock;
+    protected $helpBlock, $row, $relatedName;
 
     /**
      * @return mixed
@@ -30,5 +30,38 @@ class FormFieldBase
         return $this;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getRow()
+    {
+        return $this->row;
+    }
+
+    /**
+     * @param mixed $row
+     */
+    public function setRow($row)
+    {
+        $this->row = $row;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getRelatedName()
+    {
+        return $this->relatedName;
+    }
+
+    /**
+     * @param mixed $relatedName
+     */
+    public function setRelatedName($relatedName)
+    {
+        $this->relatedName = $relatedName;
+        return $this;
+    }
 
 }

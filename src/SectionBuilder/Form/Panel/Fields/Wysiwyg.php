@@ -25,7 +25,7 @@ class Wysiwyg extends FormFieldBase
     /**
      * @param mixed $name
      */
-    private function setName($name): void
+    public function setName($name): void
     {
         $this->name = $name;
     }
@@ -167,6 +167,7 @@ class Wysiwyg extends FormFieldBase
         $cols = $this->getCols();
         $rows = $this->getRows();
         $helpBlock = $this->getHelpBlock();
+        $relatedName = $this->getRelatedName();
 
         return View::make('zeusAdmin::SectionBuilder/Form/Fields/wysiwyg')
             ->with(compact(
@@ -178,7 +179,8 @@ class Wysiwyg extends FormFieldBase
                 'readonly',
                 'cols',
                 'rows',
-                'helpBlock'
+                'helpBlock',
+                'relatedName'
             ));
     }
 }

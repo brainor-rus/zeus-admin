@@ -58,7 +58,7 @@ class Input extends FormFieldBase
     /**
      * @param mixed $name
      */
-    private function setName($name): void
+    public function setName($name): void
     {
         $this->name = $name;
     }
@@ -167,6 +167,7 @@ class Input extends FormFieldBase
         $value = $value ?? $this->getValue();
         $pattern = $this->getPattern();
         $helpBlock = $this->getHelpBlock();
+        $relatedName = $this->getRelatedName();
 
         return View::make('zeusAdmin::SectionBuilder/Form/Fields/input')
             ->with(compact(
@@ -178,7 +179,8 @@ class Input extends FormFieldBase
                 'readonly',
                 'type',
                 'pattern',
-                'helpBlock'
+                'helpBlock',
+                'relatedName'
             ));
     }
 }

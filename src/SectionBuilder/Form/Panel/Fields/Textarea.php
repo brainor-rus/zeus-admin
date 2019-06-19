@@ -42,7 +42,7 @@ class Textarea extends FormFieldBase
     /**
      * @param mixed $name
      */
-    private function setName($name): void
+    public function setName($name): void
     {
         $this->name = $name;
     }
@@ -185,6 +185,7 @@ class Textarea extends FormFieldBase
         $rows = $this->getRows();
         $maxlength = $this->getMaxlenght();
         $helpBlock = $this->getHelpBlock();
+        $relatedName = $this->getRelatedName();
 
         return View::make('zeusAdmin::SectionBuilder/Form/Fields/textarea')
             ->with(compact(
@@ -197,7 +198,8 @@ class Textarea extends FormFieldBase
                 'cols',
                 'rows',
                 'maxlength',
-                'helpBlock'
+                'helpBlock',
+                'relatedName'
             ));
     }
 }
