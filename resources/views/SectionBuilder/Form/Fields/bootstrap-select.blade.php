@@ -1,7 +1,7 @@
 <div class="form-group">
-    {{--<select name="{{ $name }}" id="" style="display: none">--}}
-        {{--<option value=""></option>--}}
-    {{--</select>--}}
+    <select name="{{ $name }}" id="" style="display: none">
+        <option value=""></option>
+    </select>
     @if(empty($relatedName))
         <label for="input_{{ $name }}">{{ $label }} @if($required) <span class="text-danger">*</span> @endif</label>
     @endif
@@ -15,8 +15,10 @@
             @endif
             @if($required) {{ $formIgnore ? 'data-required' : 'required' }} @endif
             @if($readonly) readonly @endif>
-            <option value="">Не указано</option>
             @if(isset($options))
+                @unless(isset($dataAttributes) && in_array('multiple', $dataAttributes))
+                    <option value="">Не задано</option>
+                @endunless
                 @foreach($options as $key => $option)
                     <option value="{{ $key }}"
                             @if(isset($value))
