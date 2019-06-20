@@ -15,7 +15,7 @@
             @endif
             @if($required) {{ $formIgnore ? 'data-required' : 'required' }} @endif
             @if($readonly) readonly @endif>
-            <option disabled value> Не указано </option>
+            <option value="">Не указано</option>
             @if(isset($options))
                 @foreach($options as $key => $option)
                     <option value="{{ $key }}"
