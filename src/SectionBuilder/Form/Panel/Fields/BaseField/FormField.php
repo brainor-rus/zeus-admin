@@ -9,6 +9,7 @@
 namespace Zeus\Admin\SectionBuilder\Form\Panel\Fields\BaseField;
 
 
+use Zeus\Admin\SectionBuilder\Form\Panel\Fields\BSelect;
 use Zeus\Admin\SectionBuilder\Form\Panel\Fields\Custom;
 use Zeus\Admin\SectionBuilder\Form\Panel\Fields\DatePicker;
 use Zeus\Admin\SectionBuilder\Form\Panel\Fields\Hidden;
@@ -16,6 +17,7 @@ use Zeus\Admin\SectionBuilder\Form\Panel\Fields\Input;
 use Zeus\Admin\SectionBuilder\Form\Panel\Fields\MultiSelect;
 use Zeus\Admin\SectionBuilder\Form\Panel\Fields\Related;
 use Zeus\Admin\SectionBuilder\Form\Panel\Fields\Select;
+use Zeus\Admin\SectionBuilder\Form\Panel\Fields\Selectize;
 use Zeus\Admin\SectionBuilder\Form\Panel\Fields\Textarea;
 use Zeus\Admin\SectionBuilder\Form\Panel\Fields\Wysiwyg;
 use Zeus\Admin\SectionBuilder\Form\Panel\Fields\DropZone;
@@ -47,9 +49,8 @@ class FormField
         return new Select($name, $label);
     }
 
-    public static function multiselect($name, $label)
-    {
-        return new MultiSelect($name, $label);
+    public static function bselect($name, $label) {
+        return new BSelect($name, $label);
     }
 
     public static function hidden($name)

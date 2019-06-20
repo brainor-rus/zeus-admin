@@ -11,7 +11,7 @@ namespace Zeus\Admin\SectionBuilder\Form\Panel\Fields\BaseField;
 
 class FormFieldBase
 {
-    protected $helpBlock, $row, $relatedName, $formIgnore;
+    protected $helpBlock, $row, $relatedName, $formIgnore, $dataAttributes, $classes;
 
     /**
      * @return mixed
@@ -78,6 +78,40 @@ class FormFieldBase
     public function setFormIgnore($formIgnore)
     {
         $this->formIgnore = $formIgnore;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDataAttributes()
+    {
+        return $this->dataAttributes;
+    }
+
+    /**
+     * @param mixed $dataAttributes
+     */
+    public function setDataAttributes($dataAttributes)
+    {
+        $this->dataAttributes = $dataAttributes;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getClasses()
+    {
+        return $this->classes;
+    }
+
+    /**
+     * @param mixed $classes
+     */
+    public function setClasses($classes)
+    {
+        $this->classes = $classes;
         return $this;
     }
 

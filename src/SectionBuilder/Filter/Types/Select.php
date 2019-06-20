@@ -7,6 +7,7 @@
  */
 namespace Zeus\Admin\SectionBuilder\Filter\Types;
 use Illuminate\Support\Facades\View;
+
 class Select
 {
     private $name, $placeholder, $options, $modelForOptions, $queryFunctionForModel, $field, $display, $isLike;

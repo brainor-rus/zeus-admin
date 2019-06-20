@@ -14,7 +14,7 @@ use Zeus\Admin\SectionBuilder\Form\Panel\Fields\BaseField\FormFieldBase;
 
 class Select extends FormFieldBase
 {
-    private $name, $field, $label, $value, $required, $readonly, $options, $modelForOptions, $queryFunctionForModel, $display, $defaultSelected;
+    protected $name, $field, $label, $value, $required, $readonly, $options, $modelForOptions, $queryFunctionForModel, $display, $defaultSelected;
 
     public function __construct($name, $label)
     {
@@ -257,6 +257,8 @@ class Select extends FormFieldBase
         $helpBlock = $this->getHelpBlock();
         $relatedName = $this->getRelatedName();
         $formIgnore = $this->getFormIgnore();
+        $dataAttributes = $this->getDataAttributes();
+        $classes = $this->getClasses();
 
         return View::make('zeusAdmin::SectionBuilder/Form/Fields/select')
             ->with(compact(
@@ -269,7 +271,9 @@ class Select extends FormFieldBase
                 'defaultSelected',
                 'helpBlock',
                 'relatedName',
-                'formIgnore'
+                'formIgnore',
+                'dataAttributes',
+                'classes'
             ));
     }
 }

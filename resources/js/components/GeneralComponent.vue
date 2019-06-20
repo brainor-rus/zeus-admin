@@ -121,17 +121,6 @@
         updated: function () {
 
             this.$nextTick(function () {
-                $('.multiselect').selectize({
-                    plugins: ['remove_button'],
-                    delimiter: ',',
-                    persist: false,
-                    // create: function(input) {
-                    //     return {
-                    //         value: input,
-                    //         text: input
-                    //     }
-                    // }
-                });
                 $(function(){
                     $('.wysiwyg_editor').each(function(e){
                         var instance = CKEDITOR.instances[this.id];
@@ -143,6 +132,7 @@
                     });
 
                     jQuery(function($) {
+                        $.fn.selectpicker.Constructor.BootstrapVersion = '4';
                         $('.date input').each(function () {
                            $(this).datetimepicker({
                                format: $(this).data('datepicker-format'),
@@ -153,6 +143,10 @@
                                clearBtn: ($(this).data('datepicker-clearbtn')===1)
                            });
                         });
+                    });
+
+                    jQuery(function($) {
+                        $('select.bselect').selectpicker();
                     });
 
                     function dropzoneExists(selector) {

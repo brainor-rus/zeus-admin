@@ -20,6 +20,7 @@ use Zeus\Admin\Cms\Models\ZeusAdminFile;
 
 class ZeusAdminController extends Controller
 {
+
     public function getIndex()
     {
         return view('zeusAdmin::spa');
@@ -161,9 +162,7 @@ class ZeusAdminController extends Controller
             $model = $model::create($request->only($attrFields));
 
             $relationFields = array_keys(ZeusAdminHelper::getModelRelationships($model));
-            if(is_array($model->zeusAdminIgnore) && count($model->zeusAdminIgnore) > 0) {
-                $relationFields = array_diff($relationFields, $model->zeusAdminIgnore);
-            }
+            $relationFields = array_diff($relationFields, $model->zeusAdminIgnore);
             $model = $model->where('id', $model->id)
                 ->when(isset($relationFields), function ($query) use ($relationFields) {
                     $query->with($relationFields);
@@ -223,9 +222,7 @@ class ZeusAdminController extends Controller
 
             $model = new $modelPath;
             $relationFields = array_keys(ZeusAdminHelper::getModelRelationships($model));
-            if(is_array($model->zeusAdminIgnore) && count($model->zeusAdminIgnore) > 0) {
-                $relationFields = array_diff($relationFields, $model->zeusAdminIgnore);
-            }
+            $relationFields = array_diff($relationFields, $model->zeusAdminIgnore);
 
             $model = $model->where('id', $id)
                 ->when(isset($relationFields), function ($query) use ($relationFields) {
@@ -354,4 +351,5 @@ class ZeusAdminController extends Controller
             return view('zeusAdmin::SectionBuilder.Form.Fields.InsertMedia.imagesList')->with(compact('files','requestCount','wrapperId'));
         }
     }
+
 }
