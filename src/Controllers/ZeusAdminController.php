@@ -162,7 +162,10 @@ class ZeusAdminController extends Controller
             $model = $model::create($request->only($attrFields));
 
             $relationFields = array_keys(ZeusAdminHelper::getModelRelationships($model));
-            $relationFields = array_diff($relationFields, $model->zeusAdminIgnore);
+            if(isset($model->zeusAdminIgnore) && is_array($model->zeusAdminIgnore) && count($model->zeusAdminIgnore) > 0) {
+                $relationFields = array_diff($relationFields, $model->zeusAdminIgnore);
+            }
+
             $model = $model->where('id', $model->id)
                 ->when(isset($relationFields), function ($query) use ($relationFields) {
                     $query->with($relationFields);
@@ -222,7 +225,9 @@ class ZeusAdminController extends Controller
 
             $model = new $modelPath;
             $relationFields = array_keys(ZeusAdminHelper::getModelRelationships($model));
-            $relationFields = array_diff($relationFields, $model->zeusAdminIgnore);
+            if(isset($model->zeusAdminIgnore) && is_array($model->zeusAdminIgnore) && count($model->zeusAdminIgnore) > 0) {
+                $relationFields = array_diff($relationFields, $model->zeusAdminIgnore);
+            }
 
             $model = $model->where('id', $id)
                 ->when(isset($relationFields), function ($query) use ($relationFields) {
