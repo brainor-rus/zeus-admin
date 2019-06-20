@@ -1,6 +1,6 @@
 <div class="form-group">
     <label>{{ $label }}</label>
-    <div class="table-responsive">
+    <div class="">
         <input type="hidden" name="{{ "related[$name][foreignModel]" }}" value="{{ $relatedForeignModel }}">
         <input type="hidden" name="{{ "related[$name][foreignKey]" }}" value="{{ $relatedForeignKey }}">
         <table class="table table-hover table-bordered related-table" data-current-index="{{ count($relatedRows) }}">
