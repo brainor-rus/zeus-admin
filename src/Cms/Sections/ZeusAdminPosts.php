@@ -85,7 +85,10 @@ class ZeusAdminPosts extends Section
             '0.04' => FormField::input('url', 'Ссылка ("." для автогенерации)')
                 ->setRequired(true)
                 ->setValue('.'),
-            '0.05' => FormField::multiselect('tags', 'Метки')
+            '0.05' => FormField::bselect('tags', 'Метки')
+                ->setDataAttributes([
+                    'multiple', 'data-live-search="true"'
+                ])
                 ->setModelForOptions(ZeusAdminTag::class)
                 ->setQueryFunctionForModel(
                     function ($query) {
@@ -93,7 +96,10 @@ class ZeusAdminPosts extends Section
                     }
                 )
                 ->setDisplay('title'),
-            '0.06' => FormField::multiselect('categories', 'Рубрики')
+            '0.06' => FormField::bselect('categories', 'Рубрики')
+                ->setDataAttributes([
+                    'multiple', 'data-live-search="true"'
+                ])
                 ->setModelForOptions(ZeusAdminTerm::class)
                 ->setQueryFunctionForModel(
                     function ($query) {
@@ -105,16 +111,19 @@ class ZeusAdminPosts extends Section
             '0.08' => FormField::wysiwyg('content', 'Содержимое'),
         ];
         $brFieldsRight = [
-            '0.01' => FormField::select('status', 'Статус')
+            '0.01' => FormField::bselect('status', 'Статус')
                 ->setOptions([
                     'draft' => 'Черновик',
                     'published' => 'Опубликовано'
                 ])
                 ->setDefaultSelected('published')
                 ->setRequired(true),
-            '0.02' => FormField::select('template', 'Шаблон')
+            '0.02' => FormField::bselect('template', 'Шаблон')
+                ->setDataAttributes([
+                    'data-live-search="true"'
+                ])
                 ->setOptions($templates),
-            '0.03' => FormField::select('comment_on', 'Комментарии')
+            '0.03' => FormField::bselect('comment_on', 'Комментарии')
                 ->setOptions([
                     0 => 'Запрещены',
                     1 => 'Разрешены'
