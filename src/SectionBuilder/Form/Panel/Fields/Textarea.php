@@ -188,6 +188,8 @@ class Textarea extends FormFieldBase
         $helpBlock = $this->getHelpBlock();
         $relatedName = $this->getRelatedName();
         $formIgnore = $this->getFormIgnore();
+        $dataAttributes = $this->getDataAttributes();
+        $classes = $this->getClasses();
 
         return View::make('zeusAdmin::SectionBuilder/Form/Fields/textarea')
             ->with(compact(
@@ -202,7 +204,9 @@ class Textarea extends FormFieldBase
                 'maxlength',
                 'helpBlock',
                 'relatedName',
-                'formIgnore'
+                'formIgnore',
+                'dataAttributes',
+                'classes'
             ));
     }
 }
