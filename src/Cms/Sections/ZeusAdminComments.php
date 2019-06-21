@@ -52,12 +52,12 @@ class ZeusAdminComments extends Section
             "0.03" => FormField::input('fio', 'ФИО'),
             "0.04" => FormField::input('ip', 'IP'),
             "0.05" => FormField::input('rating', 'Рейтинг')->setType('number'),
-            "0.06" => FormField::select('visible', 'Видимость')
+            "0.06" => FormField::bselect('visible', 'Видимость')
                 ->setOptions([
                     0 => 'Нет',
                     1 => 'Да',
                 ])->setRequired(true),
-            "0.07" => FormField::select('moderate', 'Модерация')
+            "0.07" => FormField::bselect('moderate', 'Модерация')
                 ->setOptions([
                     0 => 'Нет',
                     1 => 'Да',
