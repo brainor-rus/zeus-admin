@@ -2,6 +2,7 @@
 
 namespace Zeus\Admin\Cms\Sections;
 
+use Zeus\Admin\Cms\Models\ZeusAdminTag;
 use Zeus\Admin\Section;
 use Zeus\Admin\SectionBuilder\Display\BaseDisplay\Display;
 use Zeus\Admin\SectionBuilder\Display\Table\Columns\BaseColumn\Column;
@@ -33,17 +34,22 @@ class ZeusAdminTags extends Section
 
     public static function onCreate()
     {
-        return self::onEdit();
+        return self::onEdit(null);
     }
 
-    public static function onEdit()
+    public static function onEdit($id)
     {
         $pluginsFields = app()['PluginsData']['CmsData']['Tags']['EditField'] ?? [];
+
+        $tags_tree = ZeusAdminTag::where('type', 'tag')->get()->toTree()->toArray();
+        $cur_tag = $id ? ZeusAdminTag::with('ancestors')->where('id', $id)->first()->toArray() : null;
+        $tagsTreeView = view('zeusAdmin::cms.partials.tagsTree')->with(compact('tags_tree', 'cur_tag'));
 
         $brFields = [
             '0.01' => FormField::input('title', 'Название')->setRequired(true),
             '0.02' => FormField::input('slug', 'Ярлык (необязательно)'),
             '0.03' => FormField::textarea('description', 'Описание'),
+            '0.04' => FormField::custom($tagsTreeView),
             '99.99' => FormField::hidden('type')->setValue("tag"),
         ];
 

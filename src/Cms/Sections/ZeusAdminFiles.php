@@ -3,6 +3,7 @@
 namespace Zeus\Admin\Cms\Sections;
 
 use Zeus\Admin\Cms\Models\ZeusAdminFile;
+use Zeus\Admin\Cms\Models\ZeusAdminTag;
 use Zeus\Admin\Section;
 use Zeus\Admin\SectionBuilder\Display\BaseDisplay\Display;
 use Zeus\Admin\SectionBuilder\Display\Table\Columns\BaseColumn\Column;
@@ -89,6 +90,17 @@ class ZeusAdminFiles extends Section
             "0.01" => FormField::input('title', 'Заголовок'),
             "0.02" => FormField::input('alt', 'Alt (для изображений)'),
             "0.03" => FormField::textarea('description', 'Описание'),
+            "0.04" => FormField::bselect('tags', 'Метки')
+                ->setModelForOptions(ZeusAdminTag::class)
+                ->setDataAttributes([
+                    'multiple', 'data-live-search="true"'
+                ])
+                ->setQueryFunctionForModel(
+                    function ($query) {
+                        return $query->tags();
+                    }
+                )
+                ->setDisplay('title'),
         ];
 
         $brFieldsRight = [

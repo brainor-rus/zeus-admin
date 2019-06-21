@@ -83,7 +83,10 @@ class ZeusAdminPages extends Section
             '0.04' => FormField::input('url', 'Ссылка ("." для автогенерации)')
                 ->setRequired(true)
                 ->setValue('.'),
-            '0.05' => FormField::multiselect('tags', 'Метки')
+            '0.05' => FormField::bselect('tags', 'Метки')
+                ->setDataAttributes([
+                    'multiple', 'data-live-search="true"'
+                ])
                 ->setModelForOptions(ZeusAdminTag::class)
                 ->setQueryFunctionForModel(
                     function ($query) {
@@ -91,7 +94,10 @@ class ZeusAdminPages extends Section
                     }
                 )
                 ->setDisplay('title'),
-            '0.06' => FormField::multiselect('categories', 'Рубрики')
+            '0.06' => FormField::bselect('categories', 'Рубрики')
+                ->setDataAttributes([
+                    'multiple', 'data-live-search="true"'
+                ])
                 ->setModelForOptions(ZeusAdminTerm::class)
                 ->setQueryFunctionForModel(
                     function ($query) {
@@ -121,7 +127,7 @@ class ZeusAdminPages extends Section
         }
         $brFieldsRight = [
             '0.001' => FormField::custom(view('zeusAdmin::cms.partials.showPostLink')->with(compact('cur_page'))),
-            '0.01' => FormField::select('status', 'Статус')
+            '0.01' => FormField::bselect('status', 'Статус')
                 ->setOptions([
                     'draft' => 'Черновик',
                     'published' => 'Опубликовано'
@@ -129,10 +135,13 @@ class ZeusAdminPages extends Section
                 ->setDefaultSelected('published')
                 ->setRequired(true)
                 ->setHelpBlock('<a href="#">Статус страницы</a>'),
-            '0.02' => FormField::select('template', 'Шаблон')
+            '0.02' => FormField::bselect('template', 'Шаблон')
+                ->setDataAttributes([
+                    'data-live-search="true"'
+                ])
                 ->setOptions($templates),
             '0.03' => FormField::custom($pagesTreeView),
-            '0.04' => FormField::select('comment_on', 'Комментарии')
+            '0.04' => FormField::bselect('comment_on', 'Комментарии')
                 ->setOptions([
                     0 => 'Запрещены',
                     1 => 'Разрешены'
