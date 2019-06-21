@@ -211,6 +211,8 @@ class DatePicker extends FormFieldBase
         $helpBlock = $this->getHelpBlock();
         $relatedName = $this->getRelatedName();
         $formIgnore = $this->getFormIgnore();
+        $dataAttributes = $this->getDataAttributes();
+        $classes = $this->getClasses();
 
         return View::make('zeusAdmin::SectionBuilder/Form/Fields/datePicker')
             ->with(compact(
@@ -226,7 +228,9 @@ class DatePicker extends FormFieldBase
                 'readonly',
                 'helpBlock',
                 'relatedName',
-                'formIgnore'
+                'formIgnore',
+                'dataAttributes',
+                'classes'
             ));
     }
 }
