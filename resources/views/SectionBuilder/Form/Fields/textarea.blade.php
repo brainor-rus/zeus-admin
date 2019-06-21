@@ -2,7 +2,8 @@
     @if(empty($relatedName))
         <label for="input_{{ $name }}">{{ $label }} @if($required) <span class="text-danger">*</span> @endif</label>
     @endif
-    <textarea class="form-control"
+    <textarea class="form-control {{ isset($classes) ? implode($classes, ' ') : '' }}"
+              {{ isset($dataAttributes) ? implode($dataAttributes, ' ') : '' }}
               @if(empty($relatedName)) id="input_{{ $name }}" @endif
               @if($formIgnore)
                 data-name="{{ $relatedName ?? $name }}"

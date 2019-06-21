@@ -60,7 +60,7 @@
                                 <span class="badge badge-info text-white">{!! $value->{$name} !!}</span>
                             @endforeach
                         @else
-                            @switch(basename(get_class($column)))
+                            @switch(basename(str_replace('\\', '/', get_class($column))))
                                 @case('Text')
                                     {!! $field[$column->getName()] !!}
                                     @break
