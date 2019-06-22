@@ -47,6 +47,26 @@
         </tr>
         </thead>
         <tbody>
+        @if(!empty($filter) && $filterPosition === 'top')
+            <tr>
+                @foreach($filter as $filterType)
+                    <td>
+                        @if(!empty($filterType))
+                            {!! $filterType->render() !!}
+                        @endif
+                    </td>
+                @endforeach
+                <td class="text-right">
+                    {{--<button type="submit" class="btn btn-success">Фильтровать</button>--}}
+
+                    <div class="btn-group" role="group">
+                        <button @click.prevent="$emit('filter')" type="button" class="btn btn-secondary"><i class="fas fa-filter"></i> Фильтровать</button>
+                        <button @click.prevent="$emit('filterClear')" type="button" class="btn btn-danger"><i class="fas fa-times"></i></button>
+                    </div>
+
+                </td>
+            </tr>
+        @endif
         @foreach($fields as $field)
             <tr>
                 @foreach($columns as $column)
@@ -84,7 +104,7 @@
                 </td>
             </tr>
         @endforeach
-        @if(!empty($filter))
+        @if(!empty($filter) && $filterPosition === 'bottom')
             <tr>
                 @foreach($filter as $filterType)
                     <td>

@@ -16,113 +16,14 @@ use ZeusAdminHelper;
 
 class DisplayTable
 {
-    private $pagination, $columns, $scopes, $meta, $nav, $filter;
+    private $pagination, $columns, $scopes, $meta, $nav, $filter, $filterPosition;
 
     public function __construct($columns, $pagination)
     {
         $this->setPagination($pagination);
         $this->setColumns($columns);
         $this->meta = new Meta;
-    }
-
-    public function render($modelPath, Section $firedSection, $pluginData = null, $request = null)
-    {
-        $columns = $this->getColumns();
-        $relationData = null;
-
-        foreach ($columns as $column)
-        {
-            $exp = explode('.', $column->getName());
-            if(count($exp) > 1)
-            {
-                $relationData[] = implode(".", array_slice($exp, 0, -1));
-            }
-        }
-
-        $model = new $modelPath();
-
-        if(!empty($this->getScopes()))
-        {
-            foreach ($this->getScopes() as $scope)
-            {
-                $model = $model->{$scope}();
-            }
-        }
-
-        // Для проверки
-        // todo Обязательно убрать при закрытии ветки
-//        $request->filter = [
-//            ['field' => 'title', 'value' => 'тест'],
-//            ['field' => 'description', 'value' => 'фыва']
-//        ];
-        $data = $model
-            ->when(isset($relationData), function ($query) use ($relationData) {
-                $query->with($relationData);
-            })
-//            ->when(!empty($request->sortBy), function ($query) use ($request) {
-//                $query->orderBy($request->sortBy, 'asc');
-//            })
-//            ->when(!empty($request->sortByDesc), function ($query) use ($request) {
-//                $query->orderBy($request->sortByDesc, 'desc');
-//            })
-            ->when(!empty($request->sort), function ($query) use ($request) {
-                parse_str($request->sort, $sortArray);
-                foreach ($sortArray as $sortItem) {
-                    $query = $query->orderBy($sortItem['by'], $sortItem['type']);
-                }
-            })
-            ->when(empty($request->sort), function ($query) use ($request) {
-                $query = $query->orderBy('id', 'desc');
-            })
-            ->when(!empty($request->filter), function ($query) use ($request) {
-                parse_str($request->filter, $filterArray);
-                foreach ($filterArray as $filterItem) {
-                    if($filterItem['is_like'] == '1') {
-                        $query = $query->where($filterItem['field'], 'like', '%' . $filterItem['value'] . '%');
-                    } else {
-                        $query = $query->where($filterItem['field'], $filterItem['value']);
-                    }
-                }
-            })
-            ->paginate($this->getPagination());
-        $fields = array();
-
-        foreach ($data as $key => $row)
-        {
-            foreach ($columns as $column)
-            {
-                $names = explode('.', $column->getName());
-
-                $rowVal = $row;
-                foreach ($names as $name)
-                {
-                    if(!(is_array($rowVal) || $rowVal instanceof \Countable))
-                    {
-                        $rowVal = $rowVal->{$name} ?? null;
-                    } else
-                    {
-                        break;
-                    }
-                }
-
-                $fields[$key][$column->getName()] = $column->render($rowVal);
-            }
-            $fields[$key]['brRowId'] = $row->id;
-        }
-
-        if(isset($pluginData['redirectUrl']))
-        {
-            $rc = new \ReflectionClass($firedSection);
-            $pluginData['redirectUrl'] = strtr($pluginData['redirectUrl'], ['{sectionName}' => $rc->getShortName()]);
-        }
-
-        $nav = self::getNav();
-        $filter = $this->getFilter();
-
-        $response['data'] = $data;
-        $response['view'] = View::make('zeusAdmin::SectionBuilder/Display/Table/table')->with(compact('data', 'columns', 'fields', 'firedSection', 'pluginData', 'nav', 'filter'));
-
-        return $response;
+        $this->setFilterPosition(config('zeusAdmin.display_table_filter_default_position') ?? 'top');
     }
 
     /**
@@ -231,5 +132,121 @@ class DisplayTable
     {
         $this->filter = $filter;
         return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getFilterPosition()
+    {
+        return $this->filterPosition;
+    }
+
+    /**
+     * @param mixed $filterPosition
+     */
+    public function setFilterPosition($filterPosition)
+    {
+        $this->filterPosition = $filterPosition;
+        return $this;
+    }
+
+    public function render($modelPath, Section $firedSection, $pluginData = null, $request = null)
+    {
+        $columns = $this->getColumns();
+        $relationData = null;
+
+        foreach ($columns as $column)
+        {
+            $exp = explode('.', $column->getName());
+            if(count($exp) > 1)
+            {
+                $relationData[] = implode(".", array_slice($exp, 0, -1));
+            }
+        }
+
+        $model = new $modelPath();
+
+        if(!empty($this->getScopes()))
+        {
+            foreach ($this->getScopes() as $scope)
+            {
+                $model = $model->{$scope}();
+            }
+        }
+        
+        $data = $model
+            ->when(isset($relationData), function ($query) use ($relationData) {
+                $query->with($relationData);
+            })
+            ->when(!empty($request->sort), function ($query) use ($request) {
+                parse_str($request->sort, $sortArray);
+                foreach ($sortArray as $sortItem) {
+                    $query = $query->orderBy($sortItem['by'], $sortItem['type']);
+                }
+            })
+            ->when(empty($request->sort), function ($query) use ($request) {
+                $query = $query->orderBy('id', 'desc');
+            })
+            ->when(!empty($request->filter), function ($query) use ($request) {
+                parse_str($request->filter, $filterArray);
+                foreach ($filterArray as $filterItem) {
+                    if($filterItem['is_like'] == '1') {
+                        $query = $query->where($filterItem['field'], 'like', '%' . $filterItem['value'] . '%');
+                    } else {
+                        $query = $query->where($filterItem['field'], $filterItem['value']);
+                    }
+                }
+            })
+            ->paginate($this->getPagination());
+        $fields = array();
+
+        foreach ($data as $key => $row)
+        {
+            foreach ($columns as $column)
+            {
+                $names = explode('.', $column->getName());
+
+                $rowVal = $row;
+                foreach ($names as $name)
+                {
+                    if(!(is_array($rowVal) || $rowVal instanceof \Countable))
+                    {
+                        $rowVal = $rowVal->{$name} ?? null;
+                    } else
+                    {
+                        break;
+                    }
+                }
+
+                $fields[$key][$column->getName()] = $column->render($rowVal);
+            }
+            $fields[$key]['brRowId'] = $row->id;
+        }
+
+        if(isset($pluginData['redirectUrl']))
+        {
+            $rc = new \ReflectionClass($firedSection);
+            $pluginData['redirectUrl'] = strtr($pluginData['redirectUrl'], ['{sectionName}' => $rc->getShortName()]);
+        }
+
+        $nav = self::getNav();
+        $filter = $this->getFilter();
+        $filterPosition = $this->getFilterPosition();
+
+        $response['data'] = $data;
+        $response['view'] = View::make('zeusAdmin::SectionBuilder/Display/Table/table')
+            ->with(compact(
+                'data',
+                'columns',
+                'fields',
+                'firedSection',
+                'pluginData',
+                'nav',
+                'filter',
+                'filterPosition'
+            ));
+
+        return $response;
     }
 }
