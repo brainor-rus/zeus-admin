@@ -21,6 +21,15 @@ class ZeusAdminPosts extends Section
     protected $title = 'Записи';
     protected $model = 'Zeus\Admin\Cms\Models\ZeusAdminPost';
 
+    public function __construct(\Illuminate\Contracts\Foundation\Application $app)
+    {
+        parent::__construct($app);
+
+        if(!empty(config('zeusAdmin.post_model'))) {
+            $this->model = config('zeusAdmin.post_model');
+        }
+    }
+
     public static function onDisplay(){
 //        $meta = new Meta;
 //        $meta->setStyles([
