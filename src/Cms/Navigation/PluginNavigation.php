@@ -16,6 +16,7 @@ class PluginNavigation
                 'text' => 'CMS',
                 'noDirect' => true,
                 'nodes' => [
+                    app()->get('PluginsData')['CmsData']['Navigation'] ?? [],
                     [
                         'url' => '/'.config('zeusAdmin.admin_url').'/cms/ZeusAdminPages',
                         'icon' => 'fas fa-users',
