@@ -22,6 +22,14 @@ class ZeusAdminPages extends Section
     protected $title = 'Страницы';
     protected $model = 'Zeus\Admin\Cms\Models\ZeusAdminPost';
 
+    public function __construct(\Illuminate\Contracts\Foundation\Application $app)
+    {
+        parent::__construct($app);
+
+        if(!empty(config('zeusAdmin.page_model'))) {
+            $this->model = config('zeusAdmin.page_model');
+        }
+    }
 
     public static function onDisplay(){
         $pluginsFields = app()['PluginsData']['CmsData']['Pages']['DisplayField'] ?? [];
