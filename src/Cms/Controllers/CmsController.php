@@ -3,6 +3,7 @@
 namespace Zeus\Admin\Cms\Controllers;
 
 use Zeus\Admin\Cms\Helpers\CMSHelper;
+use Zeus\Admin\Cms\Helpers\MenuHelper;
 use Zeus\Admin\Cms\Providers\Cms;
 use Zeus\Admin\Controllers\ZeusAdminController;
 use http\Exception;
@@ -11,6 +12,8 @@ use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\View;
 
 use Zeus\Admin\Cms\Models\ZeusAdminFile;
+use Zeus\Admin\Cms\Models\ZeusAdminMenu;
+use Zeus\Admin\Cms\Models\ZeusAdminMenuElement;
 use Carbon\Carbon;
 use Image;
 use Zeus\Admin\Section;
@@ -239,6 +242,93 @@ class CmsController extends Controller
                     'error' => 400,
                 ]
             );
+        }
+    }
+
+    public function menuElementCreate(Request $request)
+    {
+        $newMenuElement = new ZeusAdminMenuElement;
+
+        $newMenuElement->menu_id = $request->menu_id;
+        $newMenuElement->title = $request->title;
+        $newMenuElement->slug = $request->slug;
+        $newMenuElement->url = $request->url;
+        $newMenuElement->description = $request->description;
+
+        switch ($request->tree_type) {
+            case "root":
+                $newMenuElement->makeRoot();
+                break;
+
+            case "before":
+                $neighbor = ZeusAdminMenuElement::where('id',$request->tree_neighbor)->first();
+                $newMenuElement->beforeNode($neighbor);
+
+            case "after":
+                $neighbor = ZeusAdminMenuElement::where('id',$request->tree_neighbor)->first();
+                $newMenuElement->afterNode($neighbor);
+                break;
+
+            case "inside":
+                $parent = ZeusAdminMenuElement::where('id',$request->parent_id)->first();
+                $newMenuElement->parent_id = $parent->id;
+                break;
+        }
+
+        $newMenuElement->save();
+
+        $elementsTree = MenuHelper::getMenuTreeById($request->menu_id);
+        
+        return view('zeusAdmin::SectionBuilder.Form.Fields.Menu.TreeOutput.Sortable.main')->with(compact('elementsTree'));
+    }
+
+    public function menuElementEdit(Request $request)
+    {
+        $updateArray ['title'] = $request->title;
+        $updateArray ['slug'] = $request->slug;
+        $updateArray ['url'] = $request->url;
+        $updateArray ['description'] = $request->description;
+
+        $newMenuElement =  ZeusAdminMenuElement::where('id', $request->element_id)->update($updateArray);
+
+        $elementsTree = MenuHelper::getMenuTreeById($request->menu_id);
+
+        return view('zeusAdmin::SectionBuilder.Form.Fields.Menu.TreeOutput.Sortable.main')->with(compact('elementsTree'));
+    }
+
+    public function menuElementDelete(Request $request)
+    {
+        $newMenuElement =  ZeusAdminMenuElement::where('id', $request->element_id)->delete();
+
+        $elementsTree = MenuHelper::getMenuTreeById($request->menu_id);
+
+        return view('zeusAdmin::SectionBuilder.Form.Fields.Menu.TreeOutput.Sortable.main')->with(compact('elementsTree'));
+    }
+
+    public function menuElementsReorder(Request $request)
+    {
+
+        $movingElement = ZeusAdminMenuElement::where('id', $request->id)->first();
+
+        var_dump($request->parent_id .'-'.$request->next_id .'-'.$request->id);
+
+        if ($request->parent_id == 'root') {
+            $movingElement->makeRoot();
+        } else {
+            if ($request->parent_id != $movingElement->parent_id) {
+                $newParent = ZeusAdminMenuElement::where('id', $request->parent_id)->first();
+                $movingElement->appendToNode($newParent)->save();
+            }
+        }
+
+        if ($request->next_id != 'undefined') {
+            $rightNode = ZeusAdminMenuElement::where('id', $request->next_id)->first();
+            $movingElement->beforeNode($rightNode)->save();
+        } else{
+            if ($request->parent_id != 'root') {
+                $parentNode = ZeusAdminMenuElement::where('id', $request->parent_id)->first();
+                $movingElement->appendToNode($parentNode)->save();
+            }
         }
     }
 }
