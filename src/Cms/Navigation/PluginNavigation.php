@@ -43,6 +43,11 @@ class PluginNavigation
                         'text' => 'Метки'
                     ],
                     [
+                        'url' => '/'.config('zeusAdmin.admin_url').'/cms/ZeusAdminMenus',
+                        'icon' => 'fas fa-address-book',
+                        'text' => 'Меню'
+                    ],
+                    [
                         'url' => '/'.config('zeusAdmin.admin_url').'/cms/ZeusAdminFiles',
                         'icon' => 'fas fa-address-book',
                         'text' => 'Файлы'
