@@ -8,7 +8,7 @@
                 {{ $node->title }}
                 @include('zeusAdmin::SectionBuilder.Form.Fields.Menu.TreeOutput.controls-buttons', ['node' => $node])
             </span>
-            <div id="collapse_{{ $node->id }}" data-parent-id="{{ $node->id }}" class="collapse show">
+            <div id="collapse_{{ $node->id }}" data-parent-id="{{ $node->id }}" class="collapse">
                 <ul class="sortable" style="min-width: 100%; min-height: 5px;">
                     @include('zeusAdmin::SectionBuilder.Form.Fields.Menu.TreeOutput.Sortable.part', ['elementsTree' => $node->children])
                 </ul>
@@ -22,7 +22,7 @@
             </span>
 
         </li>
-        <div id="collapse_{{ $node->id }}"  data-parent-id="{{ $node->id }}" class="collapse show">
+        <div id="collapse_{{ $node->id }}"  data-parent-id="{{ $node->id }}" class="collapse">
             <ul class="sortable">
             </ul>
         </div>
@@ -33,7 +33,7 @@
                 {{ $node->title }}
                 @include('zeusAdmin::SectionBuilder.Form.Fields.Menu.TreeOutput.controls-buttons', ['node' => $node])
             </span>
-            <div id="collapse_{{ $node->id }}"  data-parent-id="{{ $node->id }}" class="collapse show">
+            <div id="collapse_{{ $node->id }}"  data-parent-id="{{ $node->id }}" class="collapse">
                 <ul class="sortable">
                     @include('zeusAdmin::SectionBuilder.Form.Fields.Menu.TreeOutput.Sortable.part', ['elementsTree' => $node->children])
                 </ul>

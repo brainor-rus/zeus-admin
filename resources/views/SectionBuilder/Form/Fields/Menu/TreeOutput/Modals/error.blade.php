@@ -11,8 +11,7 @@
                 <div id="ajax_error_modal_text"></div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
-                <button type="button" class="btn btn-success tree-element-edit-btn">Сохранить</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
             </div>
         </div>
     </div>
