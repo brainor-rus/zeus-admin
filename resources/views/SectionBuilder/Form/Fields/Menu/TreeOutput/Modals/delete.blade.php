@@ -1,7 +1,7 @@
 <div class="modal fade" id="delete_tree_element_modal" tabindex="-1" role="dialog" aria-labelledby="deleteTreeElementModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <form class="new-element-form" method="post" action="/api/tree-elements/menu/delete">
+            <form class="delete-element-form" method="post" action="/api/tree-elements/menu/delete">
                 <div class="modal-header">
                     <h5 class="modal-title" id="deleteTreeElementModalLabel">Удалить элемент</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -15,7 +15,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
-                    <button type="button" class="btn btn-danger tree-element-delete-btn">Удалить</button>
+                    <button type="submit" class="btn btn-danger tree-element-delete-btn">Удалить</button>
                 </div>
             </form>
         </div>

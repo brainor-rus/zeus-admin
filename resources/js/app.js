@@ -11,6 +11,7 @@ global.Vue = Vue;
 import App from './components/App';
 import Home from './components/Home';
 import GeneralComponent from './components/GeneralComponent';
+import './bootstrap';
 
 const router = new VueRouter({
     mode: 'history',

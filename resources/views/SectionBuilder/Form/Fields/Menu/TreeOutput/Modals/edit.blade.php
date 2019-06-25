@@ -1,7 +1,7 @@
 <div class="modal fade" id="edit_tree_element_modal" tabindex="-1" role="dialog" aria-labelledby="editTreeElementModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <form class="new-element-form" method="post" action="/api/tree-elements/menu/edit">
+            <form class="edit-element-form" method="post" action="/api/tree-elements/menu/edit">
                 <div class="modal-header">
                     <h5 class="modal-title" id="editTreeElementModalLabel">Изменить элемент</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -39,7 +39,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
-                    <button type="button" class="btn btn-success tree-element-edit-btn">Сохранить</button>
+                    <button type="submit" class="btn btn-success tree-element-edit-btn">Сохранить</button>
                 </div>
             </form>
         </div>
