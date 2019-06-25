@@ -46,6 +46,6 @@ class ZeusAdminMenuElement extends Model
     ];
     public function menu()
     {
-        return $this->belongsTo('Zeus\Admin\Cms\Models\ZeusAdminMenu', 'id', 'menu_id');
+        return $this->belongsTo('Zeus\Admin\Cms\Models\ZeusAdminMenu', 'menu_id', 'id');
     }
 }

@@ -19,4 +19,20 @@ class MenuHelper
         $elementsTree = ZeusAdminMenuElement::where('menu_id', $id)->defaultOrder()->get()->toTree();
         return $elementsTree;
     }
+
+    public static function getMenuTreeBySlug($slug)
+    {
+        $elementsTree = ZeusAdminMenuElement::whereHas('menu', function ($menuQ) use ($slug) {
+            return $menuQ->whereSlug($slug);
+        })->defaultOrder()->get()->toTree();
+        return $elementsTree;
+    }
+
+    public static function getMenuTreeByClass($class)
+    {
+        $elementsTree = ZeusAdminMenuElement::whereHas('menu', function ($menuQ) use ($class) {
+            return $menuQ->whereClass($class);
+        })->defaultOrder()->get()->toTree();
+        return $elementsTree;
+    }
 }
