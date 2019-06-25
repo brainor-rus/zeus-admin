@@ -40,7 +40,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
-                    <button type="button" class="btn btn-success new-tree-element-save-btn">Сохранить</button>
+                    <button type="submit" class="btn btn-success new-tree-element-save-btn">Сохранить</button>
                 </div>
             </form>
         </div>
