@@ -90,9 +90,11 @@ class ZeusAdminMenus extends Section
             '0.05' => FormField::input('class', 'Класс'),
             '0.06' => FormField::input('order', 'Порядок')
                 ->setValue(0),
-            '0.07' => FormField::custom(view('zeusAdmin::SectionBuilder.Form.Fields.Menu.menuElements')->with(compact('elementsTree','id'))),
         ];
-        $brFieldsRight = [];
+        $brFieldsRight = [
+            '0.01' => FormField::custom(view('zeusAdmin::SectionBuilder.Form.Fields.Menu.menuElements')
+                ->with(compact('elementsTree','id'))),
+        ];
 
         $mergedFieldsLeft = array_merge($pluginsFieldsLeft, $brFieldsLeft);
         $mergedFieldsRight = array_merge($pluginsFieldsRight, $brFieldsRight);
@@ -103,8 +105,7 @@ class ZeusAdminMenus extends Section
         $form = Form::panel([
             FormColumn::column($mergedFieldsLeft, 'col-md-8 col-12'),
             FormColumn::column($mergedFieldsRight, 'col-md-4 col-12'),
-        ]);
-//            ->setMeta($meta);
+        ])->setMeta($meta);
 
         return $form;
     }

@@ -65,6 +65,11 @@ Route::post('/'.config('zeusAdmin.admin_url').'/api/tree-elements/menu/edit', [
     'uses' => 'Zeus\Admin\Cms\Controllers\CmsController@menuElementEdit',
 ]);
 
+Route::post('/'.config('zeusAdmin.admin_url').'/api/tree-elements/menu/delete', [
+    'as'   => 'zeusAdmin.tree.menu.delete',
+    'uses' => 'Zeus\Admin\Cms\Controllers\CmsController@menuElementDelete',
+]);
+
 Route::post('/'.config('zeusAdmin.admin_url').'/api/tree-elements/menu/reorder', [
     'as'   => 'zeusAdmin.tree.menu.reorder',
     'uses' => 'Zeus\Admin\Cms\Controllers\CmsController@menuElementsReorder',

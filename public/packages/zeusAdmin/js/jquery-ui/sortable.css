@@ -17,3 +17,7 @@
     display: block;
     padding: 5px 10px
 }
+
+form#ZeusAdminMenus-edit-form {
+    overflow-x: hidden !important;
+}

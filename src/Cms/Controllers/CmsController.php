@@ -244,9 +244,10 @@ class CmsController extends Controller
             );
         }
     }
+
     public function menuElementCreate(Request $request)
     {
-        $newMenuElement =  new ZeusAdminMenuElement;
+        $newMenuElement = new ZeusAdminMenuElement;
 
         $newMenuElement->menu_id = $request->menu_id;
         $newMenuElement->title = $request->title;
@@ -256,20 +257,22 @@ class CmsController extends Controller
 
         switch ($request->tree_type) {
             case "root":
-
                 $newMenuElement->makeRoot();
                 break;
 
             case "before":
                 $neighbor = ZeusAdminMenuElement::where('id',$request->tree_neighbor)->first();
-                $newMenuElement->afterNode($neighbor);
-                break;
+                $newMenuElement->beforeNode($neighbor);
 
             case "after":
                 $neighbor = ZeusAdminMenuElement::where('id',$request->tree_neighbor)->first();
-                $newMenuElement->beforeNode($neighbor);
+                $newMenuElement->afterNode($neighbor);
                 break;
 
+            case "inside":
+                $parent = ZeusAdminMenuElement::where('id',$request->parent_id)->first();
+                $newMenuElement->parent_id = $parent->id;
+                break;
         }
 
         $newMenuElement->save();
@@ -281,14 +284,21 @@ class CmsController extends Controller
 
     public function menuElementEdit(Request $request)
     {
-
         $updateArray ['title'] = $request->title;
         $updateArray ['slug'] = $request->slug;
         $updateArray ['url'] = $request->url;
         $updateArray ['description'] = $request->description;
 
-        $newMenuElement =  ZeusAdminMenuElement::where('id', $request->element_id)
-        ->update($updateArray);
+        $newMenuElement =  ZeusAdminMenuElement::where('id', $request->element_id)->update($updateArray);
+
+        $elementsTree = MenuHelper::getMenuTreeById($request->menu_id);
+
+        return view('zeusAdmin::SectionBuilder.Form.Fields.Menu.TreeOutput.Sortable.main')->with(compact('elementsTree'));
+    }
+
+    public function menuElementDelete(Request $request)
+    {
+        $newMenuElement =  ZeusAdminMenuElement::where('id', $request->element_id)->delete();
 
         $elementsTree = MenuHelper::getMenuTreeById($request->menu_id);
 
