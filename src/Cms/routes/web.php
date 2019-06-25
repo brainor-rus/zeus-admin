@@ -54,3 +54,18 @@ Route::post('/'.config('zeusAdmin.admin_url').'/cms/files/upload', [
     'as'   => 'zeusAdmin.cms.file-upload',
     'uses' => 'Zeus\Admin\Cms\Controllers\CmsController@fileUpload',
 ]);
+
+Route::post('/'.config('zeusAdmin.admin_url').'/api/tree-elements/menu/create', [
+    'as'   => 'zeusAdmin.tree.menu.create',
+    'uses' => 'Zeus\Admin\Cms\Controllers\CmsController@menuElementCreate',
+]);
+
+Route::post('/'.config('zeusAdmin.admin_url').'/api/tree-elements/menu/edit', [
+    'as'   => 'zeusAdmin.tree.menu.edit',
+    'uses' => 'Zeus\Admin\Cms\Controllers\CmsController@menuElementEdit',
+]);
+
+Route::post('/'.config('zeusAdmin.admin_url').'/api/tree-elements/menu/reorder', [
+    'as'   => 'zeusAdmin.tree.menu.reorder',
+    'uses' => 'Zeus\Admin\Cms\Controllers\CmsController@menuElementsReorder',
+]);
