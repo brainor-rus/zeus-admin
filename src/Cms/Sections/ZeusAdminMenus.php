@@ -84,16 +84,16 @@ class ZeusAdminMenus extends Section
         $elementsTree = MenuHelper::getMenuTreeById($id);
         
         $brFieldsLeft = [
+            '0.01' => FormField::custom(view('zeusAdmin::SectionBuilder.Form.Fields.Menu.menuElements')
+                ->with(compact('elementsTree','id'))),
+        ];
+        $brFieldsRight = [
             '0.01' => FormField::input('title', 'Заголовок')->setRequired(true),
             '0.02' => FormField::textarea('description', 'Описание')->setRows(3),
             '0.03' => FormField::input('slug', 'Слаг (необязательно)'),
             '0.05' => FormField::input('class', 'Класс'),
             '0.06' => FormField::input('order', 'Порядок')
                 ->setValue(0),
-        ];
-        $brFieldsRight = [
-            '0.01' => FormField::custom(view('zeusAdmin::SectionBuilder.Form.Fields.Menu.menuElements')
-                ->with(compact('elementsTree','id'))),
         ];
 
         $mergedFieldsLeft = array_merge($pluginsFieldsLeft, $brFieldsLeft);
