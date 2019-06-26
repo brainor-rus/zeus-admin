@@ -25,9 +25,10 @@ class FormAction
     public static function save(Model $model, $ignore, Request $request)
     {
         foreach ($model->getAttributes() as $name => $attribute) {
-            if(!in_array($attribute, $ignore)) {
-                $model->{$name} = $request->has($name) ? $request->get($name) : $model->{$name};
+            if(isset($ignore) && is_array($ignore) && in_array($name, $ignore)) {
+                continue;
             }
+            $model->{$name} = $request->has($name) ? $request->get($name) : $model->{$name};
         }
         $model->save();
     }
