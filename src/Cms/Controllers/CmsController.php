@@ -29,23 +29,92 @@ class CmsController extends Controller
         'cancelUrl' => '',
     ];
 
+    // Направляет CMS секции на кастомные, если таковые заданы в конфиге
+    private function makeCustomSection($sectionName) {
+        $srcSectionName = $sectionName;
+        $isCustom = false;
+
+        switch ($sectionName) {
+            case 'ZeusAdminComments':
+                if(!empty(config('zeusAdmin.cms_comments_section'))) {
+                    $sectionName = config('zeusAdmin.comments_section');
+                    $isCustom = true;
+                }
+                break;
+
+            case 'ZeusAdminFiles':
+                if(!empty(config('zeusAdmin.cms_files_section'))) {
+                    $sectionName = config('zeusAdmin.files_section');
+                    $isCustom = true;
+                }
+                break;
+
+            case 'ZeusAdminMenus':
+                if(!empty(config('zeusAdmin.cms_menus_section'))) {
+                    $sectionName = config('zeusAdmin.menus_section');
+                    $isCustom = true;
+                }
+                break;
+
+            case 'ZeusAdminPages':
+                if(!empty(config('zeusAdmin.cms_pages_section'))) {
+                    $sectionName = config('zeusAdmin.pages_section');
+                    $isCustom = true;
+                }
+                break;
+
+            case 'ZeusAdminPosts':
+                if(!empty(config('zeusAdmin.cms_posts_section'))) {
+                    $sectionName = config('zeusAdmin.posts_section');
+                    $isCustom = true;
+                }
+                break;
+
+            case 'ZeusAdminTags':
+                if(!empty(config('zeusAdmin.cms_tags_section'))) {
+                    $sectionName = config('zeusAdmin.tags_section');
+                    $isCustom = true;
+                }
+                break;
+
+            case 'ZeusAdminTerms':
+                if(!empty(config('zeusAdmin.cms_terms_section'))) {
+                    $sectionName = config('zeusAdmin.terms_section');
+                    $isCustom = true;
+                }
+                break;
+
+            default: break;
+        }
+
+        if($isCustom) {
+            $this->pluginData['sectionPath'] = config('zeusAdmin.user_path');
+            $this->pluginData['deleteUrl'] = '/' . config('zeusAdmin.admin_url') . "/cms/{$srcSectionName}";
+            $this->pluginData['redirectUrl'] = '/' . config('zeusAdmin.admin_url') . "/cms/{$srcSectionName}/{id}/{action}";
+            $this->pluginData['cancelUrl'] = '/' . config('zeusAdmin.admin_url') . "/cms/{$srcSectionName}";
+        }
+
+        return $sectionName;
+    }
+
     public function __construct(\Illuminate\Contracts\Foundation\Application $app)
     {
         $this->app = $app;
         $this->pluginData['deleteUrl'] = '/' . config('zeusAdmin.admin_url') . '/cms/{sectionName}';
         $this->pluginData['redirectUrl'] = '/' . config('zeusAdmin.admin_url') . '/cms/{sectionName}/{id}/{action}';
         $this->pluginData['cancelUrl'] = '/' . config('zeusAdmin.admin_url') . '/cms/{sectionName}';
-
     }
 
     public function showRouteRedirect(Section $section, $sectionName, Request $request)
     {
+        $sectionName = $this->makeCustomSection($sectionName);
         $mainController = new ZeusAdminController;
         return $mainController->getDisplay($section, $sectionName, $this->pluginData,  $request);
     }
 
     public function createRouteRedirect(Section $section, $sectionName)
     {
+        $sectionName = $this->makeCustomSection($sectionName);
         $mainController = new ZeusAdminController;
 
         return $mainController->getCreate($section, $sectionName, $this->pluginData);
@@ -53,6 +122,7 @@ class CmsController extends Controller
 
     public function editRouteRedirect(Section $section, $sectionName, $id)
     {
+        $sectionName = $this->makeCustomSection($sectionName);
         $mainController = new ZeusAdminController;
 
         return $mainController->getEdit($section, $sectionName, $id, $this->pluginData);
@@ -60,6 +130,7 @@ class CmsController extends Controller
 
     public function createActionRouteRedirect(Section $section, $sectionName, Request $request)
     {
+        $sectionName = $this->makeCustomSection($sectionName);
         $mainController = new ZeusAdminController;
 
         return $mainController->createAction($section, $sectionName, $request, $this->pluginData);
@@ -67,6 +138,7 @@ class CmsController extends Controller
 
     public function editActionRouteRedirect(Section $section, $sectionName, $id, Request $request)
     {
+        $sectionName = $this->makeCustomSection($sectionName);
         $mainController = new ZeusAdminController;
 
         return $mainController->editAction($section, $sectionName, $id, $request);
@@ -74,10 +146,12 @@ class CmsController extends Controller
 
     public function deleteActionRouteRedirect(Section $section, $sectionName, $id, Request $request)
     {
+        $sectionName = $this->makeCustomSection($sectionName);
         $mainController = new ZeusAdminController;
 
         return $mainController->deleteAction($section, $sectionName, $id, $request);
     }
+
     public function parseUrl($path)
     {
         if (strpos($path, '/') == false) {
@@ -119,7 +193,7 @@ class CmsController extends Controller
         SEO::setTitle('Home');
         SEO::setDescription('This is my page description');
         SEO::addKeyword(['key1', 'key2', 'key3']);
-        
+
         return view($templatePath)->with(compact('data'));
     }
 
@@ -278,7 +352,7 @@ class CmsController extends Controller
         $newMenuElement->save();
 
         $elementsTree = MenuHelper::getMenuTreeById($request->menu_id);
-        
+
         return view('zeusAdmin::SectionBuilder.Form.Fields.Menu.TreeOutput.Sortable.main')->with(compact('elementsTree'));
     }
 
