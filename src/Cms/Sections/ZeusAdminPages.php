@@ -69,12 +69,12 @@ class ZeusAdminPages extends Section
         return $display->setScopes(['pages']);
     }
 
-    public static function onCreate()
+    public static function onCreate(Request $request = null, $id = null)
     {
-        return self::onEdit(null);
+        return self::onEdit($request,$id);
     }
 
-    public static function onEdit($id)
+    public static function onEdit(Request $request, $id)
     {
         $pluginsFieldsLeft = app()['PluginsData']['CmsData']['Pages']['EditField']['Left'] ?? [];
         $pluginsFieldsRight = app()['PluginsData']['CmsData']['Pages']['EditField']['Right'] ?? [];
