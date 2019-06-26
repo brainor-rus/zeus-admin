@@ -174,11 +174,11 @@ class ZeusAdminController extends Controller
 
 
             //        FormAction::save($model, $request);
-            FormAction::saveBelongsToRelations($model, $request);
-            FormAction::saveBelongsToManyRelations($model, $request);
-            FormAction::saveHasOneRelations($model, $request);
-            FormAction::saveRelated($model, $relatedRows);
-            FormAction::saveCustomFields($model, $request);
+            FormAction::saveBelongsToRelations($model, $relationFields, $request);
+            FormAction::saveBelongsToManyRelations($model, $relationFields, $request);
+            FormAction::saveHasOneRelations($model, $relationFields, $request);
+            FormAction::saveRelated($model, $relationFields, $relatedRows);
+            FormAction::saveCustomFields($model, $relationFields, $request);
 
             $class->afterSave($request, $model);
 
@@ -237,12 +237,12 @@ class ZeusAdminController extends Controller
 
             $class->beforeSave($request, $model);
 
-            FormAction::save($model, $request);
-            FormAction::saveBelongsToRelations($model, $request);
-            FormAction::saveBelongsToManyRelations($model, $request);
-            FormAction::saveHasOneRelations($model, $request);
-            FormAction::saveRelated($model, $relatedRows);
-            FormAction::saveCustomFields($model, $request);
+            FormAction::save($model, $relationFields, $request);
+            FormAction::saveBelongsToRelations($model, $relationFields, $request);
+            FormAction::saveBelongsToManyRelations($model, $relationFields, $request);
+            FormAction::saveHasOneRelations($model, $relationFields, $request);
+            FormAction::saveRelated($model, $relationFields, $relatedRows);
+            FormAction::saveCustomFields($model, $relationFields, $request);
 
 
             $class->afterSave($request, $model);
