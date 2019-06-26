@@ -88,7 +88,7 @@ class CmsController extends Controller
         }
 
         if($isCustom) {
-            $this->pluginData['sectionPath'] = config('zeusAdmin.user_path');
+            $this->pluginData['sectionPath'] = config('zeusAdmin.user_path') . '\\Sections\\';
             $this->pluginData['deleteUrl'] = '/' . config('zeusAdmin.admin_url') . "/cms/{$srcSectionName}";
             $this->pluginData['redirectUrl'] = '/' . config('zeusAdmin.admin_url') . "/cms/{$srcSectionName}/{id}/{action}";
             $this->pluginData['cancelUrl'] = '/' . config('zeusAdmin.admin_url') . "/cms/{$srcSectionName}";

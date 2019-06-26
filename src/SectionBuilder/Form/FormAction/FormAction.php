@@ -22,17 +22,19 @@ use Illuminate\Http\Request;
 
 class FormAction
 {
-    public static function save(Model $model, Request $request)
+    public static function save(Model $model, $relationFields, Request $request)
     {
         foreach ($model->getAttributes() as $name => $attribute) {
-            $model->{$name} = $request->has($name) ? $request->get($name) : $model->{$name};
+            if(in_array($attribute, $relationFields)) {
+                $model->{$name} = $request->has($name) ? $request->get($name) : $model->{$name};
+            }
         }
         $model->save();
     }
 
-    public static function saveBelongsToRelations(Model $model, Request $request)
+    public static function saveBelongsToRelations(Model $model, $relationFields, Request $request)
     {
-        foreach (ZeusAdminHelper::getModelRelationships($model) as $name => $relation) {
+        foreach ($relationFields as $name) {
             if ($model->{$name}() instanceof BelongsTo && $request->has($name)) {
 //                $request->{$name}->save();
                 $model->{$name}()->associate($request->{$name});
@@ -40,9 +42,9 @@ class FormAction
         }
     }
 
-    public static function saveBelongsToManyRelations(Model $model, Request $request)
+    public static function saveBelongsToManyRelations(Model $model, $relationFields, Request $request)
     {
-        foreach (ZeusAdminHelper::getModelRelationships($model) as $name => $relation) {
+        foreach ($relationFields as $name) {
             if ($model->{$name}() instanceof BelongsToMany && $request->has($name)) {
 //                $request->{$name}->save();
                 $model->{$name}()->sync($request->{$name});
@@ -50,9 +52,9 @@ class FormAction
         }
     }
 
-    public static function saveHasOneRelations(Model $model, Request $request)
+    public static function saveHasOneRelations(Model $model, $relationFields, Request $request)
     {
-        foreach (ZeusAdminHelper::getModelRelationships($model) as $name => $relation) {
+        foreach ($relationFields as $name) {
             if ($model->{$name}() instanceof HasOneOrMany && $request->has($name) && isset($request->{$name})) {
                 if (is_array($request->{$name}) || $request->{$name} instanceof \Traversable) {
                     $model->{$name}()->saveMany($request->{$name});
@@ -64,9 +66,9 @@ class FormAction
         }
     }
 
-    public static function saveCustomFields(Model $model, Request $request)
+    public static function saveCustomFields(Model $model, $relationFields, Request $request)
     {
-        $modelRelations = ZeusAdminHelper::getModelRelationships($model);
+        $modelRelations = $relationFields;
         if(array_key_exists('customFields',$modelRelations)){
             if ($model->customFields() instanceof MorphMany && $request->has('custom_fields') && isset($request->custom_fields)) {
                 if (is_array($request->custom_fields) || $request->custom_fields instanceof \Traversable) {
@@ -94,7 +96,7 @@ class FormAction
         }
     }
 
-    public static function saveRelated(Model $model, $relatedRows = []) {
+    public static function saveRelated(Model $model, $relationFields, $relatedRows = []) {
         if(!isset($relatedRows)) {
             return;
         }
