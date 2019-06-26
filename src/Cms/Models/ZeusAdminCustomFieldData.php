@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class ZeusAdminCustomFieldData extends Model
 {
+    protected $table = 'zeus_admin_custom_field_data';
 
     /**
      * The attributes that are mass assignable.
