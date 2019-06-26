@@ -63,12 +63,12 @@ class ZeusAdminPosts extends Section
         return $display->setScopes(['posts']);
     }
 
-    public static function onCreate()
+    public static function onCreate(Request $request = null, $id = null)
     {
-        return self::onEdit(null);
+        return self::onEdit($request, $id);
     }
 
-    public static function onEdit($id)
+    public static function onEdit(Request $request, $id)
     {
 //        $meta = new Meta;
 //        $meta->setStyles([
