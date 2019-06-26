@@ -41,6 +41,14 @@ return [
 //    'page_model' => 'App\\CustomPageModel',
 //    'post_model' => 'App\\CustomPostModel',
 
+//    'cms_comments_section' => '',
+//    'cms_files_section' => '',
+//    'cms_menus_section' => '',
+//    'cms_pages_section' => '',
+//    'cms_posts_section' => '',
+//    'cms_tags_section' => '',
+//    'cms_terms_section' => '',
+
     /*
     |--------------------------------------------------------------------------
     | Title
