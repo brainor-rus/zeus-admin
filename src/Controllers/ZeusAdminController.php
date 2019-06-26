@@ -162,8 +162,10 @@ class ZeusAdminController extends Controller
             $model = $model::create($request->only($attrFields));
 
             $relationFields = array_keys(ZeusAdminHelper::getModelRelationships($model));
+            $ignore = null;
             if(isset($model->zeusAdminIgnore) && is_array($model->zeusAdminIgnore) && count($model->zeusAdminIgnore) > 0) {
-                $relationFields = array_diff($relationFields, $model->zeusAdminIgnore);
+                $ignore = $model->zeusAdminIgnore;
+                $relationFields = array_diff($relationFields, $ignore);
             }
 
             $model = $model->where('id', $model->id)
@@ -225,8 +227,10 @@ class ZeusAdminController extends Controller
 
             $model = new $modelPath;
             $relationFields = array_keys(ZeusAdminHelper::getModelRelationships($model));
+            $ignore = null;
             if(isset($model->zeusAdminIgnore) && is_array($model->zeusAdminIgnore) && count($model->zeusAdminIgnore) > 0) {
-                $relationFields = array_diff($relationFields, $model->zeusAdminIgnore);
+                $ignore = $model->zeusAdminIgnore;
+                $relationFields = array_diff($relationFields, $ignore);
             }
 
             $model = $model->where('id', $id)
@@ -237,7 +241,7 @@ class ZeusAdminController extends Controller
 
             $class->beforeSave($request, $model);
 
-            FormAction::save($model, $relationFields, $request);
+            FormAction::save($model, $ignore, $request);
             FormAction::saveBelongsToRelations($model, $relationFields, $request);
             FormAction::saveBelongsToManyRelations($model, $relationFields, $request);
             FormAction::saveHasOneRelations($model, $relationFields, $request);

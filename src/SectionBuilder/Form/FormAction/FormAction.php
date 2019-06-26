@@ -22,10 +22,10 @@ use Illuminate\Http\Request;
 
 class FormAction
 {
-    public static function save(Model $model, $relationFields, Request $request)
+    public static function save(Model $model, $ignore, Request $request)
     {
         foreach ($model->getAttributes() as $name => $attribute) {
-            if(in_array($attribute, $relationFields)) {
+            if(!in_array($attribute, $ignore)) {
                 $model->{$name} = $request->has($name) ? $request->get($name) : $model->{$name};
             }
         }
