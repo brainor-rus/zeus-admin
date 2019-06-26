@@ -37,49 +37,49 @@ class CmsController extends Controller
         switch ($sectionName) {
             case 'ZeusAdminComments':
                 if(!empty(config('zeusAdmin.cms_comments_section'))) {
-                    $sectionName = config('zeusAdmin.comments_section');
+                    $sectionName = config('zeusAdmin.cms_comments_section');
                     $isCustom = true;
                 }
                 break;
 
             case 'ZeusAdminFiles':
                 if(!empty(config('zeusAdmin.cms_files_section'))) {
-                    $sectionName = config('zeusAdmin.files_section');
+                    $sectionName = config('zeusAdmin.cms_files_section');
                     $isCustom = true;
                 }
                 break;
 
             case 'ZeusAdminMenus':
                 if(!empty(config('zeusAdmin.cms_menus_section'))) {
-                    $sectionName = config('zeusAdmin.menus_section');
+                    $sectionName = config('zeusAdmin.cms_menus_section');
                     $isCustom = true;
                 }
                 break;
 
             case 'ZeusAdminPages':
                 if(!empty(config('zeusAdmin.cms_pages_section'))) {
-                    $sectionName = config('zeusAdmin.pages_section');
+                    $sectionName = config('zeusAdmin.cms_pages_section');
                     $isCustom = true;
                 }
                 break;
 
             case 'ZeusAdminPosts':
                 if(!empty(config('zeusAdmin.cms_posts_section'))) {
-                    $sectionName = config('zeusAdmin.posts_section');
+                    $sectionName = config('zeusAdmin.cms_posts_section');
                     $isCustom = true;
                 }
                 break;
 
             case 'ZeusAdminTags':
                 if(!empty(config('zeusAdmin.cms_tags_section'))) {
-                    $sectionName = config('zeusAdmin.tags_section');
+                    $sectionName = config('zeusAdmin.cms_tags_section');
                     $isCustom = true;
                 }
                 break;
 
             case 'ZeusAdminTerms':
                 if(!empty(config('zeusAdmin.cms_terms_section'))) {
-                    $sectionName = config('zeusAdmin.terms_section');
+                    $sectionName = config('zeusAdmin.cms_terms_section');
                     $isCustom = true;
                 }
                 break;
