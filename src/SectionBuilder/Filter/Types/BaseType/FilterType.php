@@ -8,6 +8,7 @@
 
 namespace Zeus\Admin\SectionBuilder\Filter\Types\BaseType;
 
+use Zeus\Admin\SectionBuilder\Filter\Types\BSelect;
 use Zeus\Admin\SectionBuilder\Filter\Types\Text;
 use Zeus\Admin\SectionBuilder\Filter\Types\Select;
 
@@ -21,5 +22,10 @@ class FilterType
     public static function select($name = null)
     {
         return new Select($name);
+    }
+
+    public static function bselect($name = null)
+    {
+        return new BSelect($name);
     }
 }
