@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\View;
 
 class Select
 {
-    private $name, $placeholder, $options, $modelForOptions, $queryFunctionForModel, $field, $display, $isLike;
+    protected $name, $placeholder, $options, $modelForOptions, $queryFunctionForModel, $field, $display, $isLike;
     public function __construct($name, $field = 'id')
     {
         $this->setName($name);
