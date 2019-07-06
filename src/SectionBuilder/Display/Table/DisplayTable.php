@@ -16,11 +16,18 @@ use ZeusAdminHelper;
 
 class DisplayTable
 {
-    private $pagination, $columns, $scopes, $meta, $nav, $filter, $filterPosition;
+    private $pagination, $userPagination, $userPaginationArray, $columns, $scopes, $meta, $nav, $filter, $filterPosition;
 
     public function __construct($columns, $pagination)
     {
         $this->setPagination($pagination);
+        $this->setUserPagination(true);
+        $this->setUserPaginationArray([
+            10 => '10 записей',
+            25 => '25 записей',
+            50 => '50 записей',
+            'all' => 'Все записи'
+        ]);
         $this->setColumns($columns);
         $this->meta = new Meta;
         $this->setFilterPosition(config('zeusAdmin.display_table_filter_default_position') ?? 'top');
@@ -33,6 +40,40 @@ class DisplayTable
     public function setPagination($pagination)
     {
         $this->pagination = $pagination;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUserPagination()
+    {
+        return $this->userPagination;
+    }
+
+    /**
+     * @param mixed $userPagination
+     */
+    public function setUserPagination($userPagination)
+    {
+        $this->userPagination = $userPagination;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUserPaginationArray()
+    {
+        return $this->userPaginationArray;
+    }
+
+    /**
+     * @param mixed $userPaginationArray
+     */
+    public function setUserPaginationArray($userPaginationArray)
+    {
+        $this->userPaginationArray = $userPaginationArray;
         return $this;
     }
 
@@ -197,8 +238,28 @@ class DisplayTable
                         $query = $query->where($filterItem['field'], $filterItem['value']);
                     }
                 }
-            })
-            ->paginate($this->getPagination());
+            });
+
+        $userPaginationArray = $this->getUserPaginationArray();
+        $userPaginationArrayKeys = array_keys($userPaginationArray);
+        $currentShow = $this->getPagination() ?? array_shift($userPaginationArrayKeys);
+
+        if($this->getUserPagination()) {
+            if(!empty($request->show) && in_array($request->show, $userPaginationArrayKeys)) {
+                $currentShow = $request->show;
+            }
+
+            if(is_numeric($currentShow)) {
+                $data = $data->paginate($currentShow);
+            } else {
+                $data = $data->get();
+            }
+        } else {
+             $data = $data->paginate($this->getPagination());
+        }
+
+        $currentShow = $userPaginationArray[$currentShow];
+        
         $fields = array();
 
         foreach ($data as $key => $row)
@@ -234,6 +295,8 @@ class DisplayTable
         $filter = $this->getFilter();
         $filterPosition = $this->getFilterPosition();
 
+        $isUserPagination = $this->getUserPagination();
+
         $response['data'] = $data;
         $response['view'] = View::make('zeusAdmin::SectionBuilder/Display/Table/table')
             ->with(compact(
@@ -243,6 +306,9 @@ class DisplayTable
                 'firedSection',
                 'pluginData',
                 'nav',
+                'isUserPagination',
+                'userPaginationArray',
+                'currentShow',
                 'filter',
                 'filterPosition'
             ));

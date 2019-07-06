@@ -2,6 +2,7 @@
 
 namespace Zeus\Admin\Controllers;
 
+use Illuminate\Database\Eloquent\Collection;
 use Zeus\Admin\Helpers\ZeusAdminHelper;
 use Zeus\Admin\SectionBuilder\Display\Custom\DisplayCustom;
 use Zeus\Admin\SectionBuilder\Form\FormAction\FormAction;
@@ -60,7 +61,7 @@ class ZeusAdminController extends Controller
         $html = $results['view'];
 
         $pagination = [];
-        if(!isset($results['isCustom'])) {
+        if(!isset($results['isCustom']) && !($results['data'] instanceof Collection)) {
             $pagination = [
                 'total' => $results['data']->total(),
                 'per_page' => $results['data']->perPage(),

@@ -2,7 +2,7 @@
     <div class="col-12">
         <div class="card">
             <div class="card-body">
-                <div class="row w-100 align-items-center">
+                <div class="row align-items-center">
                     <div class="col-auto">
                         @if($firedSection->isCreatable())
                             <a @click.prevent="$emit('redirectTo',$event)" href="{{ Request::url() }}/create" class="btn btn-primary">Создать</a>
@@ -10,6 +10,25 @@
                     </div>
                     <div class="col">
                         {!! $nav !!}
+                    </div>
+                    <div class="col-auto">
+                        @if($isUserPagination)
+                            <div class="dropdown">
+                                <button class="btn btn-secondary dropdown-toggle" type="button" id="showDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Показывать
+                                    <strong>{{ $currentShow }}</strong>
+                                </button>
+                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="showDropdown">
+                                    @foreach($userPaginationArray as $val => $title)
+                                        <a class="dropdown-item"
+                                           href="{{ route('zeusAdmin.section.display', ['section' => Route::getCurrentRoute()->parameters['section'], 'show' => $val]) }}"
+                                        >
+                                            {{ $title }}
+                                        </a>
+                                    @endforeach
+                                </div>
+                            </div>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -57,13 +76,10 @@
                     </td>
                 @endforeach
                 <td class="text-right">
-                    {{--<button type="submit" class="btn btn-success">Фильтровать</button>--}}
-
                     <div class="btn-group" role="group">
                         <button @click.prevent="$emit('filter')" type="button" class="btn btn-secondary"><i class="fas fa-filter"></i> Фильтровать</button>
                         <button @click.prevent="$emit('filterClear')" type="button" class="btn btn-danger"><i class="fas fa-times"></i></button>
                     </div>
-
                 </td>
             </tr>
         @endif
