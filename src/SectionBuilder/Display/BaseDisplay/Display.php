@@ -17,12 +17,12 @@ class Display
 {
     public static function table($columns = null, $pagination = null)
     {
-        return new DisplayTable($columns ?? null, $pagination ?? 15);
+        return new DisplayTable($columns ?? null, $pagination ?? 10);
     }
 
     public static function tiles($columns = null, $pagination = null)
     {
-        return new DisplayTiles($columns ?? null, $pagination ?? 15);
+        return new DisplayTiles($columns ?? null, $pagination ?? 10);
     }
 
     public static function custom($columns = null, $pagination = null, $view = null)
