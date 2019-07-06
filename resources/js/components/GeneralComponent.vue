@@ -16,28 +16,28 @@
         <nav v-if="pagination.pagesNumber.length > 1">
             <ul class="pagination" role="navigation">
                 <li class="page-item" v-bind:class="[ pagination.current_page <= 1 ? 'disabled' : '']">
-                    <router-link :to="{query: {page: 1, sort: currentSorting, filter: currentFilter}}" class="page-link" aria-label="« First">
+                    <router-link :to="{query: {page: 1, sort: currentSorting, filter: currentFilter, show: currentShow}}" class="page-link" aria-label="« First">
                         <span aria-hidden="true">‹‹</span>
                     </router-link>
                 </li>
                 <li class="page-item" v-bind:class="[ pagination.current_page <= 1 ? 'disabled' : '']">
-                    <router-link :to="{query: {page: pagination.current_page - 1, sort: currentSorting, filter: currentFilter}}" class="page-link" aria-label="« Previous">
+                    <router-link :to="{query: {page: pagination.current_page - 1, sort: currentSorting, filter: currentFilter, show: currentShow}}" class="page-link" aria-label="« Previous">
                         <span aria-hidden="true">‹</span>
                     </router-link>
                 </li>
                 <li class="page-item" v-for="page in pagination.pagesNumber"
                     v-bind:class="[ page == currentPage ? 'active' : '']">
-                    <router-link :to="{query: {page: page, sort: currentSorting, filter: currentFilter}}" class="page-link">
+                    <router-link :to="{query: {page: page, sort: currentSorting, filter: currentFilter, show: currentShow}}" class="page-link">
                         {{page}}
                     </router-link>
                 </li>
                 <li class="page-item" v-bind:class="[ pagination.current_page >= pagination.last_page ? 'disabled' : '']">
-                    <router-link :to="{query: {page: pagination.current_page + 1, sort: currentSorting, filter: currentFilter}}" class="page-link" aria-label="Next »">
+                    <router-link :to="{query: {page: pagination.current_page + 1, sort: currentSorting, filter: currentFilter, show: currentShow}}" class="page-link" aria-label="Next »">
                         <span aria-hidden="true">›</span>
                     </router-link>
                 </li>
                 <li class="page-item" v-bind:class="[ pagination.current_page >= pagination.last_page ? 'disabled' : '']">
-                    <router-link :to="{query: {page: pagination.last_page, sort: currentSorting, filter: currentFilter}}" class="page-link" aria-label="Last »">
+                    <router-link :to="{query: {page: pagination.last_page, sort: currentSorting, filter: currentFilter, show: currentShow}}" class="page-link" aria-label="Last »">
                         <span aria-hidden="true">››</span>
                     </router-link>
                 </li>
@@ -112,6 +112,13 @@
                     filterObject = this.$route.query.filter;
                 }
                 return filterObject;
+            },
+            currentShow(){
+                let showObject = null;
+                if (typeof this.$route.query.show !== 'undefined') {
+                    showObject = this.$route.query.show;
+                }
+                return showObject;
             }
         },
         created: function () {
