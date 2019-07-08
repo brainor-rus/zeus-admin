@@ -15,6 +15,7 @@ class CreateZeusAdminFilesTable extends Migration
     {
         Schema::create('zeus_admin_files', function (Blueprint $table) {
             $table->increments('id');
+            $table->uuid('uuid')->nullable();
             $table->string('mime');
             $table->string('extension');
             $table->string('url');

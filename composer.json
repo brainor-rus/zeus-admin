@@ -11,7 +11,8 @@
         "cviebrock/eloquent-sluggable": "4.*",
         "kalnoy/nestedset": "4.*",
         "intervention/image": "2.*",
-        "artesaos/seotools": "^0.14.0"
+        "artesaos/seotools": "^0.14.0",
+        "emadadly/laravel-uuid": "1.*"
     },
     "autoload": {
 		"psr-4": {

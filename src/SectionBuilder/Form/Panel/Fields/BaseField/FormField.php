@@ -12,6 +12,7 @@ namespace Zeus\Admin\SectionBuilder\Form\Panel\Fields\BaseField;
 use Zeus\Admin\SectionBuilder\Form\Panel\Fields\BSelect;
 use Zeus\Admin\SectionBuilder\Form\Panel\Fields\Custom;
 use Zeus\Admin\SectionBuilder\Form\Panel\Fields\DatePicker;
+use Zeus\Admin\SectionBuilder\Form\Panel\Fields\Gallery;
 use Zeus\Admin\SectionBuilder\Form\Panel\Fields\Hidden;
 use Zeus\Admin\SectionBuilder\Form\Panel\Fields\Input;
 use Zeus\Admin\SectionBuilder\Form\Panel\Fields\MultiSelect;
@@ -66,6 +67,10 @@ class FormField
     public static function dropZone($label, $name, $id, $url)
     {
         return new DropZone($label, $name, $id, $url);
+    }
+
+    public static function gallery($label, $id = null) {
+        return new Gallery($label, $id);
     }
 
     public static function related($name, $label, $model, $columns) {

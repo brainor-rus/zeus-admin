@@ -11,6 +11,8 @@ namespace Zeus\Admin\SectionBuilder\Form\FormAction;
 
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
+use PhpParser\Node\Expr\AssignOp\Mod;
+use Zeus\Admin\Cms\Models\ZeusAdminFile;
 use Zeus\Admin\Helpers\ZeusAdminHelper;
 use Zeus\Admin\Cms\Helpers\CustomFieldsHelper;
 use Zeus\Admin\Cms\Models\ZeusAdminCustomFieldData;
@@ -131,5 +133,21 @@ class FormAction
 
             // todo Другие типы связей?
         }
+    }
+
+    public static function saveGallery(Model $model, $zagallery) {
+        $toSync = [];
+
+        if(isset($zagallery['images'])) {
+            $files = ZeusAdminFile::whereIn('uuid', $zagallery['images'])->get();
+
+            foreach($files as $file) {
+                $toSync[$file->id] = [
+                    'default' => isset($zagallery['default_image']) && $file->uuid === $zagallery['default_image']
+                ];
+            }
+        }
+
+        $model->zaGalleryImages()->sync($toSync);
     }
 }

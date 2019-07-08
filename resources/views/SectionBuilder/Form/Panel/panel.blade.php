@@ -32,6 +32,8 @@
                             $relatedRows = $currentRow->{ $field->getName() } ?? null;
                         @endphp
                         {!! $field->render($relatedRows) !!}
+                    @elseif($field instanceof \Zeus\Admin\SectionBuilder\Form\Panel\Fields\Gallery)
+                        {!! $field->render($model) !!}
                     @else
                         @php
                             $value = $currentRow->{ $field->getName() } ?? null;

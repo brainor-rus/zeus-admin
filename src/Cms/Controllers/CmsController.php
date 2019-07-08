@@ -299,17 +299,26 @@ class CmsController extends Controller
             $newFile->extension = $extension;
             $newFile->path = $destinationPath;
             $newFile->size = $fileSize;
+            if(!empty($request->uuid)) {
+                $newFile->uuid = $request->uuid;
+            }
 
             $newFile->save();
             if(strstr($fileMime, "image/")){
                 $thumbPath = $destinationPath.'/'.$filename.'-200x200'.'.'.$extension;
                 Image::make($newFilePath)->fit(200)->save($thumbPath);
             }
+
+            if($request->get('g') === '1') {
+                return $newFile->uuid;
+            }
+
             return response()->json(
                 [
                     'success' => 200,
                 ]
             );
+
         } else {
             return response()->json(
                 [

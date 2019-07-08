@@ -191,3 +191,23 @@ body{
   border: 1px solid #dee2e6!important;
   background-color: white!important;
 }
+
+.dz-complete .dz-success-mark {
+  display: unset!important;
+  position: absolute;
+  left: 3px;
+  bottom: 0;
+}
+
+.preload-image-hover {
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+.dz-complete .preload-image-hover {
+  display: none;
+}
+
+.sq-image {
+  max-width: 120px;
+  max-height: 120px;
+}
