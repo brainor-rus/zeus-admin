@@ -148,6 +148,8 @@ class ZeusAdminController extends Controller
         if(!isset($class)) { abort(500); }
         if ($class->isCreatable()) {
             $relatedRows = $request->get('related');
+            $zagallery = $request->get('zagallery');
+            $request->offsetUnset('zagallery');
 
             $request->offsetUnset('_token');
             $request->offsetUnset('related');
@@ -181,6 +183,7 @@ class ZeusAdminController extends Controller
             FormAction::saveBelongsToManyRelations($model, $relationFields, $request);
             FormAction::saveHasOneRelations($model, $relationFields, $request);
             FormAction::saveRelated($model, $relationFields, $relatedRows);
+            FormAction::saveGallery($model, $zagallery);
             FormAction::saveCustomFields($model, $relationFields, $request);
 
             $class->afterSave($request, $model);
@@ -219,9 +222,12 @@ class ZeusAdminController extends Controller
         if(!isset($class)) { abort(500); }
         if ($class->isEditable()) {
             $relatedRows = $request->get('related');
+            $zagallery = $request->get('zagallery');
 
             $request->offsetUnset('_token');
             $request->offsetUnset('related');
+            $request->offsetUnset('zagallery');
+
             $sectionModelSettings = $section->getSectionSettings(studly_case($sectionName), $request->pluginData['sectionPath'] ?? null);
             $modelPath = $sectionModelSettings['model'] ?? config('zeusAdmin.base_models_path') . studly_case(strtolower(str_singular($sectionName)));
             $request->offsetUnset('pluginData');
@@ -247,6 +253,7 @@ class ZeusAdminController extends Controller
             FormAction::saveBelongsToManyRelations($model, $relationFields, $request);
             FormAction::saveHasOneRelations($model, $relationFields, $request);
             FormAction::saveRelated($model, $relationFields, $relatedRows);
+            FormAction::saveGallery($model, $zagallery);
             FormAction::saveCustomFields($model, $relationFields, $request);
 
 

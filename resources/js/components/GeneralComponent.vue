@@ -169,6 +169,79 @@
                             dropZones[this.id] = new Dropzone("#"+this.id, { url: this.getAttribute('data-dropzone-url')});
                         }
                     });
+
+                    $('.dropzone-gallery').each(function(e){
+                        var exists = dropzoneExists('div#' + this.id);
+                        if(!exists)
+                        {
+                            let currentDz = this;
+                            let container = '#dropzone-photo-preview-' + this.id;
+                            let photosDropzoneOptions = {
+                                url: this.getAttribute('data-dropzone-url'),
+                                acceptedFiles: 'image/*',
+                                previewsContainer: container,
+                                previewTemplate:
+                                '<div class="col-6 col-md-auto mb-3 dz-preview dz-file-preview">\n' +
+                                '  <div class="dz-details position-relative">\n' +
+                                '      <div class="h-100 pt-4 position-absolute preload-image-hover text-center text-white w-100"><span class="position-relative">Загрузка..</span></div>' +
+                                '      <div data-dz-remove class="delete-img-btn">\n' +
+                                '          <button type="button" class="close">\n' +
+                                '              <i class="fas fa-times"></i>' +
+                                '          </button>\n' +
+                                '      </div>' +
+                                '      <img class="img-fluid w-100 sq-image" data-dz-thumbnail />\n' +
+                                '      <div class="dz-success-mark d-none"><span><i class="fas text-success fa-check"></i></span></div>' +
+                                '  </div>\n' +
+                                '  <label><input type="radio" name="zagallery[default_image]">По умолчанию</label>\n' +
+                                '</div>'
+                            };
+                            let imageDropzone = new Dropzone("#"+this.id, photosDropzoneOptions);
+
+                            imageDropzone.on('sending', function (file, req, formData) {
+                                    let token = $('meta[name="csrf-token"]').attr('content');
+                                    formData.set('_token', token);
+                                    formData.set('uuid', file.upload.uuid);
+                            });
+
+                            imageDropzone.on('success', function (file, res) {
+                                $(container).append('<input type="hidden" data-uuid="'+res+'" name="zagallery[images][]" value="'+res+'">');
+                                $(file.previewElement).find('input[name="zagallery[default_image]"]').val(res);
+                                file.upload.uuid = res;
+                            });
+
+                            imageDropzone.on('removedfile', function (file) {
+                                $('input[data-uuid="'+file.upload.uuid+'"]').remove();
+                            });
+
+                            imageDropzone.on('complete', function () {
+                                $('.dz-error').remove();
+                            });
+
+                            imageDropzone.on('error', function (data) {
+                                console.log(data);
+                            });
+
+                            $('.preloaded-photos').each(function () {
+                                let fileData = $(this);
+                                let imgUrl = fileData.val();
+                                // Create the mock file:
+                                var mockFile = { name: "Filename", size: 12345, upload: {uuid: fileData.data('uuid-preload')} };
+                                imageDropzone.emit("addedfile", mockFile);
+                                imageDropzone.emit("thumbnail", mockFile, imgUrl);
+                                imageDropzone.emit("complete", mockFile);
+
+                                $(mockFile.previewElement).find('input[name="zagallery[default_image]"]').val(mockFile.upload.uuid);
+
+                                let prevContainer = document.getElementById(container.substr(1));
+
+                                if(mockFile.upload.uuid === prevContainer.querySelector('input[data-default]').getAttribute('data-uuid-preload')) {
+                                    $(mockFile.previewElement).find('input[name="zagallery[default_image]"]').attr('checked', 'checked');
+                                }
+                            });
+
+                            dropZones[this.id] = imageDropzone;
+                        }
+                    });
                 });
             });
 
@@ -359,6 +432,7 @@
                     vm.redirectTo(null,vm.redirectUrl);
                 })
                 .catch(function (error) {
+                    console.log(error);
                     vm.loading = false;
                     vm.error = error.response.data.message || error.message;
                 });

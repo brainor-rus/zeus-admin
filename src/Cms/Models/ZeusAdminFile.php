@@ -2,17 +2,20 @@
 
 namespace Zeus\Admin\Cms\Models;
 
+use Emadadly\LaravelUuid\Uuids;
 use Illuminate\Database\Eloquent\Model;
 
 class ZeusAdminFile extends Model
 {
+    use Uuids;
+
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'mime', 'extension', 'url', 'base_url', 'path', 'size', 'title', 'alt', 'description'
+        'mime', 'extension', 'url', 'base_url', 'path', 'size', 'title', 'alt', 'description', 'uuid'
     ];
 
     public function terms()
