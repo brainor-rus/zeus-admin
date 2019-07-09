@@ -136,6 +136,10 @@ class FormAction
     }
 
     public static function saveGallery(Model $model, $zagallery) {
+        if(!method_exists($model, 'zaGalleryImages')) {
+            return;
+        }
+
         $toSync = [];
 
         if(isset($zagallery['images'])) {
