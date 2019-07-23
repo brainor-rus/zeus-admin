@@ -25,6 +25,15 @@ class ZeusAdminExceptionsHandler extends ExceptionHandler
     {
         if($exception instanceof NotFoundHttpException)
         {
+            $localeField = config('zeusAdmin.locale_field') ?? 'locale';
+
+            if($request->hasCookie($localeField)) {
+                // Get cookie
+                $cookieLang = $request->cookie('locale');
+                // Set locale
+                app()->setLocale($cookieLang);
+            }
+
             $postExistenceCheck = CMSHelper::getByUrl($request->getPathInfo());
             if($postExistenceCheck){
                     switch ($postExistenceCheck->type) {
