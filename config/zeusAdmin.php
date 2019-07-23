@@ -38,6 +38,8 @@ return [
     'cms_page_prefix' => 'page',
     'cms_post_prefix' => 'post',
 
+//    'locale_field' => '',
+
 //    'page_model' => 'App\\CustomPageModel',
 //    'post_model' => 'App\\CustomPostModel',
 

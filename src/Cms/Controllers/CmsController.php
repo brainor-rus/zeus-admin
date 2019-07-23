@@ -4,6 +4,7 @@ namespace Zeus\Admin\Cms\Controllers;
 
 use Zeus\Admin\Cms\Helpers\CMSHelper;
 use Zeus\Admin\Cms\Helpers\MenuHelper;
+use Zeus\Admin\Cms\Models\ZeusAdminPost;
 use Zeus\Admin\Cms\Providers\Cms;
 use Zeus\Admin\Controllers\ZeusAdminController;
 use http\Exception;
@@ -199,11 +200,12 @@ class CmsController extends Controller
 
     public static function showPage($slug)
     {
-        $args = [
-            'type' => 'page',
-            'slug' => $slug,
-        ];
-        $page = CMSHelper::getQueryBuilder($args);
+        $modelPath = config('zeusAdmin.page_model') ?? ZeusAdminPost::class;
+
+        $page = $modelPath::where([
+            ['type', 'page'],
+            ['slug', $slug]
+        ]);
         $page = $page->first();
 
         if(!$page)
@@ -230,11 +232,12 @@ class CmsController extends Controller
 
     public static function showPost($slug)
     {
-        $args = [
-            'type' => 'post',
-            'slug' => $slug,
-        ];
-        $post = CMSHelper::getQueryBuilder($args);
+        $modelPath = config('zeusAdmin.post_model') ?? ZeusAdminPost::class;
+
+        $post = $modelPath::where([
+            ['type', 'post'],
+            ['slug', $slug]
+        ]);
         $post = $post->first();
 
         if(!$post)
