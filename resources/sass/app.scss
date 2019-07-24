@@ -211,3 +211,12 @@ body{
   max-width: 120px;
   max-height: 120px;
 }
+
+label.system {
+  color: #777777 !important;
+  cursor: pointer;
+}
+
+label.system ~ .system-toggle {
+  display: none;
+}

@@ -242,6 +242,11 @@
                             dropZones[this.id] = imageDropzone;
                         }
                     });
+
+                    $('label.system').on('click', function () {
+                        console.log('test');
+                        $(this).siblings(".system-toggle").toggle();
+                    })
                 });
             });
 
@@ -520,7 +525,7 @@
                 delete query.filter;
                 this.$router.replace({ query });
 
-            }
+            },
         }
     }
 </script>

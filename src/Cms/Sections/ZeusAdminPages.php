@@ -87,8 +87,8 @@ class ZeusAdminPages extends Section
         $brFieldsLeft = [
             '0.01' => FormField::input('title', 'Заголовок')->setRequired(true),
             '0.02' => FormField::textarea('description', 'Краткое описание')->setRows(3),
-            '0.03' => FormField::input('slug', 'Слаг (необязательно)'),
-            '0.04' => FormField::input('url', 'Ссылка ("." для автогенерации)')
+            '0.03' => FormField::input('slug', 'Слаг')->setIsSystem(true),
+            '0.04' => FormField::input('url', 'Адрес страницы (url, ЧПУ) ("." для автогенерации)')
                 ->setRequired(true)
                 ->setValue('.'),
             '0.05' => FormField::bselect('tags', 'Метки')

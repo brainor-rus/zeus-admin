@@ -172,6 +172,7 @@ class Input extends FormFieldBase
         $formIgnore = $this->getFormIgnore();
         $dataAttributes = $this->getDataAttributes();
         $classes = $this->getClasses();
+        $isSystem = $this->getIsSystem();
 
         return View::make('zeusAdmin::SectionBuilder/Form/Fields/input')
             ->with(compact(
@@ -187,7 +188,8 @@ class Input extends FormFieldBase
                 'relatedName',
                 'formIgnore',
                 'dataAttributes',
-                'classes'
+                'classes',
+                'isSystem'
             ));
     }
 }
