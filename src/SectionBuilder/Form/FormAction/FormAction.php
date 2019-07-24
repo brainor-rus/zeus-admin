@@ -72,7 +72,7 @@ class FormAction
     public static function saveCustomFields(Model $model, $relationFields, Request $request)
     {
         $modelRelations = $relationFields;
-        if(array_key_exists('customFields',$modelRelations)){
+        if(in_array('customFields',$modelRelations)){
             if ($model->customFields() instanceof MorphMany && $request->has('custom_fields') && isset($request->custom_fields)) {
                 if (is_array($request->custom_fields) || $request->custom_fields instanceof \Traversable) {
                     foreach ($request->custom_fields as $customFieldId=>$customFieldDataValue){
