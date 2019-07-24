@@ -11,7 +11,7 @@ namespace Zeus\Admin\SectionBuilder\Form\Panel\Fields\BaseField;
 
 class FormFieldBase
 {
-    protected $helpBlock, $row, $relatedName, $formIgnore, $dataAttributes, $classes;
+    protected $helpBlock, $row, $relatedName, $formIgnore, $dataAttributes, $classes, $isSystem;
 
     /**
      * @return mixed
@@ -19,6 +19,23 @@ class FormFieldBase
     public function getHelpBlock()
     {
         return $this->helpBlock;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getIsSystem()
+    {
+        return $this->isSystem;
+    }
+
+    /**
+     * @param mixed $isSystem
+     */
+    public function setIsSystem($isSystem)
+    {
+        $this->isSystem = $isSystem;
+        return $this;
     }
 
     /**
