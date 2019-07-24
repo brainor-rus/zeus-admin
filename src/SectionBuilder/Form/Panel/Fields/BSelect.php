@@ -25,6 +25,7 @@ class BSelect extends Select
         $formIgnore = $this->getFormIgnore();
         $dataAttributes = $this->getDataAttributes();
         $classes = $this->getClasses();
+        $defaultSelected = $this->getDefaultSelected();
 
         return View::make('zeusAdmin::SectionBuilder/Form/Fields/bootstrap-select')
             ->with(compact(
@@ -38,7 +39,8 @@ class BSelect extends Select
                 'relatedName',
                 'formIgnore',
                 'dataAttributes',
-                'classes'
+                'classes',
+                'defaultSelected'
             ));
     }
 }
