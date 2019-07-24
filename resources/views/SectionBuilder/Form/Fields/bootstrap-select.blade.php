@@ -27,6 +27,8 @@
                                 @elseif($key == $value)
                                     selected
                                 @endif
+                            @elseif($key == $defaultSelected)
+                                selected
                             @endif
                     >
                         {{ $option }}
