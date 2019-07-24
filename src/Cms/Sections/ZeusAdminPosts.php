@@ -168,6 +168,13 @@ class ZeusAdminPosts extends Section
 
     public function afterSave(Request $request, $model = null)
     {
+        if($request->has('parent_id')) {
+            $parent = ZeusAdminPost::where('id', $request->parent_id)->first();
+            $parent->appendNode($model);
+        } else {
+            $model->saveAsRoot();
+        }
+
         $terms = [];
         $terms = array_merge($request->tags ?? [], $terms);
         $terms = array_merge($request->categories ?? [], $terms);
@@ -176,15 +183,11 @@ class ZeusAdminPosts extends Section
 
         if($request->url == '.')
         {
-            $model->url = $model->default_url;
-            $model->save();
-        }
+            $updatedModelClass = get_class($model);
+            $updatedModel = $updatedModelClass::where('id', $model->id)->first();
 
-        if($request->has('parent_id')) {
-            $parent = ZeusAdminPost::where('id', $request->parent_id)->first();
-            $parent->appendNode($model);
-        } else {
-            $model->saveAsRoot();
+            $model->url = $updatedModel->default_url;
+            $model->save();
         }
     }
 }
