@@ -302,6 +302,8 @@ class CmsController extends Controller
             $newFile->extension = $extension;
             $newFile->path = $destinationPath;
             $newFile->size = $fileSize;
+            $newFile->title = $filename;
+            $newFile->alt = $filename;
             if(!empty($request->uuid)) {
                 $newFile->uuid = $request->uuid;
             }

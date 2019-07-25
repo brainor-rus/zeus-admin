@@ -1,5 +1,5 @@
 <hr>
-<button type="button" class="btn btn-default" data-toggle="modal" data-target="#insertMediaModal">Медиа</button>
+<button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#insertMediaModal">Медиа</button>
 <hr>
 {{--<div class="modal fade" id="insertMediaModal" tabindex="-1" role="dialog" aria-labelledby="insertMediaModal" aria-hidden="true">--}}
     {{--<div class="modal-dialog modal-lg" role="document">--}}
