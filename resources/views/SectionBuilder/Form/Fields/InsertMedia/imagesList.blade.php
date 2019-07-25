@@ -18,7 +18,7 @@
                     @endphp
                 @else
                     @php
-                        $thumb_url = '/uploads/doc';
+                        $thumb_url = '/uploads/default';
                     @endphp
                 @endif
             @endif
@@ -32,7 +32,7 @@
                          data-insert-media-extension="{{ $file->extension }}"
                          data-insert-media-title="{{ $file->title }}"
                          data-insert-media-alt="{{ $file->alt }}"
-                         title="{{ basename($file->url) }}"
+                         title="{{ $file->title ?? basename($file->url) }}"
                     >
                 </div>
             </div>
@@ -50,4 +50,4 @@
         $( ".selectable" ).selectable();
     } );
 </script>
-<button type="button" class="btn btn-default image-list-more" id="image-list-more" data-wrapper-key="{{ $wrapperId }}" data-file-type="image" data-request-count="{{ $requestCount }}">Eщё файлы</button>
+<button type="button" class="btn btn-outline-secondary image-list-more" id="image-list-more" data-wrapper-key="{{ $wrapperId }}" data-file-type="image" data-request-count="{{ $requestCount }}">Eщё файлы</button>

@@ -20,12 +20,12 @@
                 {{ $node->title }}
                 @include('zeusAdmin::SectionBuilder.Form.Fields.Menu.TreeOutput.controls-buttons', ['node' => $node])
             </span>
-
+            <div id="collapse_{{ $node->id }}"  data-parent-id="{{ $node->id }}" class="collapse show">
+                <ul class="sortable">
+                </ul>
+            </div>
         </li>
-        <div id="collapse_{{ $node->id }}"  data-parent-id="{{ $node->id }}" class="collapse show">
-            <ul class="sortable">
-            </ul>
-        </div>
+
     @elseif (count($node->children))
         <li class="ui-state-default" id="{{ $node->id }}">
             <span class="sortable-li-text">

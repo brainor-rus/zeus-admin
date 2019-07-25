@@ -6,5 +6,6 @@
 <div id="insertMediaUploadMore"></div>
 <div class="modal-footer">
     <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+    <button type="button" class="btn  btn-success" id="insertSingleMediaAsLink" data-ckeditor-id="{{ $id }}">Вставить ссылкой</button>
     <button type="button" class="btn  btn-success" id="insertSingleMedia" data-ckeditor-id="{{ $id }}">Вставить в запись</button>
 </div>
