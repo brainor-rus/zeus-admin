@@ -21,43 +21,50 @@ class PluginNavigation
                         'url' => '/'.config('zeusAdmin.admin_url').'/cms/ZeusAdminPages',
                         'icon' => 'fas fa-users',
                         'text' => 'Страницы',
-                        'sectionPath' => 'Zeus\Admin\Cms\Sections\\'
+                        'sectionPath' => !empty(config('ZeusAdmin.cms_pages_section')) ?
+                            config('ZeusAdmin.user_path') . config('ZeusAdmin.cms_pages_section') : 'Zeus\Admin\Cms\Sections\ZeusAdminPages'
                     ],
                     [
                         'url' => '/'.config('zeusAdmin.admin_url').'/cms/ZeusAdminPosts',
                         'icon' => 'fas fa-address-book',
                         'text' => 'Записи',
-                        'sectionPath' => 'Zeus\Admin\Cms\Sections\\'
+                        'sectionPath' => !empty(config('ZeusAdmin.cms_posts_section')) ?
+                            config('ZeusAdmin.user_path') . config('ZeusAdmin.cms_posts_section') : 'Zeus\Admin\Cms\Sections\ZeusAdminPosts'
                     ],
                     [
                         'url' => '/'.config('zeusAdmin.admin_url').'/cms/ZeusAdminComments',
                         'icon' => 'fas fa-users',
                         'text' => 'Комментарии',
-                        'sectionPath' => 'Zeus\Admin\Cms\Sections\\'
+                        'sectionPath' => !empty(config('ZeusAdmin.cms_comments_section')) ?
+                            config('ZeusAdmin.user_path') . config('ZeusAdmin.cms_comments_section') : 'Zeus\Admin\Cms\Sections\ZeusAdminComments'
                     ],
                     [
                         'url' => '/'.config('zeusAdmin.admin_url').'/cms/ZeusAdminTerms',
                         'icon' => 'fas fa-users',
                         'text' => 'Рубрики',
-                        'sectionPath' => 'Zeus\Admin\Cms\Sections\\'
+                        'sectionPath' => !empty(config('ZeusAdmin.cms_terms_section')) ?
+                            config('ZeusAdmin.user_path') . config('ZeusAdmin.cms_terms_section') : 'Zeus\Admin\Cms\Sections\ZeusAdminTerms'
                     ],
                     [
                         'url' => '/'.config('zeusAdmin.admin_url').'/cms/ZeusAdminTags',
                         'icon' => 'fas fa-address-book',
                         'text' => 'Метки',
-                        'sectionPath' => 'Zeus\Admin\Cms\Sections\\'
+                        'sectionPath' => !empty(config('ZeusAdmin.cms_tags_section')) ?
+                            config('ZeusAdmin.user_path') . config('ZeusAdmin.cms_tags_section') : 'Zeus\Admin\Cms\Sections\ZeusAdminTags'
                     ],
                     [
                         'url' => '/'.config('zeusAdmin.admin_url').'/cms/ZeusAdminMenus',
                         'icon' => 'fas fa-address-book',
                         'text' => 'Меню',
-                        'sectionPath' => 'Zeus\Admin\Cms\Sections\\'
+                        'sectionPath' => !empty(config('ZeusAdmin.cms_menus_section')) ?
+                            config('ZeusAdmin.user_path') . config('ZeusAdmin.cms_menus_section') : 'Zeus\Admin\Cms\Sections\ZeusAdminMenus'
                     ],
                     [
                         'url' => '/'.config('zeusAdmin.admin_url').'/cms/ZeusAdminFiles',
                         'icon' => 'fas fa-address-book',
                         'text' => 'Файлы',
-                        'sectionPath' => 'Zeus\Admin\Cms\Sections\\'
+                        'sectionPath' => !empty(config('ZeusAdmin.cms_files_section')) ?
+                            config('ZeusAdmin.user_path') . config('ZeusAdmin.cms_files_section') : 'Zeus\Admin\Cms\Sections\ZeusAdminFiles'
                     ]
                 ]
             ]

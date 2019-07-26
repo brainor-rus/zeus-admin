@@ -47,7 +47,13 @@ class ZeusAdminHelper
     private static function checkSectionAccess($el) {
         $section = new Section(app());
         $sectionName = basename($el['url']);
-        $firedSection = $section->getSectionByName($sectionName, $el['sectionPath'] ?? null);
+
+        if(isset($el['sectionPath'])) {
+            $firedSection = new $el['sectionPath'](app());
+        } else {
+            $firedSection = $section->getSectionByName($sectionName, null);
+        }
+
 
         if($firedSection->isCheckAccess() && Auth::user()->cant('display', [get_class($firedSection), $sectionName])) {
             return false;
