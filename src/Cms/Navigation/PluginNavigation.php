@@ -20,37 +20,44 @@ class PluginNavigation
                     [
                         'url' => '/'.config('zeusAdmin.admin_url').'/cms/ZeusAdminPages',
                         'icon' => 'fas fa-users',
-                        'text' => 'Страницы'
+                        'text' => 'Страницы',
+                        'sectionPath' => 'Zeus\Admin\Cms\Sections\\'
                     ],
                     [
                         'url' => '/'.config('zeusAdmin.admin_url').'/cms/ZeusAdminPosts',
                         'icon' => 'fas fa-address-book',
-                        'text' => 'Записи'
+                        'text' => 'Записи',
+                        'sectionPath' => 'Zeus\Admin\Cms\Sections\\'
                     ],
                     [
                         'url' => '/'.config('zeusAdmin.admin_url').'/cms/ZeusAdminComments',
                         'icon' => 'fas fa-users',
-                        'text' => 'Комментарии'
+                        'text' => 'Комментарии',
+                        'sectionPath' => 'Zeus\Admin\Cms\Sections\\'
                     ],
                     [
                         'url' => '/'.config('zeusAdmin.admin_url').'/cms/ZeusAdminTerms',
                         'icon' => 'fas fa-users',
-                        'text' => 'Рубрики'
+                        'text' => 'Рубрики',
+                        'sectionPath' => 'Zeus\Admin\Cms\Sections\\'
                     ],
                     [
                         'url' => '/'.config('zeusAdmin.admin_url').'/cms/ZeusAdminTags',
                         'icon' => 'fas fa-address-book',
-                        'text' => 'Метки'
+                        'text' => 'Метки',
+                        'sectionPath' => 'Zeus\Admin\Cms\Sections\\'
                     ],
                     [
                         'url' => '/'.config('zeusAdmin.admin_url').'/cms/ZeusAdminMenus',
                         'icon' => 'fas fa-address-book',
-                        'text' => 'Меню'
+                        'text' => 'Меню',
+                        'sectionPath' => 'Zeus\Admin\Cms\Sections\\'
                     ],
                     [
                         'url' => '/'.config('zeusAdmin.admin_url').'/cms/ZeusAdminFiles',
                         'icon' => 'fas fa-address-book',
-                        'text' => 'Файлы'
+                        'text' => 'Файлы',
+                        'sectionPath' => 'Zeus\Admin\Cms\Sections\\'
                     ]
                 ]
             ]

@@ -42,7 +42,7 @@ class ZeusAdminController extends Controller
     public function getSidebarMenu(\Illuminate\Contracts\Foundation\Application  $app)
     {
         $navigation = NavigationManager::returnNavigation($app);
-        $user = Auth::user();
+        $navigation = ZeusAdminHelper::getAvailableNavigation($navigation);
 
         return response()->json($navigation);
     }
