@@ -3,6 +3,7 @@
 namespace Zeus\Admin\Controllers;
 
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\Auth;
 use Zeus\Admin\Helpers\ZeusAdminHelper;
 use Zeus\Admin\SectionBuilder\Display\Custom\DisplayCustom;
 use Zeus\Admin\SectionBuilder\Form\FormAction\FormAction;
@@ -41,6 +42,7 @@ class ZeusAdminController extends Controller
     public function getSidebarMenu(\Illuminate\Contracts\Foundation\Application  $app)
     {
         $navigation = NavigationManager::returnNavigation($app);
+        $user = Auth::user();
 
         return response()->json($navigation);
     }
@@ -52,6 +54,11 @@ class ZeusAdminController extends Controller
         $sectionModelSettings = $section->getSectionSettings(studly_case($sectionName), $pluginData['sectionPath'] ?? null);
 
         $firedSection = $section->getSectionByName($sectionName, $pluginData['sectionPath'] ?? null);
+
+        if($firedSection->isCheckAccess() && Auth::user()->cant('display', [get_class($firedSection), $sectionName])) {
+            abort(403);
+        }
+
         if($display instanceof DisplayCustom) {
             $results = $display->render($firedSection, $pluginData);
         } else {
@@ -72,7 +79,6 @@ class ZeusAdminController extends Controller
             ];
         }
 
-
         $meta = [
             'title' => $sectionModelSettings['title'],
             'scripts' => $meta->getScripts(),
@@ -86,6 +92,10 @@ class ZeusAdminController extends Controller
     {
         $firedSection = $section->getSectionByName($sectionName, $pluginData['sectionPath'] ?? null);
         if(isset($firedSection)) {
+            if($firedSection->isCheckAccess() && Auth::user()->cant('create', [get_class($firedSection), $sectionName])) {
+                abort(403);
+            }
+
             if ($firedSection->isCreatable()) {
                 $display = $section->fireCreate(studly_case($sectionName), [], $pluginData['sectionPath'] ?? null);
                 $meta = $display->getMeta();
@@ -113,6 +123,10 @@ class ZeusAdminController extends Controller
     {
         $firedSection = $section->getSectionByName($sectionName, $pluginData['sectionPath'] ?? null);
         if(isset($firedSection)) {
+            if($firedSection->isCheckAccess() && Auth::user()->cant('edit', [get_class($firedSection), $sectionName])) {
+                abort(403);
+            }
+
             if ($firedSection->isEditable()) {
                 $display = $section->fireEdit(studly_case($sectionName), [$id], $pluginData['sectionPath'] ?? null);
                 $meta = $display->getMeta();
@@ -136,6 +150,10 @@ class ZeusAdminController extends Controller
     public function createAction(Section $section, $sectionName, Request $request)
     {
         $class = $section->getSectionByName($sectionName, $request->pluginData['sectionPath'] ?? null);
+
+        if($class->isCheckAccess() && Auth::user()->cant('create', [get_class($class), $sectionName])) {
+            abort(403);
+        }
 
         if(isset($request->pluginData['redirectUrl']))
         {
@@ -212,6 +230,11 @@ class ZeusAdminController extends Controller
     public function editAction(Section $section, $sectionName, Request $request, $id)
     {
         $class = $section->getSectionByName($sectionName, $request->pluginData['sectionPath'] ?? null);
+
+        if($class->isCheckAccess() && Auth::user()->cant('edit', [get_class($class), $sectionName])) {
+            abort(403);
+        }
+
         if(isset($request->pluginData['redirectUrl']))
         {
             $params['{sectionName}'] = $sectionName;
@@ -289,6 +312,10 @@ class ZeusAdminController extends Controller
         $class = $section->getSectionByName($sectionName, $request->pluginData['sectionPath'] ?? null);
         if(!isset($class)) { abort(500); }
 
+        if($class->isCheckAccess() && Auth::user()->cant('delete', [get_class($class), $sectionName])) {
+            abort(403);
+        }
+
         if(isset($request->pluginData['deleteUrl']))
         {
             $params['{sectionName}'] = $sectionName;
@@ -331,7 +358,7 @@ class ZeusAdminController extends Controller
                 'html' => View::make('zeusAdmin::content.general')->with(compact('html'))->render(),
                 'data' => [
                     'pagination' => $pagination ?? '',
-                    ],
+                ],
                 'meta' => $meta ?? ''
             ]
         );
@@ -356,7 +383,7 @@ class ZeusAdminController extends Controller
 //                }
 //            )
         limit($request->quantity)
-        ->offset($request->requestCount*$request->quantity)
+            ->offset($request->requestCount*$request->quantity)
             ->orderBy('created_at','DESC')
             ->get();
         $requestCount = $request->requestCount+1;

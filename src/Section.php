@@ -11,6 +11,7 @@ class Section
     protected $model = null;
     protected $title = null;
     protected $showTopButtons = null;
+    protected $checkAccess = false;
 
     private $class;
 
@@ -30,7 +31,7 @@ class Section
 
         return get_object_vars(new $section($this->app));
     }
-    
+
     public function getSectionByName($sectionName, $sectionPath = null){
 
         $section =  ($sectionPath ?? config('zeusAdmin.user_path').'\\Sections\\') . $sectionName;
@@ -148,6 +149,38 @@ class Section
     public function beforeDelete(Request $request, $id = null)
     {
         // override in child
+    }
+
+    /**
+     * @return null
+     */
+    public function getModel()
+    {
+        return $this->model;
+    }
+
+    /**
+     * @param null $model
+     */
+    public function setModel($model): void
+    {
+        $this->model = $model;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isCheckAccess(): bool
+    {
+        return $this->checkAccess;
+    }
+
+    /**
+     * @param bool $checkAccess
+     */
+    public function setCheckAccess(bool $checkAccess): void
+    {
+        $this->checkAccess = $checkAccess;
     }
 
 }
