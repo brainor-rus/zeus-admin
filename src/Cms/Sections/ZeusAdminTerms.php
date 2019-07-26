@@ -16,6 +16,11 @@ class ZeusAdminTerms extends Section
     protected $title = 'Рубрики';
     protected $model = 'Zeus\Admin\Cms\Models\ZeusAdminTerm';
 
+    public function isCheckAccess(): bool
+    {
+        return config('zeusAdmin.cms_terms_check_access') ?? false;
+    }
+
     public static function onDisplay(){
         $pluginsFields = app()['PluginsData']['CmsData']['Posts']['DisplayField'] ?? [];
         $brFields = [

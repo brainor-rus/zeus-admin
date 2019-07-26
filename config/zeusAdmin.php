@@ -51,6 +51,14 @@ return [
 //    'cms_tags_section' => '',
 //    'cms_terms_section' => '',
 
+    'cms_comments_check_access' => false,
+    'cms_files_check_access' => false,
+    'cms_menus_check_access' => false,
+    'cms_pages_check_access' => false,
+    'cms_posts_check_access' => false,
+    'cms_tags_check_access' => false,
+    'cms_terms_check_access' => false,
+
     /*
     |--------------------------------------------------------------------------
     | Title

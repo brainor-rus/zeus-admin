@@ -22,6 +22,11 @@ class ZeusAdminPages extends Section
     protected $title = 'Страницы';
     protected $model = 'Zeus\Admin\Cms\Models\ZeusAdminPost';
 
+    public function isCheckAccess(): bool
+    {
+        return config('zeusAdmin.cms_pages_check_access') ?? false;
+    }
+
     public function __construct(\Illuminate\Contracts\Foundation\Application $app)
     {
         parent::__construct($app);

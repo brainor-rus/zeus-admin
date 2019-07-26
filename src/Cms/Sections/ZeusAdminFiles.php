@@ -21,6 +21,11 @@ class ZeusAdminFiles extends Section
     protected $title = 'Файлы';
     protected $model = 'Zeus\Admin\Cms\Models\ZeusAdminFile';
 
+    public function isCheckAccess(): bool
+    {
+        return config('zeusAdmin.cms_files_check_access') ?? false;
+    }
+
     public static function onDisplay(Request $request){
         $currentDisplay = Cookie::get('ZeusAdminFilesDisplay');
 
