@@ -49,6 +49,7 @@ class ZeusAdminHelper
         $sectionName = basename($el['url']);
 
         if(isset($el['sectionPath'])) {
+            $sectionName = basename(str_replace('\\', '/', $el['sectionPath']));
             $firedSection = new $el['sectionPath'](app());
         } else {
             $firedSection = $section->getSectionByName($sectionName, null);
