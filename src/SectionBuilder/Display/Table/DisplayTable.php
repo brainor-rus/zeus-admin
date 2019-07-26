@@ -306,8 +306,7 @@ class DisplayTable
             $user = Auth::user();
 
             $sectionClass = get_class($firedSection);
-            $sectionName = basename($sectionClass);
-
+            $sectionName = basename(str_replace('\\', '/', $sectionClass));
 
             $canCreate = $user->can('create', [$sectionClass, $sectionName]);
             $canEdit = $user->can('edit', [$sectionClass, $sectionName]);
