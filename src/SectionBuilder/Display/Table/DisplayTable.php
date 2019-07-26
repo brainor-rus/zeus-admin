@@ -8,6 +8,7 @@
 
 namespace Zeus\Admin\SectionBuilder\Display\Table;
 
+use Illuminate\Support\Facades\Auth;
 use Zeus\Admin\Section;
 use Zeus\Admin\SectionBuilder\Meta\Meta;
 use Illuminate\Support\Facades\DB;
@@ -215,7 +216,7 @@ class DisplayTable
                 $model = $model->{$scope}();
             }
         }
-        
+
         $data = $model
             ->when(isset($relationData), function ($query) use ($relationData) {
                 $query->with($relationData);
@@ -255,11 +256,11 @@ class DisplayTable
                 $data = $data->get();
             }
         } else {
-             $data = $data->paginate($this->getPagination());
+            $data = $data->paginate($this->getPagination());
         }
 
         $currentShow = $userPaginationArray[$currentShow];
-        
+
         $fields = array();
 
         foreach ($data as $key => $row)
@@ -297,6 +298,22 @@ class DisplayTable
 
         $isUserPagination = $this->getUserPagination();
 
+        $canCreate = true;
+        $canEdit = true;
+        $canDelete = true;
+
+        if($firedSection->isCheckAccess()) {
+            $user = Auth::user();
+
+            $sectionClass = get_class($firedSection);
+            $sectionName = basename($sectionClass);
+
+
+            $canCreate = $user->can('create', [$sectionClass, $sectionName]);
+            $canEdit = $user->can('edit', [$sectionClass, $sectionName]);
+            $canDelete = $user->can('delete', [$sectionClass, $sectionName]);
+        }
+
         $response['data'] = $data;
         $response['view'] = View::make('zeusAdmin::SectionBuilder/Display/Table/table')
             ->with(compact(
@@ -310,7 +327,10 @@ class DisplayTable
                 'userPaginationArray',
                 'currentShow',
                 'filter',
-                'filterPosition'
+                'filterPosition',
+                'canCreate',
+                'canEdit',
+                'canDelete'
             ));
 
         return $response;
