@@ -74,3 +74,23 @@ Route::post('/'.config('zeusAdmin.admin_url').'/api/tree-elements/menu/reorder',
     'as'   => 'zeusAdmin.tree.menu.reorder',
     'uses' => 'Zeus\Admin\Cms\Controllers\CmsController@menuElementsReorder',
 ]);
+
+Route::post('/'.config('zeusAdmin.admin_url').'/api/tree-elements/category/create', [
+    'as'   => 'zeusAdmin.tree.menu.create',
+    'uses' => 'Zeus\Admin\Cms\Controllers\CmsController@categoryElementCreate',
+]);
+
+Route::post('/'.config('zeusAdmin.admin_url').'/api/tree-elements/category/edit', [
+    'as'   => 'zeusAdmin.tree.menu.edit',
+    'uses' => 'Zeus\Admin\Cms\Controllers\CmsController@categoryElementEdit',
+]);
+
+Route::post('/'.config('zeusAdmin.admin_url').'/api/tree-elements/category/delete', [
+    'as'   => 'zeusAdmin.tree.menu.delete',
+    'uses' => 'Zeus\Admin\Cms\Controllers\CmsController@categoryElementDelete',
+]);
+
+Route::post('/'.config('zeusAdmin.admin_url').'/api/tree-elements/category/reorder', [
+    'as'   => 'zeusAdmin.tree.menu.reorder',
+    'uses' => 'Zeus\Admin\Cms\Controllers\CmsController@categoryElementsReorder',
+]);
