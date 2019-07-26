@@ -1,7 +1,7 @@
 <div class="modal fade" id="delete_tree_element_modal" tabindex="-1" role="dialog" aria-labelledby="deleteTreeElementModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <form class="delete-element-form" method="post" action="/api/tree-elements/menu/delete">
+            <form class="delete-element-form" method="post" action="/api/tree-elements/delete">
                 <div class="modal-header">
                     <h5 class="modal-title" id="deleteTreeElementModalLabel">Удалить элемент</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -10,6 +10,7 @@
                 </div>
                 <div class="modal-body">
                     <input id="menu_id_input" type="hidden" hidden="hidden" name="menu_id" value="{{$node->id}}">
+                    <input id="model_class" type="hidden" hidden="hidden" name="model_class" value="{{$modelPath}}">
                     <input id="tree_element_input" type="hidden" hidden="hidden" name="element_id" value="null">
                     <p>Вы уверены, что хотите удалить этот элемент?</p>
                 </div>

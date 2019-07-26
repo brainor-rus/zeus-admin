@@ -2,6 +2,7 @@
 
 namespace Zeus\Admin\Cms\Controllers;
 
+use Zeus\Admin\Cms\Helpers\TreeHelper;
 use Zeus\Admin\Cms\Helpers\CMSHelper;
 use Zeus\Admin\Cms\Helpers\MenuHelper;
 use Zeus\Admin\Cms\Models\ZeusAdminPost;
@@ -420,14 +421,16 @@ class CmsController extends Controller
         }
     }
 
-    public function categoryElementCreate(Request $request)
+    public function TreeCreate(Request $request)
     {
-        $newMenuElement = new ZeusAdminMenuElement;
 
-        $newMenuElement->menu_id = $request->menu_id;
-        $newMenuElement->title = $request->title;
+        $newMenuElement = new $request->model_class;
+
+
+        $newMenuElement->parent_id = $request->parent_id;
+        $newMenuElement->name = $request->name;
         $newMenuElement->slug = $request->slug;
-        $newMenuElement->url = $request->url;
+//        $newMenuElement->url = $request->url;
         $newMenuElement->description = $request->description;
 
         switch ($request->tree_type) {
@@ -436,55 +439,57 @@ class CmsController extends Controller
                 break;
 
             case "before":
-                $neighbor = ZeusAdminMenuElement::where('id',$request->tree_neighbor)->first();
+                $neighbor = $request->model_class::where('id',$request->tree_neighbor)->first();
                 $newMenuElement->beforeNode($neighbor);
 
             case "after":
-                $neighbor = ZeusAdminMenuElement::where('id',$request->tree_neighbor)->first();
+                $neighbor = $request->model_class::where('id',$request->tree_neighbor)->first();
                 $newMenuElement->afterNode($neighbor);
                 break;
 
             case "inside":
-                $parent = ZeusAdminMenuElement::where('id',$request->parent_id)->first();
+                $parent = $request->model_class::where('id',$request->parent_id)->first();
                 $newMenuElement->parent_id = $parent->id;
                 break;
         }
 
         $newMenuElement->save();
 
-        $elementsTree = MenuHelper::getMenuTreeById($request->menu_id);
+        $data = TreeHelper::getTreeById($request->menu_id,$request->model_class);
 
-        return view('zeusAdmin::SectionBuilder.Form.Fields.Menu.TreeOutput.Sortable.main')->with(compact('elementsTree'));
+        return view('zeusAdmin::SectionBuilder.Display.Tree.Sortable.main')->with(compact('data'));
     }
 
-    public function categoryElementEdit(Request $request)
+    public function TreeEdit(Request $request)
     {
-        $updateArray ['title'] = $request->title;
+        $updateArray ['name'] = $request->title;
         $updateArray ['slug'] = $request->slug;
-        $updateArray ['url'] = $request->url;
+//        $updateArray ['url'] = $request->url;
         $updateArray ['description'] = $request->description;
 
-        $newMenuElement =  ZeusAdminMenuElement::where('id', $request->element_id)->update($updateArray);
+        $modelPath = $request->modal_class;
 
-        $elementsTree = MenuHelper::getMenuTreeById($request->menu_id);
+        $newMenuElement =  $request->model_class::where('id', $request->menu_id)->update($updateArray);
 
-        return view('zeusAdmin::SectionBuilder.Form.Fields.Menu.TreeOutput.Sortable.main')->with(compact('elementsTree'));
+        $data = TreeHelper::getTreeById($request->menu_id,$request->model_class);
+
+        return view('zeusAdmin::SectionBuilder.Display.Tree.Sortable.main')->with(compact('data','modelPath'));
     }
 
-    public function categoryElementDelete(Request $request)
+    public function TreeDelete(Request $request)
     {
-        $newMenuElement =  ZeusAdminMenuElement::where('id', $request->element_id)->delete();
+        $newMenuElement =  $request->model_class::where('id', $request->menu_id)->delete();
 
-        $elementsTree = MenuHelper::getMenuTreeById($request->menu_id);
+        $data = TreeHelper::getTreeById($request->menu_id,$request->model_class);
 
-        return view('zeusAdmin::SectionBuilder.Form.Fields.Menu.TreeOutput.Sortable.main')->with(compact('elementsTree'));
+        return view('zeusAdmin::SectionBuilder.Display.Tree.Sortable.main')->with(compact('data'));
     }
 
-    public function categoryElementsReorder(Request $request)
+    public function TreeReorder(Request $request)
     {
-        dd($request);
 
-        $movingElement = ZeusAdminMenuElement::where('id', $request->id)->first();
+
+        $movingElement = $request->model::where('id', $request->id)->first();
 
         var_dump($request->parent_id .'-'.$request->next_id .'-'.$request->id);
 
@@ -492,17 +497,17 @@ class CmsController extends Controller
             $movingElement->makeRoot();
         } else {
             if ($request->parent_id != $movingElement->parent_id) {
-                $newParent = ZeusAdminMenuElement::where('id', $request->parent_id)->first();
+                $newParent = $request->model::where('id', $request->parent_id)->first();
                 $movingElement->appendToNode($newParent)->save();
             }
         }
 
         if ($request->next_id != 'undefined' && $request->next_id != '') {
-            $rightNode = ZeusAdminMenuElement::where('id', $request->next_id)->first();
+            $rightNode = $request->model::where('id', $request->next_id)->first();
             $movingElement->beforeNode($rightNode)->save();
         } else{
             if ($request->parent_id != 'root') {
-                $parentNode = ZeusAdminMenuElement::where('id', $request->parent_id)->first();
+                $parentNode = $request->model::where('id', $request->parent_id)->first();
                 $movingElement->appendToNode($parentNode)->save();
             }
         }

@@ -75,22 +75,22 @@ Route::post('/'.config('zeusAdmin.admin_url').'/api/tree-elements/menu/reorder',
     'uses' => 'Zeus\Admin\Cms\Controllers\CmsController@menuElementsReorder',
 ]);
 
-Route::post('/'.config('zeusAdmin.admin_url').'/api/tree-elements/category/create', [
-    'as'   => 'zeusAdmin.tree.menu.create',
-    'uses' => 'Zeus\Admin\Cms\Controllers\CmsController@categoryElementCreate',
+Route::post('/'.config('zeusAdmin.admin_url').'/api/tree-elements/create', [
+    'as'   => 'zeusAdmin.tree.create',
+    'uses' => 'Zeus\Admin\Cms\Controllers\CmsController@TreeCreate',
 ]);
 
-Route::post('/'.config('zeusAdmin.admin_url').'/api/tree-elements/category/edit', [
-    'as'   => 'zeusAdmin.tree.menu.edit',
-    'uses' => 'Zeus\Admin\Cms\Controllers\CmsController@categoryElementEdit',
+Route::post('/'.config('zeusAdmin.admin_url').'/api/tree-elements/edit', [
+    'as'   => 'zeusAdmin.tree.edit',
+    'uses' => 'Zeus\Admin\Cms\Controllers\CmsController@TreeEdit',
 ]);
 
-Route::post('/'.config('zeusAdmin.admin_url').'/api/tree-elements/category/delete', [
-    'as'   => 'zeusAdmin.tree.menu.delete',
-    'uses' => 'Zeus\Admin\Cms\Controllers\CmsController@categoryElementDelete',
+Route::post('/'.config('zeusAdmin.admin_url').'/api/tree-elements/delete', [
+    'as'   => 'zeusAdmin.tree.delete',
+    'uses' => 'Zeus\Admin\Cms\Controllers\CmsController@TreeDelete',
 ]);
 
-Route::post('/'.config('zeusAdmin.admin_url').'/api/tree-elements/category/reorder', [
-    'as'   => 'zeusAdmin.tree.menu.reorder',
-    'uses' => 'Zeus\Admin\Cms\Controllers\CmsController@categoryElementsReorder',
+Route::post('/'.config('zeusAdmin.admin_url').'/api/tree-elements/reorder', [
+    'as'   => 'zeusAdmin.tree.reorder',
+    'uses' => 'Zeus\Admin\Cms\Controllers\CmsController@TreeReorder',
 ]);

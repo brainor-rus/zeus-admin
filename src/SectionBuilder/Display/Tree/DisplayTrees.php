@@ -6,7 +6,7 @@
  * Time: 13:12
  */
 
-namespace Zeus\Admin\SectionBuilder\Display\Trees;
+namespace Zeus\Admin\SectionBuilder\Display\Tree;
 
 use Zeus\Admin\Cms\Helpers\MenuHelper;
 use Zeus\Admin\Section;
@@ -273,7 +273,7 @@ class DisplayTrees
 
 
         $response['data'] = $data;
-        $response['view'] = View::make('zeusAdmin::SectionBuilder/Display/Trees/trees')
+        $response['view'] = View::make('zeusAdmin::SectionBuilder/Display/Tree/tree')
             ->with(compact(
                 'data',
                 'columns',

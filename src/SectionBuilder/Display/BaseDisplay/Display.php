@@ -12,7 +12,7 @@ namespace Zeus\Admin\SectionBuilder\Display\BaseDisplay;
 use Zeus\Admin\SectionBuilder\Display\Custom\DisplayCustom;
 use Zeus\Admin\SectionBuilder\Display\Table\DisplayTable;
 use Zeus\Admin\SectionBuilder\Display\Tiles\DisplayTiles;
-use Zeus\Admin\SectionBuilder\Display\Trees\DisplayTrees;
+use Zeus\Admin\SectionBuilder\Display\Tree\DisplayTrees;
 
 class Display
 {
@@ -31,7 +31,7 @@ class Display
         return new DisplayCustom($view ?? null);
     }
 
-    public static function trees($columns = null, $pagination = null)
+    public static function tree($columns = null, $pagination = null)
     {
         return new DisplayTrees($columns ?? null, $pagination ?? 10);
     }
