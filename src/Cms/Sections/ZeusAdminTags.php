@@ -15,6 +15,11 @@ class ZeusAdminTags extends Section
     protected $title = 'Метки';
     protected $model = 'Zeus\Admin\Cms\Models\ZeusAdminTag';
 
+    public function isCheckAccess(): bool
+    {
+        return config('zeusAdmin.cms_tags_check_access') ?? false;
+    }
+
     public static function onDisplay(){
         $pluginsFields = app()['PluginsData']['CmsData']['Posts']['DisplayField'] ?? [];
         $brFields = [

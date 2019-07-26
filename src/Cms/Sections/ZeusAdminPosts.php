@@ -21,6 +21,11 @@ class ZeusAdminPosts extends Section
     protected $title = 'Записи';
     protected $model = 'Zeus\Admin\Cms\Models\ZeusAdminPost';
 
+    public function isCheckAccess(): bool
+    {
+        return config('zeusAdmin.cms_posts_check_access') ?? false;
+    }
+
     public function __construct(\Illuminate\Contracts\Foundation\Application $app)
     {
         parent::__construct($app);

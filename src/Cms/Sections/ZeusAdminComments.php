@@ -15,6 +15,11 @@ class ZeusAdminComments extends Section
     protected $title = 'Комментарии';
     protected $model = 'Zeus\Admin\Cms\Models\ZeusAdminComment';
 
+    public function isCheckAccess(): bool
+    {
+        return config('zeusAdmin.cms_comments_check_access') ?? false;
+    }
+
     public static function onDisplay(){
         $pluginsFields = app()['PluginsData']['CmsData']['Comments']['DisplayField'] ?? [];
         $brFields = [

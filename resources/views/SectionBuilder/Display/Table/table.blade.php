@@ -4,7 +4,7 @@
             <div class="card-body">
                 <div class="row align-items-center">
                     <div class="col-auto">
-                        @if($firedSection->isCreatable())
+                        @if($firedSection->isCreatable() && $canCreate)
                             <a @click.prevent="$emit('redirectTo',$event)" href="{{ Request::url() }}/create" class="btn btn-primary">Создать</a>
                         @endif
                     </div>
@@ -98,23 +98,27 @@
                         @else
                             @switch(basename(str_replace('\\', '/', get_class($column))))
                                 @case('Text')
-                                    {!! $field[$column->getName()] !!}
-                                    @break
+                                {!! $field[$column->getName()] !!}
+                                @break
                                 @case('Link')
+                                @if($firedSection->isEditable() && $canEdit)
                                     <a href="{{ parse_url(Request::url(), PHP_URL_PATH) . '/' . $field['brRowId'] . '/edit' }}">{!! $field[$column->getName()] !!}</a>
-                                    @break
-                                @default
+                                @else
                                     {!! $field[$column->getName()] !!}
-                                    @break
+                                @endif
+                                @break
+                                @default
+                                {!! $field[$column->getName()] !!}
+                                @break
                             @endswitch
                         @endif
                     </td>
                 @endforeach
                 <td class="text-right">
-                    @if($firedSection->isEditable())
+                    @if($firedSection->isEditable() && $canEdit)
                         <a @click.prevent="$emit('redirectTo',$event)" href="{{ parse_url(Request::url(), PHP_URL_PATH) . '/' . $field['brRowId'] . '/edit' }}" class="text-success">Ред.</a>
                     @endif
-                    @if($firedSection->isDeletable())
+                    @if($firedSection->isDeletable() && $canDelete)
                         <button @click="$emit('showDeleteModal',$event)" type="button" class="delete-btn text-danger bg-transparent border-0" data-delete-link="{{ Request::url() . '/' . $field['brRowId'] . '/delete' }}">Удал.</button>
                     @endif
                 </td>
