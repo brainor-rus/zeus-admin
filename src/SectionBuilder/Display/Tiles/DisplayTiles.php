@@ -8,6 +8,7 @@
 
 namespace Zeus\Admin\SectionBuilder\Display\Tiles;
 
+use Illuminate\Support\Facades\Auth;
 use Zeus\Admin\Section;
 use Zeus\Admin\SectionBuilder\Meta\Meta;
 use Illuminate\Support\Facades\DB;
@@ -94,8 +95,35 @@ class DisplayTiles
 
         $nav = self::getNav();
 
+        $canCreate = true;
+        $canEdit = true;
+        $canDelete = true;
+
+        if($firedSection->isCheckAccess()) {
+            $user = Auth::user();
+
+            $sectionClass = get_class($firedSection);
+            $sectionName = basename($sectionClass);
+
+
+            $canCreate = $user->can('create', [$sectionClass, $sectionName]);
+            $canEdit = $user->can('edit', [$sectionClass, $sectionName]);
+            $canDelete = $user->can('delete', [$sectionClass, $sectionName]);
+        }
+
         $response['data'] = $data;
-        $response['view'] = View::make('zeusAdmin::SectionBuilder/Display/Tiles/tiles')->with(compact('data', 'elements', 'fields', 'firedSection', 'pluginData', 'nav'));
+        $response['view'] = View::make('zeusAdmin::SectionBuilder/Display/Tiles/tiles')
+            ->with(compact(
+                'data',
+                'elements',
+                'fields',
+                'firedSection',
+                'pluginData',
+                'nav',
+                'canCreate',
+                'canEdit',
+                'canDelete'
+            ));
 
         return $response;
     }
