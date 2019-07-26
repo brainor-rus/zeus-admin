@@ -409,7 +409,7 @@ class CmsController extends Controller
             }
         }
 
-        if ($request->next_id != 'undefined') {
+        if ($request->next_id != 'undefined' && $request->next_id != '') {
             $rightNode = ZeusAdminMenuElement::where('id', $request->next_id)->first();
             $movingElement->beforeNode($rightNode)->save();
         } else{
