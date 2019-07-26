@@ -56,7 +56,7 @@ class ZeusAdminController extends Controller
         $firedSection = $section->getSectionByName($sectionName, $pluginData['sectionPath'] ?? null);
 
         if($firedSection->isCheckAccess() && Auth::user()->cant('display', [get_class($firedSection), $sectionName])) {
-            abort(403);
+            return $this->render("Доступ запрещён");
         }
 
         if($display instanceof DisplayCustom) {
@@ -93,7 +93,7 @@ class ZeusAdminController extends Controller
         $firedSection = $section->getSectionByName($sectionName, $pluginData['sectionPath'] ?? null);
         if(isset($firedSection)) {
             if($firedSection->isCheckAccess() && Auth::user()->cant('create', [get_class($firedSection), $sectionName])) {
-                abort(403);
+                return $this->render("Доступ запрещён");
             }
 
             if ($firedSection->isCreatable()) {
@@ -124,7 +124,7 @@ class ZeusAdminController extends Controller
         $firedSection = $section->getSectionByName($sectionName, $pluginData['sectionPath'] ?? null);
         if(isset($firedSection)) {
             if($firedSection->isCheckAccess() && Auth::user()->cant('edit', [get_class($firedSection), $sectionName])) {
-                abort(403);
+                return $this->render("Доступ запрещён");
             }
 
             if ($firedSection->isEditable()) {

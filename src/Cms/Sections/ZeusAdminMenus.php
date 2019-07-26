@@ -21,6 +21,11 @@ class ZeusAdminMenus extends Section
     protected $title = 'Меню';
     protected $model = 'Zeus\Admin\Cms\Models\ZeusAdminMenu';
 
+    public function isCheckAccess(): bool
+    {
+        return config('zeusAdmin.cms_menus_check_access') ?? false;
+    }
+
     public function __construct(\Illuminate\Contracts\Foundation\Application $app)
     {
         parent::__construct($app);
