@@ -19,6 +19,16 @@ class ZeusAdminCustomFieldData extends Model
 
     public function field()
     {
-        return $this->belongsTo(ZeusAdminCustomField::class, 'id', 'field_id');
+        return $this->belongsTo(ZeusAdminCustomField::class, 'field_id', 'id');
+    }
+
+    public function getFieldSlugAttribute()
+    {
+        return $this->field()->first()->slug;
+    }
+
+    public function getGroupSlugAttribute()
+    {
+        return $this->field()->first()->group()->first()->slug;
     }
 }

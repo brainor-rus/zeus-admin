@@ -18,7 +18,8 @@ use Zeus\Admin\Cms\Models\ZeusAdminMenuElement;
 use Carbon\Carbon;
 use Image;
 use Zeus\Admin\Section;
-use SEO;
+use SEOMeta;
+use OpenGraph;
 
 
 class CmsController extends Controller
@@ -166,13 +167,14 @@ class CmsController extends Controller
             'slug' => $slug,
         ];
         $page = CMSHelper::getQueryBuilder($args);
-        $data = $page->first();
+        $page = $page->with('customFields.field.group')->first();
+        $customFields = $page->customFields;
+        $data = $page;
 
         if(!$data)
         {
             abort(404, 'Страница не найдена');
         }
-//        dd($data);
         if($data->type == 'post'){
             $teplate = 'post';
             $teplateFolder = config('zeusAdmin.cms_posts_templates_path');
@@ -191,9 +193,14 @@ class CmsController extends Controller
             throw new \Exception('Шаблон ' . $templatePath . ' не найден');
         }
 
-        SEO::setTitle('Home');
-        SEO::setDescription('This is my page description');
-        SEO::addKeyword(['key1', 'key2', 'key3']);
+        SEOMeta::setTitle($customFields->where('fieldSlug', 'seo-title')->first()->value ?? '');
+        SEOMeta::setDescription($customFields->where('fieldSlug', 'seo-descriptio')->first()->value ?? '');
+        SEOMeta::addKeyword([$customFields->where('fieldSlug', 'seo-keywords')->first()->value ?? '']);
+        SEOMeta::setCanonical(url($page->url));
+
+        OpenGraph::setDescription($customFields->where('fieldSlug', 'seo-descriptio')->first()->value ?? '');
+        OpenGraph::setTitle($customFields->where('fieldSlug', 'seo-title')->first()->value ?? '');
+        OpenGraph::setUrl(url($page->url));
 
         return view($templatePath)->with(compact('data'));
     }
@@ -205,8 +212,9 @@ class CmsController extends Controller
         $page = $modelPath::where([
             ['type', 'page'],
             ['slug', $slug]
-        ]);
+        ])->with('customFields.field.group');
         $page = $page->first();
+        $customFields = $page->customFields;
 
         if(!$page)
         {
@@ -224,6 +232,15 @@ class CmsController extends Controller
             throw new \Exception('Шаблон ' . $templatePath . ' не найден');
         }
 
+        SEOMeta::setTitle($customFields->where('fieldSlug', 'seo-title')->first()->value ?? '');
+        SEOMeta::setDescription($customFields->where('fieldSlug', 'seo-descriptio')->first()->value ?? '');
+        SEOMeta::addKeyword([$customFields->where('fieldSlug', 'seo-keywords')->first()->value ?? '']);
+        SEOMeta::setCanonical(url($page->url));
+
+        OpenGraph::setDescription($customFields->where('fieldSlug', 'seo-descriptio')->first()->value ?? '');
+        OpenGraph::setTitle($customFields->where('fieldSlug', 'seo-title')->first()->value ?? '');
+        OpenGraph::setUrl(url($page->url));
+
         return [
             'view'=>$templatePath,
             'data'=>compact('page')
@@ -237,8 +254,9 @@ class CmsController extends Controller
         $post = $modelPath::where([
             ['type', 'post'],
             ['slug', $slug]
-        ]);
+        ])->with('customFields.field.group');
         $post = $post->first();
+        $customFields = $post->customFields;
 
         if(!$post)
         {
@@ -260,6 +278,15 @@ class CmsController extends Controller
         {
             throw new \Exception('Шаблон ' . $templatePath . ' не найден');
         }
+
+        SEOMeta::setTitle($customFields->where('fieldSlug', 'seo-title')->first()->value ?? '');
+        SEOMeta::setDescription($customFields->where('fieldSlug', 'seo-descriptio')->first()->value ?? '');
+        SEOMeta::addKeyword([$customFields->where('fieldSlug', 'seo-keywords')->first()->value ?? '']);
+        SEOMeta::setCanonical(url($page->url));
+
+        OpenGraph::setDescription($customFields->where('fieldSlug', 'seo-descriptio')->first()->value ?? '');
+        OpenGraph::setTitle($customFields->where('fieldSlug', 'seo-title')->first()->value ?? '');
+        OpenGraph::setUrl(url($page->url));
 
         return [
             'view'=>$templatePath,
