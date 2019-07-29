@@ -45,7 +45,7 @@ class ZeusAdminCustomField extends Model
 
     public function group()
     {
-        return $this->belongsTo(ZeusAdminCustomFieldGroup::class, 'id', 'group_id');
+        return $this->belongsTo(ZeusAdminCustomFieldGroup::class, 'group_id', 'id');
     }
 
     public function data()
