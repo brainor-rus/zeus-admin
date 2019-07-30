@@ -15,4 +15,6 @@ mix.js('resources/js/app.js', 'public/js')
    .sass('resources/sass/app.scss', 'public/css')
     .setPublicPath('./')
     .copy('public/js/app.js','public/packages/zeusAdmin/js')
-    .copy('public/css/app.css','public/packages/zeusAdmin/css');
+    .copy('public/css/app.css','public/packages/zeusAdmin/css')
+    .copy('public/js/app.js','../../../public/packages/zeusAdmin/js')
+    .copy('public/css/app.css','../../../public/packages/zeusAdmin/css');
