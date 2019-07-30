@@ -15,7 +15,18 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-12 panel-header">
-                        <h1>{{ title }}</h1>
+                        <div class="row">
+                            <div class="col-sm-12 col-md-6">
+                                <h1>{{ title }}</h1>
+                            </div>
+                            <div class="col-sm-12 col-md-6 text-right justify-content-center align-self-center">
+                                <ul class="list-inline">
+                                    <li class="list-inline-item"><a href="/"><i class="fas fa-desktop"></i> На сайт</a></li>
+                                    <li class="list-inline-item"><a href="/logout"><i class="fas fa-sign-out-alt"></i> Выход</a></li>
+                                </ul>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
                 <div class="row panel-content-wrapper">
