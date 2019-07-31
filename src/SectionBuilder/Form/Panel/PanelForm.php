@@ -15,12 +15,30 @@ use Zeus\Admin\Section;
 
 class PanelForm
 {
-    private $columns, $meta, $showButtons = true, $showTopButtons = false;
+    private $columns, $meta, $showButtons = true, $showTopButtons = false, $attributes;
 
     public function __construct($columns)
     {
         $this->setColumns($columns);
         $this->meta = new Meta;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAttributes()
+    {
+        return $this->attributes;
+    }
+
+    /**
+     * @param mixed $attributes
+     * @return $this
+     */
+    public function setAttributes($attributes)
+    {
+        $this->attributes = $attributes;
+        return $this;
     }
 
     /**
@@ -140,9 +158,20 @@ class PanelForm
 
         $showButtons = self::isShowButtons();
         $showTopButtons = self::isShowTopButtons();
+        $attributes = $this->getAttributes();
 
         $response = View::make('zeusAdmin::SectionBuilder/Form/Panel/panel')
-            ->with(compact('model', 'columns', 'sectionName', 'action', 'id', 'pluginData', 'showButtons','showTopButtons'));
+            ->with(compact(
+                'model',
+                'columns',
+                'sectionName',
+                'action',
+                'id',
+                'pluginData',
+                'showButtons',
+                'showTopButtons',
+                'attributes'
+            ));
 
         return $response;
     }
