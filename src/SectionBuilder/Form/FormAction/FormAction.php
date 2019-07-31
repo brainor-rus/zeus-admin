@@ -108,12 +108,20 @@ class FormAction
             $foreignModel = $datas['foreignModel'];
             $foreignKey = $datas['foreignKey'];
 
+            $updatedForeings = [];
+
             if($model->{$relation}() instanceof HasMany) {
                 $newModels = [];
 
                 if(isset($datas['rows'])) {
                     foreach($datas['rows'] as $row) {
-                        $relatedModel = new $foreignModel();
+                        if(in_array($foreignKey, array_keys($row))) {
+                            $relatedModel = $foreignModel::where($foreignKey, $row[$foreignKey])->first();
+                            $updatedForeings[] = $row[$foreignKey];
+                        } else {
+                            $relatedModel = new $foreignModel();
+                        }
+
 
                         foreach($row as $field => $value) {
                             if($field === $foreignKey) {
@@ -127,7 +135,7 @@ class FormAction
                     }
                 }
 
-                $model->{$relation}()->delete();
+                $model->{$relation}()->whereNotIn($foreignKey, $updatedForeings)->delete();
                 $model->{$relation}()->saveMany($newModels);
             }
 
