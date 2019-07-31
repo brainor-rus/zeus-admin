@@ -417,12 +417,15 @@
                 let ajaxUrl = event.target.attributes.action.value + document.location.search,
                     method = event.target.attributes.method.value,
                     formId = event.target.attributes.id.value,
-                    formData = $('#'+formId).serialize(),
+                    formData = new FormData(event.target),
                     vm = this;
                 axios({
                     method:method,
                     url:ajaxUrl,
-                    data:formData
+                    data:formData,
+                    headers: {
+                      'content-type': 'multipart/form-data',
+                    }
                 })
                 .then(function (response) {
                     console.log(response);
