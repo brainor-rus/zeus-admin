@@ -34,7 +34,7 @@ Route::group(['middleware' => config('zeusAdmin.middleware')], function () {
     ]);
 
     Route::post('/'.config('zeusAdmin.admin_url').'/{section}/create-action', [
-        'as'   => 'zeusAdmin.section.create.form',
+        'as'   => 'zeusAdmin.section.create.form.action',
         'uses' => 'Zeus\Admin\Controllers\ZeusAdminController@createAction',
     ]);
 
