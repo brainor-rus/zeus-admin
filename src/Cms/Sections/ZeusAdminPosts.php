@@ -88,7 +88,7 @@ class ZeusAdminPosts extends Section
         $pluginsFieldsLeft = app()['PluginsData']['CmsData']['Posts']['EditField']['Left'] ?? [];
         $pluginsFieldsRight = app()['PluginsData']['CmsData']['Posts']['EditField']['Right'] ?? [];
 
-        $cur_page = $id ? ZeusAdminPost::with('ancestors')->where('id', $id)->first()->toArray() : null;
+        $cur_page = $id ? ZeusAdminPost::with('ancestors','categories')->where('id', $id)->first()->toArray() : null;
 
         $templates = TemplatesHelper::getTemplates('post');
 
@@ -125,6 +125,7 @@ class ZeusAdminPosts extends Section
             '0.08' => FormField::wysiwyg('content', 'Содержимое'),
         ];
         $brFieldsRight = [
+            '0.001' => FormField::custom(view('zeusAdmin::cms.partials.showPostLink')->with(compact('cur_page'))),
             '0.01' => FormField::bselect('status', 'Статус')
                 ->setOptions([
                     'draft' => 'Черновик',

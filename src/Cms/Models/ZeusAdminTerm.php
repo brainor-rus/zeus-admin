@@ -42,8 +42,13 @@ class ZeusAdminTerm extends Model
      * @var array
      */
     protected $fillable = [
-        'type', 'title', 'slug', 'description', 'parent_id', '_lft', '_rgt', 'depth'
+        'type', 'title', 'slug', 'description','template', 'parent_id', '_lft', '_rgt', 'depth', 'created_at', 'updated_at'
     ];
+
+    public function customFields()
+    {
+        return $this->morphMany('Zeus\Admin\Cms\Models\ZeusAdminCustomFieldData', 'customable', 'customable_type', 'customable_id', 'id');
+    }
 
     public function scopeTags($query)
     {

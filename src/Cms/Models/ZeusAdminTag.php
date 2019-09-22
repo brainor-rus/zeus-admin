@@ -31,6 +31,6 @@ class ZeusAdminTag extends ZeusAdminTerm
      * @var array
      */
     protected $fillable = [
-        'type', 'title', 'slug', 'description', 'parent_id', '_lft', '_rgt', 'depth', 'created_at', 'updated_at'
+        'type', 'title', 'slug', 'description', 'template', 'parent_id', '_lft', '_rgt', 'depth', 'created_at', 'updated_at'
     ];
 }
