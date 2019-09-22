@@ -5,6 +5,7 @@ namespace App\Http\Helpers\Posts\Helpers;
 namespace Zeus\Admin\Cms\Helpers;
 
 use Zeus\Admin\Cms\Models\ZeusAdminPost;
+use Zeus\Admin\Cms\Models\ZeusAdminTerm;
 
 class CMSHelper
 {
@@ -74,6 +75,11 @@ class CMSHelper
     }
 
     public static function getByUrl($url) {
-        return ZeusAdminPost::where('url',$url)->first();
+        return ZeusAdminPost::with('categories')
+        ->where('url',$url)->first();
+    }
+
+    public static function getTermBySlug($slug) {
+        return ZeusAdminTerm::where('slug',$slug)->first();
     }
 }

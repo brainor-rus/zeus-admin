@@ -5,6 +5,7 @@ namespace Zeus\Admin\Cms\Controllers;
 use Zeus\Admin\Cms\Helpers\CMSHelper;
 use Zeus\Admin\Cms\Helpers\MenuHelper;
 use Zeus\Admin\Cms\Models\ZeusAdminPost;
+use Zeus\Admin\Cms\Models\ZeusAdminTerm;
 use Zeus\Admin\Cms\Providers\Cms;
 use Zeus\Admin\Controllers\ZeusAdminController;
 use http\Exception;
@@ -267,7 +268,7 @@ class CmsController extends Controller
             abort(404, 'Запись не найдена');
         }
 
-        if($page->template){
+        if($post->template){
             $teplate = $post->template;
         }else{
             $teplate = 'post';
@@ -282,15 +283,56 @@ class CmsController extends Controller
         SEOMeta::setTitle($customFields->where('fieldSlug', 'seo-title')->first()->value ?? '');
         SEOMeta::setDescription($customFields->where('fieldSlug', 'seo-descriptio')->first()->value ?? '');
         SEOMeta::addKeyword([$customFields->where('fieldSlug', 'seo-keywords')->first()->value ?? '']);
-        SEOMeta::setCanonical(url($page->url));
+        SEOMeta::setCanonical(url($post->url));
 
         OpenGraph::setDescription($customFields->where('fieldSlug', 'seo-descriptio')->first()->value ?? '');
         OpenGraph::setTitle($customFields->where('fieldSlug', 'seo-title')->first()->value ?? '');
-        OpenGraph::setUrl(url($page->url));
+        OpenGraph::setUrl(url($post->url));
 
         return [
             'view'=>$templatePath,
             'data'=>compact('post')
+        ];
+    }
+
+    public static function showTerm($slug)
+    {
+        $modelPath = config('zeusAdmin.term_model') ?? ZeusAdminTerm::class;
+        $term = $modelPath::where([
+                ['slug', $slug]
+            ])
+            ->with('customFields.field.group')
+            ->first();
+        $customFields = $term->customFields;
+
+        if(!$term)
+        {
+            abort(404, 'Страница не найдена');
+        }
+
+        if($term->template){
+            $teplate = $term->template;
+        }else{
+            $teplate = 'term';
+        }
+        $templatePath = config('zeusAdmin.cms_terms_templates_path') . '.' . $teplate;
+        if(!View::exists($templatePath))
+        {
+            throw new \Exception('Шаблон ' . $templatePath . ' не найден');
+        }
+
+        SEOMeta::setTitle($customFields->where('fieldSlug', 'seo-title')->first()->value ?? '');
+        SEOMeta::setDescription($customFields->where('fieldSlug', 'seo-descriptio')->first()->value ?? '');
+        SEOMeta::addKeyword([$customFields->where('fieldSlug', 'seo-keywords')->first()->value ?? '']);
+        SEOMeta::setCanonical(url('/'.$term->slug));
+
+        OpenGraph::setDescription($customFields->where('fieldSlug', 'seo-descriptio')->first()->value ?? '');
+        OpenGraph::setTitle($customFields->where('fieldSlug', 'seo-title')->first()->value ?? '');
+        OpenGraph::setUrl(url('/'.$term->slug));
+
+        return [
+            'view'=>$templatePath,
+            'data'=>compact('term')
         ];
     }
 

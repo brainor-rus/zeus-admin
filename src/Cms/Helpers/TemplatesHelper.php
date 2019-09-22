@@ -15,6 +15,19 @@ class TemplatesHelper
     public static function getTemplates($type)
     {
         $templatesDirectory = $type == 'page' ? config('zeusAdmin.cms_pages_templates_path') : config('zeusAdmin.cms_posts_templates_path');
+
+        switch ($type) {
+            case 'page':
+                $templatesDirectory = config('zeusAdmin.cms_pages_templates_path');
+                break;
+            case 'post':
+                $templatesDirectory = config('zeusAdmin.cms_posts_templates_path');
+                break;
+            case 'term':
+                $templatesDirectory = config('zeusAdmin.cms_terms_templates_path');
+                break;
+        }
+
         $templatesDirectory = Config::get('view.paths')[0] . '/' . str_replace('.', '/', $templatesDirectory);
         $templates = [];
         if ($handle = opendir($templatesDirectory)) {

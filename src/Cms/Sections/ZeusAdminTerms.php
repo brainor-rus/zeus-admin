@@ -2,6 +2,7 @@
 
 namespace Zeus\Admin\Cms\Sections;
 
+use Zeus\Admin\Cms\Helpers\TemplatesHelper;
 use Zeus\Admin\Cms\Models\ZeusAdminTerm;
 use Zeus\Admin\Section;
 use Zeus\Admin\SectionBuilder\Display\BaseDisplay\Display;
@@ -47,6 +48,7 @@ class ZeusAdminTerms extends Section
     {
         $pluginsFields = app()['PluginsData']['CmsData']['Terms']['EditField'] ?? [];
 
+        $templates = TemplatesHelper::getTemplates('term');
         $terms_tree = ZeusAdminTerm::where('type', 'category')->get()->toTree()->toArray();
         $cur_term = $id ? ZeusAdminTerm::with('ancestors')->where('id', $id)->first()->toArray() : null;
         $termsTreeView = view('zeusAdmin::cms.partials.termsTree')->with(compact('terms_tree', 'cur_term'));
@@ -55,7 +57,12 @@ class ZeusAdminTerms extends Section
             '0.01' => FormField::input('title', 'Название')->setRequired(true),
             '0.02' => FormField::input('slug', 'Ярлык (необязательно)'),
             '0.03' => FormField::textarea('description', 'Описание'),
-            '0.04' => FormField::custom($termsTreeView),
+            '0.04' => FormField::bselect('template', 'Шаблон')
+                ->setDataAttributes([
+                    'data-live-search="true"'
+                ])
+                ->setOptions($templates),
+            '0.05' => FormField::custom($termsTreeView),
             '99.99' => FormField::hidden('type')->setValue("category"),
         ];
 

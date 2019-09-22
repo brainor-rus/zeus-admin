@@ -34,9 +34,11 @@ return [
 
     'cms_pages_templates_path' => 'zeusAdmin.cms.templates.pages',
     'cms_posts_templates_path' => 'zeusAdmin.cms.templates.posts',
+    'cms_terms_templates_path' => 'zeusAdmin.cms.templates.terms',
     'cms_url_prefix' => 'cms',
     'cms_page_prefix' => 'page',
     'cms_post_prefix' => 'post',
+    'cms_term_prefix' => 'term',
 
 //    'locale_field' => '',
 
