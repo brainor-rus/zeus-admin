@@ -10,7 +10,7 @@
 		"laravel/framework": ">=5.6",
         "cviebrock/eloquent-sluggable": ">=4.2",
         "kalnoy/nestedset": ">=5.0",
-        "intervention/image": ">=2.5*",
+        "intervention/image": ">=2.5",
         "artesaos/seotools": ">=0.16",
         "emadadly/laravel-uuid": ">=1.2"
     },
