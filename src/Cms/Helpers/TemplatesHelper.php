@@ -9,6 +9,7 @@
 namespace Zeus\Admin\Cms\Helpers;
 
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Str;
 
 class TemplatesHelper
 {
@@ -48,7 +49,7 @@ class TemplatesHelper
                     }
                     if(isset($commentParams)) {
                         if (isset($commentParams['class'])) {
-                            if($commentParams['class'] == 'ZeusAdmin' . studly_case($type) . 'Template')
+                            if($commentParams['class'] == 'ZeusAdmin' . Str::studly($type) . 'Template')
                             {
                                 $templates[basename($file, ".blade.php")] = $commentParams['title'];
                             }
