@@ -5,12 +5,14 @@ namespace Zeus\Admin\Cms\Models;
 use Illuminate\Database\Eloquent\Model;
 use Kalnoy\Nestedset\NodeTrait;
 use Cviebrock\EloquentSluggable\Sluggable;
+use Laravel\Scout\Searchable;
 
 class ZeusAdminPost extends Model
 {
-    use Sluggable, NodeTrait {
+    use Searchable, Sluggable, NodeTrait {
         NodeTrait::replicate as replicateNode;
         Sluggable::replicate as replicateSlug;
+        NodeTrait::usesSoftDelete insteadof Searchable;
     }
 
     public function replicate(array $except = null)
@@ -33,6 +35,24 @@ class ZeusAdminPost extends Model
                 'source' => 'title'
             ]
         ];
+    }
+
+    public $asYouType = true;
+
+    /**
+     * Get the indexable data array for the model.
+     *
+     * @return array
+     */
+    public function toSearchableArray()
+    {
+        $array = $this->toArray();
+
+        $array['tags'] = implode('; ', array_column($this->tags()->get()->toArray(), 'title'));
+        $array['terms'] = implode('; ', array_column($this->terms()->get()->toArray(), 'title'));
+        $array['categories'] = implode('; ', array_column($this->categories()->get()->toArray(), 'title'));
+
+        return $array;
     }
 
     /**
@@ -91,7 +111,7 @@ class ZeusAdminPost extends Model
     {
         return $this->morphMany('Zeus\Admin\Cms\Models\ZeusAdminCustomFieldData', 'customable', 'customable_type', 'customable_id', 'id');
     }
-    
+
     public function scopePages($query)
     {
         return $query->where('type', 'page');
