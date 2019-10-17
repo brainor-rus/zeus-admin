@@ -12,7 +12,8 @@
         "kalnoy/nestedset": ">=5.0",
         "intervention/image": ">=2.5",
         "artesaos/seotools": ">=0.16",
-        "emadadly/laravel-uuid": ">=1.2"
+        "emadadly/laravel-uuid": ">=1.2",
+        "teamtnt/laravel-scout-tntsearch-driver": "^7.2"
     },
     "autoload": {
 		"psr-4": {
