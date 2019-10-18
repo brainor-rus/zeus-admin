@@ -122,10 +122,10 @@ class ZeusAdminPages extends Section
             '0.08' => FormField::wysiwyg('content', 'Содержимое'),
         ];
         $customFieldsConditions = [
-            'condition_parameter'=>'post_type',
-            'condition_value'=>'page',
-            'customable_type'=>'Zeus\Admin\Cms\Models\ZeusAdminPost',
-            'customable_id'=>$id
+            'condition_parameter' => 'post_type',
+            'condition_value' => 'page',
+            'customable_type' => config('zeusAdmin.page_model') ?? 'Zeus\Admin\Cms\Models\ZeusAdminPost',
+            'customable_id' => $id
         ];
         $customFieldGroups = CustomFieldsHelper::getCustomFieldGroupsByCondition($customFieldsConditions);
         if($customFieldGroups->count()>0){
