@@ -194,13 +194,13 @@ class CmsController extends Controller
             throw new \Exception('Шаблон ' . $templatePath . ' не найден');
         }
 
-        SEOMeta::setTitle($customFields->where('fieldSlug', 'seo-title')->first()->value ?? '');
-        SEOMeta::setDescription($customFields->where('fieldSlug', 'seo-descriptio')->first()->value ?? '');
+        SEOMeta::setTitle($customFields->where('fieldSlug', 'seo-title')->first()->value ?? $page->title);
+        SEOMeta::setDescription($customFields->where('fieldSlug', 'seo-description')->first()->value ?? $page->description ? $page->description : substr(strip_tags($page->content), 0, 160));
         SEOMeta::addKeyword([$customFields->where('fieldSlug', 'seo-keywords')->first()->value ?? '']);
         SEOMeta::setCanonical(url($page->url));
 
-        OpenGraph::setDescription($customFields->where('fieldSlug', 'seo-descriptio')->first()->value ?? '');
-        OpenGraph::setTitle($customFields->where('fieldSlug', 'seo-title')->first()->value ?? '');
+        OpenGraph::setDescription($customFields->where('fieldSlug', 'seo-description')->first()->value ?? $page->description ? $page->description : substr(strip_tags($page->content), 0, 160));
+        OpenGraph::setTitle($customFields->where('fieldSlug', 'seo-title')->first()->value ?? $page->title);
         OpenGraph::setUrl(url($page->url));
 
         return view($templatePath)->with(compact('data'));
@@ -233,13 +233,13 @@ class CmsController extends Controller
             throw new \Exception('Шаблон ' . $templatePath . ' не найден');
         }
 
-        SEOMeta::setTitle($customFields->where('fieldSlug', 'seo-title')->first()->value ?? '');
-        SEOMeta::setDescription($customFields->where('fieldSlug', 'seo-descriptio')->first()->value ?? '');
+        SEOMeta::setTitle($customFields->where('fieldSlug', 'seo-title')->first()->value ?? $page->title);
+        SEOMeta::setDescription($customFields->where('fieldSlug', 'seo-description')->first()->value ?? $page->description ? $page->description : substr(strip_tags($page->content), 0, 160));
         SEOMeta::addKeyword([$customFields->where('fieldSlug', 'seo-keywords')->first()->value ?? '']);
         SEOMeta::setCanonical(url($page->url));
 
-        OpenGraph::setDescription($customFields->where('fieldSlug', 'seo-descriptio')->first()->value ?? '');
-        OpenGraph::setTitle($customFields->where('fieldSlug', 'seo-title')->first()->value ?? '');
+        OpenGraph::setDescription($customFields->where('fieldSlug', 'seo-description')->first()->value ?? $page->description ? $page->description : substr(strip_tags($page->content), 0, 160));
+        OpenGraph::setTitle($customFields->where('fieldSlug', 'seo-title')->first()->value ?? $page->title);
         OpenGraph::setUrl(url($page->url));
 
         return [
@@ -280,13 +280,13 @@ class CmsController extends Controller
             throw new \Exception('Шаблон ' . $templatePath . ' не найден');
         }
 
-        SEOMeta::setTitle($customFields->where('fieldSlug', 'seo-title')->first()->value ?? '');
-        SEOMeta::setDescription($customFields->where('fieldSlug', 'seo-descriptio')->first()->value ?? '');
+        SEOMeta::setTitle($customFields->where('fieldSlug', 'seo-title')->first()->value ?? $post->title);
+        SEOMeta::setDescription($customFields->where('fieldSlug', 'seo-description')->first()->value ?? $post->description ? $post->description : substr(strip_tags($post->content), 0, 160));
         SEOMeta::addKeyword([$customFields->where('fieldSlug', 'seo-keywords')->first()->value ?? '']);
         SEOMeta::setCanonical(url($post->url));
 
-        OpenGraph::setDescription($customFields->where('fieldSlug', 'seo-descriptio')->first()->value ?? '');
-        OpenGraph::setTitle($customFields->where('fieldSlug', 'seo-title')->first()->value ?? '');
+        OpenGraph::setDescription($customFields->where('fieldSlug', 'seo-description')->first()->value ?? $post->description ? $post->description : substr(strip_tags($post->content), 0, 160));
+        OpenGraph::setTitle($customFields->where('fieldSlug', 'seo-title')->first()->value ?? $post->title);
         OpenGraph::setUrl(url($post->url));
 
         return [
@@ -321,13 +321,13 @@ class CmsController extends Controller
             throw new \Exception('Шаблон ' . $templatePath . ' не найден');
         }
 
-        SEOMeta::setTitle($customFields->where('fieldSlug', 'seo-title')->first()->value ?? '');
-        SEOMeta::setDescription($customFields->where('fieldSlug', 'seo-descriptio')->first()->value ?? '');
+        SEOMeta::setTitle($customFields->where('fieldSlug', 'seo-title')->first()->value ?? $term->title);
+        SEOMeta::setDescription($customFields->where('fieldSlug', 'seo-descriptio')->first()->value ?? $term->description ? $term->description : $term->title);
         SEOMeta::addKeyword([$customFields->where('fieldSlug', 'seo-keywords')->first()->value ?? '']);
         SEOMeta::setCanonical(url('/'.$term->slug));
 
-        OpenGraph::setDescription($customFields->where('fieldSlug', 'seo-descriptio')->first()->value ?? '');
-        OpenGraph::setTitle($customFields->where('fieldSlug', 'seo-title')->first()->value ?? '');
+        OpenGraph::setDescription($customFields->where('fieldSlug', 'seo-descriptio')->first()->value ?? $term->description ? $term->description : $term->title);
+        OpenGraph::setTitle($customFields->where('fieldSlug', 'seo-title')->first()->value ?? $term->title);
         OpenGraph::setUrl(url('/'.$term->slug));
 
         return [
