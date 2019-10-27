@@ -233,18 +233,26 @@ class CmsController extends Controller
             throw new \Exception('Шаблон ' . $templatePath . ' не найден');
         }
 
-        SEOMeta::setTitle($customFields->where('fieldSlug', 'seo-title')->first()->value ?? $page->title);
-        SEOMeta::setDescription($customFields->where('fieldSlug', 'seo-description')->first()->value ?? $page->description ? $page->description : substr(strip_tags($page->content), 0, 160));
-        SEOMeta::addKeyword([$customFields->where('fieldSlug', 'seo-keywords')->first()->value ?? '']);
-        SEOMeta::setCanonical(url($page->url));
 
-        OpenGraph::setDescription($customFields->where('fieldSlug', 'seo-description')->first()->value ?? $page->description ? $page->description : substr(strip_tags($page->content), 0, 160));
-        OpenGraph::setTitle($customFields->where('fieldSlug', 'seo-title')->first()->value ?? $page->title);
-        OpenGraph::setUrl(url($page->url));
+        $meta = [
+            'title' => $customFields->where('fieldSlug', 'seo-title')->first()->value ?? $page->title,
+            'description' => $customFields->where('fieldSlug', 'seo-description')->first()->value ?? $page->description ? $page->description : substr(strip_tags($page->content), 0, 160),
+            'keywords' => $customFields->where('fieldSlug', 'seo-keywords')->first()->value ?? '',
+            'canonical' => url($page->url),
+        ];
+        SEOMeta::setTitle($meta['title']);
+        SEOMeta::setDescription($meta['description']);
+        SEOMeta::addKeyword([$meta['keywords']]);
+        SEOMeta::setCanonical($meta['canonical']);
+
+        OpenGraph::setTitle($meta['title']);
+        OpenGraph::setDescription($meta['description']);
+        OpenGraph::setUrl($meta['canonical']);
 
         return [
             'view'=>$templatePath,
-            'data'=>compact('page')
+            'data'=>compact('page'),
+            'meta'=>compact('meta')
         ];
     }
 
@@ -280,18 +288,26 @@ class CmsController extends Controller
             throw new \Exception('Шаблон ' . $templatePath . ' не найден');
         }
 
-        SEOMeta::setTitle($customFields->where('fieldSlug', 'seo-title')->first()->value ?? $post->title);
-        SEOMeta::setDescription($customFields->where('fieldSlug', 'seo-description')->first()->value ?? $post->description ? $post->description : substr(strip_tags($post->content), 0, 160));
-        SEOMeta::addKeyword([$customFields->where('fieldSlug', 'seo-keywords')->first()->value ?? '']);
-        SEOMeta::setCanonical(url($post->url));
 
-        OpenGraph::setDescription($customFields->where('fieldSlug', 'seo-description')->first()->value ?? $post->description ? $post->description : substr(strip_tags($post->content), 0, 160));
-        OpenGraph::setTitle($customFields->where('fieldSlug', 'seo-title')->first()->value ?? $post->title);
-        OpenGraph::setUrl(url($post->url));
+        $meta = [
+            'title' => $customFields->where('fieldSlug', 'seo-title')->first()->value ?? $post->title,
+            'description' => $customFields->where('fieldSlug', 'seo-description')->first()->value ?? $post->description ? $post->description : substr(strip_tags($post->content), 0, 160),
+            'keywords' => $customFields->where('fieldSlug', 'seo-keywords')->first()->value ?? '',
+            'canonical' => url($post->url),
+        ];
+        SEOMeta::setTitle($meta['title']);
+        SEOMeta::setDescription($meta['description']);
+        SEOMeta::addKeyword([$meta['keywords']]);
+        SEOMeta::setCanonical($meta['canonical']);
+
+        OpenGraph::setTitle($meta['title']);
+        OpenGraph::setDescription($meta['description']);
+        OpenGraph::setUrl($meta['canonical']);
 
         return [
             'view'=>$templatePath,
-            'data'=>compact('post')
+            'data'=>compact('post'),
+            'meta'=>compact('meta')
         ];
     }
 
@@ -299,8 +315,8 @@ class CmsController extends Controller
     {
         $modelPath = config('zeusAdmin.term_model') ?? ZeusAdminTerm::class;
         $term = $modelPath::where([
-                ['slug', $slug]
-            ])
+            ['slug', $slug]
+        ])
             ->with('customFields.field.group')
             ->first();
         $customFields = $term->customFields;
@@ -320,19 +336,25 @@ class CmsController extends Controller
         {
             throw new \Exception('Шаблон ' . $templatePath . ' не найден');
         }
+        $meta = [
+            'title' => $customFields->where('fieldSlug', 'seo-title')->first()->value ?? $term->title,
+            'description' => $customFields->where('fieldSlug', 'seo-description')->first()->value ?? $term->description ? $term->description : $term->title,
+            'keywords' => $customFields->where('fieldSlug', 'seo-keywords')->first()->value ?? '',
+            'canonical' => url('/'.$term->slug),
+        ];
+        SEOMeta::setTitle($meta['title']);
+        SEOMeta::setDescription($meta['description']);
+        SEOMeta::addKeyword([$meta['keywords']]);
+        SEOMeta::setCanonical($meta['canonical']);
 
-        SEOMeta::setTitle($customFields->where('fieldSlug', 'seo-title')->first()->value ?? $term->title);
-        SEOMeta::setDescription($customFields->where('fieldSlug', 'seo-descriptio')->first()->value ?? $term->description ? $term->description : $term->title);
-        SEOMeta::addKeyword([$customFields->where('fieldSlug', 'seo-keywords')->first()->value ?? '']);
-        SEOMeta::setCanonical(url('/'.$term->slug));
-
-        OpenGraph::setDescription($customFields->where('fieldSlug', 'seo-descriptio')->first()->value ?? $term->description ? $term->description : $term->title);
-        OpenGraph::setTitle($customFields->where('fieldSlug', 'seo-title')->first()->value ?? $term->title);
-        OpenGraph::setUrl(url('/'.$term->slug));
+        OpenGraph::setTitle($meta['title']);
+        OpenGraph::setDescription($meta['description']);
+        OpenGraph::setUrl($meta['canonical']);
 
         return [
             'view'=>$templatePath,
-            'data'=>compact('term')
+            'data'=>compact('term'),
+            'meta'=>compact('meta')
         ];
     }
 

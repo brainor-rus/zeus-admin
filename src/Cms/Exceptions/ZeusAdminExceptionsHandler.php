@@ -5,6 +5,7 @@ namespace Zeus\Admin\Cms\Exceptions;
 use Exception;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Support\Facades\View;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Response;
@@ -14,7 +15,7 @@ use Zeus\Admin\Cms\Controllers\CmsController;
 
 class ZeusAdminExceptionsHandler extends ExceptionHandler
 {
-        /**
+    /**
      * Render an exception into an HTTP response.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -50,20 +51,30 @@ class ZeusAdminExceptionsHandler extends ExceptionHandler
                     $termExistenceCheck = CMSHelper::getTermBySlug($uri_segments[1]);//Trying to get term (any type)
                     if($termExistenceCheck) {
                         $controllerData = CmsController::showTerm($termExistenceCheck->slug);
-                        return response()->view($controllerData['view'], $controllerData['data']);
+                        if ($request->isMethod('post')) {
+                            return response()->json(
+                                array(
+                                    'data' => $controllerData['data']['term'],
+                                    'meta' => $controllerData['meta']['meta'],
+                                    'html' => View::make($controllerData['view'])->with(compact($controllerData['data']))->render()
+                                ), 200, ['Content-Type' => 'application/json;charset=UTF-8', 'Charset' => 'utf-8'],
+                                JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES|JSON_PRETTY_PRINT);
+                        }else{
+                            return response()->view($controllerData['view'], $controllerData['data']);
+                        }
                     }
                 }
             }
 
             if($postExistenceCheck){
-                    switch ($postExistenceCheck->type) {
-                        case 'page':
-                            $method = 'showPage';
-                            break;
-                        case 'post':
-                            $method = 'showPost';
-                            break;
-                    }
+                switch ($postExistenceCheck->type) {
+                    case 'page':
+                        $method = 'showPage';
+                        break;
+                    case 'post':
+                        $method = 'showPost';
+                        break;
+                }
             }
             if(isset($method)){
                 if($postExistenceCheck->status !== 'published'){
@@ -71,9 +82,19 @@ class ZeusAdminExceptionsHandler extends ExceptionHandler
                 }
 
                 $controllerData = CmsController::{$method}($postExistenceCheck->slug);
-                return response()->view($controllerData['view'], $controllerData['data']);
+                if ($request->isMethod('post')) {
+                    return response()->json(
+                        array(
+                            'data' => $controllerData['data']['page'] ?? $controllerData['data']['post'],
+                            'meta' => $controllerData['meta']['meta'],
+                            'html' => View::make($controllerData['view'])->with(compact($controllerData['data']))->render()
+                        ), 200, ['Content-Type' => 'application/json;charset=UTF-8', 'Charset' => 'utf-8'],
+                        JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES|JSON_PRETTY_PRINT);
+                }else{
+                    return response()->view($controllerData['view'], $controllerData['data']);
+                }
             }
         }
-            return parent::render($request, $exception);
+        return parent::render($request, $exception);
     }
 }
