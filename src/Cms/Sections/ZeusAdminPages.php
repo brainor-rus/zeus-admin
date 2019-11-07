@@ -169,7 +169,7 @@ class ZeusAdminPages extends Section
                 ->setValue(Carbon::now())
                 ->setRequired(true),
             '0.06' => FormField::custom(view('zeusAdmin::cms.partials.thumb')->with(compact('cur_page'))),
-            '99.98' => FormField::hidden('thumb'),
+            '99.98' => FormField::hidden('thumb')->setValue($cur_page['thumb'] ?? ''),
             '99.99' => FormField::hidden('type')->setValue("page"),
         ];
 
