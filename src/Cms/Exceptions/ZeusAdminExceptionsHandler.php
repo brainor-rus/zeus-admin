@@ -85,9 +85,9 @@ class ZeusAdminExceptionsHandler extends ExceptionHandler
                 if ($request->isMethod('post')) {
                     return response()->json(
                         array(
-                            'data' => $controllerData['data']['page'] ?? $controllerData['data']['post'],
-                            'meta' => $controllerData['meta']['meta'],
-                            'html' => View::make($controllerData['view'])->with($controllerData['data'])->render()
+                            'data' => mb_convert_encoding(($controllerData['data']['page'] ?? $controllerData['data']['post']), 'UTF-8'),
+                            'meta' => mb_convert_encoding($controllerData['meta']['meta'], 'UTF-8'),
+                            'html' => mb_convert_encoding(View::make($controllerData['view'])->with($controllerData['data'])->render(), 'UTF-8')
                         ), 200, ['Content-Type' => 'application/json;charset=UTF-8', 'Charset' => 'utf-8'],
                         JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES|JSON_PRETTY_PRINT);
                 }else{
