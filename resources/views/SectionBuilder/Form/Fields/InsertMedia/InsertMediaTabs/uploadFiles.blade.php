@@ -4,7 +4,7 @@
 <div class="modal-body">
     <div class="row">
         <div class="col-12">
-            <p>Перетащите нужные файлы на окошно ниже</p>
+            <p>Перетащите нужные файлы на область ниже</p>
         </div>
         <div action="/{{ config('zeusAdmin.admin_url') }}/cms/files/upload" class="dropzone col-12" id="cms-dropzone"></div>
     </div>

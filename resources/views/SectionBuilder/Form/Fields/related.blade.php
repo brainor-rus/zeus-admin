@@ -55,7 +55,9 @@
                 </tr>
                 @foreach($relatedRows as $relatedRow)
                     <tr>
-                        <input type="hidden" name="{{ "related[$name][rows][$loop->index][$relatedForeignKey]" }}" value="{{ $relatedRow->{$relatedForeignKey} }}">
+                        @if($action === 'edit')
+                            <input type="hidden" name="{{ "related[$name][rows][$loop->index][$relatedForeignKey]" }}" value="{{ $relatedRow->{$relatedForeignKey} }}">
+                        @endif
                         @foreach($columns as $column)
                             <td class="align-middle">
                                 @php

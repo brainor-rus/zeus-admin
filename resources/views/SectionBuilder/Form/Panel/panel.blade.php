@@ -1,14 +1,5 @@
 @if($showTopButtons)
-    <div class="row pt-3">
-        <div class="col-12">
-            <div class="card">
-                <div class="card-body">
-                    <button type="submit" class="btn btn-success">Сохранить</button>
-                    <a @click.prevent="$emit('redirectTo',$event)" href="{{ $pluginData['redirectUrl'] ?? '/'.config("zeusAdmin.admin_url").'/' . $sectionName}}" class="btn btn-secondary">Отмена</a>
-                </div>
-            </div>
-        </div>
-    </div>
+    @include('zeusAdmin::SectionBuilder.Form.Panel.partials.action-buttons')
 @endif
 <form @submit.prevent="$emit('fireAction',$event)"
         id="{{ $sectionName }}-edit-form"
@@ -33,7 +24,7 @@
                         @php
                             $relatedRows = $currentRow->{ $field->getName() } ?? null;
                         @endphp
-                        {!! $field->render($relatedRows) !!}
+                        {!! $field->render($relatedRows, $action) !!}
                     @elseif($field instanceof \Zeus\Admin\SectionBuilder\Form\Panel\Fields\Gallery)
                         {!! $field->render($model) !!}
                     @else
@@ -51,15 +42,6 @@
         @endforeach
     </div>
     @if($showButtons)
-        <div class="row pt-3">
-            <div class="col-12">
-                <div class="card">
-                    <div class="card-body">
-                        <button type="submit" class="btn btn-success">Сохранить</button>
-                        <a @click.prevent="$emit('redirectTo',$event)" href="{{ $pluginData['cancelUrl'] ?? '/'.config("zeusAdmin.admin_url").'/' . $sectionName}}" class="btn btn-secondary">Отмена</a>
-                    </div>
-                </div>
-            </div>
-        </div>
+        @include('zeusAdmin::SectionBuilder.Form.Panel.partials.action-buttons')
     @endif
 </form>
