@@ -63,7 +63,7 @@ class ZeusAdminController extends Controller
         if($display instanceof DisplayCustom) {
             $results = $display->render($firedSection, $pluginData);
         } else {
-            $results = $display->render($sectionModelSettings['model'] ?? config('zeusAdmin.base_models_path') . Str::studly(strtolower(str_singular($sectionName))), $firedSection, $pluginData, $request);
+            $results = $display->render($sectionModelSettings['model'] ?? config('zeusAdmin.base_models_path') . Str::studly(strtolower(Str::singular($sectionName))), $firedSection, $pluginData, $request);
         }
 
         $html = $results['view'];
@@ -102,7 +102,7 @@ class ZeusAdminController extends Controller
                 $meta = $display->getMeta();
                 $sectionModelSettings = $section->getSectionSettings(Str::studly($sectionName), $pluginData['sectionPath'] ?? null);
 
-                $html = $display->render($sectionModelSettings['model'] ?? config('zeusAdmin.base_models_path') . Str::studly(strtolower(str_singular($sectionName))), $sectionName, $firedSection, null, $pluginData);
+                $html = $display->render($sectionModelSettings['model'] ?? config('zeusAdmin.base_models_path') . Str::studly(strtolower(Str::singular($sectionName))), $sectionName, $firedSection, null, $pluginData);
                 $meta = [
                     'title' => $sectionModelSettings['title'] . '| Новая запись',
                     'scripts' => $meta->getScripts(),
@@ -133,7 +133,7 @@ class ZeusAdminController extends Controller
                 $meta = $display->getMeta();
                 $sectionModelSettings = $section->getSectionSettings(Str::studly($sectionName), $pluginData['sectionPath'] ?? null);
 
-                $html = $display->render($sectionModelSettings['model'] ?? config('zeusAdmin.base_models_path') . Str::studly(strtolower(str_singular($sectionName))), $sectionName, $firedSection, $id, $pluginData);
+                $html = $display->render($sectionModelSettings['model'] ?? config('zeusAdmin.base_models_path') . Str::studly(strtolower(Str::singular($sectionName))), $sectionName, $firedSection, $id, $pluginData);
                 $meta = [
                     'title' => $sectionModelSettings['title'] . '| Редактирование',
                     'scripts' => $meta->getScripts(),
@@ -173,7 +173,7 @@ class ZeusAdminController extends Controller
             $request->offsetUnset('_token');
             $request->offsetUnset('related');
             $sectionModelSettings = $section->getSectionSettings(Str::studly($sectionName), $request->pluginData['sectionPath'] ?? null);
-            $modelPath = $sectionModelSettings['model'] ?? config('zeusAdmin.base_models_path') . Str::studly(strtolower(str_singular($sectionName)));
+            $modelPath = $sectionModelSettings['model'] ?? config('zeusAdmin.base_models_path') . Str::studly(strtolower(Str::singular($sectionName)));
             $request->offsetUnset('pluginData');
 
             $model = new $modelPath;
@@ -253,7 +253,7 @@ class ZeusAdminController extends Controller
             $request->offsetUnset('zagallery');
 
             $sectionModelSettings = $section->getSectionSettings(Str::studly($sectionName), $request->pluginData['sectionPath'] ?? null);
-            $modelPath = $sectionModelSettings['model'] ?? config('zeusAdmin.base_models_path') . Str::studly(strtolower(str_singular($sectionName)));
+            $modelPath = $sectionModelSettings['model'] ?? config('zeusAdmin.base_models_path') . Str::studly(strtolower(Str::singular($sectionName)));
             $request->offsetUnset('pluginData');
 
             $model = new $modelPath;
@@ -308,7 +308,7 @@ class ZeusAdminController extends Controller
     public function deleteAction(Section $section, $sectionName, $id, Request $request)
     {
         $sectionModelSettings = $section->getSectionSettings($sectionName, $request->pluginData['sectionPath'] ?? null);
-        $modelPath = $sectionModelSettings['model'] ?? config('zeusAdmin.base_models_path') . Str::studly(strtolower(str_singular($sectionName)));
+        $modelPath = $sectionModelSettings['model'] ?? config('zeusAdmin.base_models_path') . Str::studly(strtolower(Str::singular($sectionName)));
         $model = new $modelPath;
         $class = $section->getSectionByName($sectionName, $request->pluginData['sectionPath'] ?? null);
         if(!isset($class)) { abort(500); }
