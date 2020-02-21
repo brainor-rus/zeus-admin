@@ -109,7 +109,7 @@ class Related extends FormFieldBase
         return $this;
     }
 
-    public function render($relatedRows = [])
+    public function render($relatedRows = [], $action = 'create')
     {
         $name = $this->getName();
         $label = $this->getLabel();
@@ -126,7 +126,8 @@ class Related extends FormFieldBase
                 'relatedRows',
                 'relatedName',
                 'relatedForeignModel',
-                'relatedForeignKey'
+                'relatedForeignKey',
+                'action'
             ));
     }
 }

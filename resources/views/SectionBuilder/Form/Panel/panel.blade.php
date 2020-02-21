@@ -24,7 +24,7 @@
                         @php
                             $relatedRows = $currentRow->{ $field->getName() } ?? null;
                         @endphp
-                        {!! $field->render($relatedRows) !!}
+                        {!! $field->render($relatedRows, $action) !!}
                     @elseif($field instanceof \Zeus\Admin\SectionBuilder\Form\Panel\Fields\Gallery)
                         {!! $field->render($model) !!}
                     @else
