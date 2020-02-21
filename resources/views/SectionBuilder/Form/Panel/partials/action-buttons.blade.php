@@ -10,12 +10,10 @@
                         <a @click.prevent="$emit('redirectTo',$event)" href="{{ $pluginData['redirectUrl'] ?? '/'.config("zeusAdmin.admin_url").'/' . $sectionName}}" class="btn btn-secondary">Отмена</a>
                     </li>
                     @if($action === 'edit' && $copyable)
-                        <li class="list-inline-item text-muted">
-                            |
-                        </li>
+                        <li class="list-inline-item text-muted">|</li>
                         <li class="list-inline-item">
                             @if($copyable)
-                                <a href="{{ round('zeusAdmin.section.create.form', ['section' => $sectionName, 'copy' => $id]) }}"
+                                <a href="{{ route('zeusAdmin.section.create.form', ['section' => $sectionName, 'copy' => $id]) }}"
                                    target="_blank"
                                 >
                                     <i class="fas fa-link"></i> Создать копию

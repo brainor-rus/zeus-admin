@@ -1,5 +1,5 @@
 @if($showTopButtons)
-    @include('SectionBuilder.Form.Panel.partials.action-buttons')
+    @include('zeusAdmin::SectionBuilder.Form.Panel.partials.action-buttons')
 @endif
 <form @submit.prevent="$emit('fireAction',$event)"
         id="{{ $sectionName }}-edit-form"
@@ -42,6 +42,6 @@
         @endforeach
     </div>
     @if($showButtons)
-        @include('SectionBuilder.Form.Panel.partials.action-buttons')
+        @include('zeusAdmin::SectionBuilder.Form.Panel.partials.action-buttons')
     @endif
 </form>
