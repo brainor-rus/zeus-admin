@@ -1,17 +1,5 @@
 @if($showTopButtons)
-    <div class="row pt-3">
-        <div class="col-12">
-            <div class="card">
-                <div class="card-body">
-                    <button type="submit" class="btn btn-success">Сохранить</button>
-                    @if($copyable)
-                        <a href="#" target="_blank" class="btn btn-secondary">Создать копию</a>
-                    @endif
-                    <a @click.prevent="$emit('redirectTo',$event)" href="{{ $pluginData['redirectUrl'] ?? '/'.config("zeusAdmin.admin_url").'/' . $sectionName}}" class="btn btn-secondary">Отмена</a>
-                </div>
-            </div>
-        </div>
-    </div>
+    @include('SectionBuilder.Form.Panel.partials.action-buttons')
 @endif
 <form @submit.prevent="$emit('fireAction',$event)"
         id="{{ $sectionName }}-edit-form"
@@ -54,18 +42,6 @@
         @endforeach
     </div>
     @if($showButtons)
-        <div class="row pt-3">
-            <div class="col-12">
-                <div class="card">
-                    <div class="card-body">
-                        <button type="submit" class="btn btn-success">Сохранить</button>
-                        @if($copyable)
-                            <a href="#" target="_blank" class="btn btn-secondary">Создать копию</a>
-                        @endif
-                        <a @click.prevent="$emit('redirectTo',$event)" href="{{ $pluginData['cancelUrl'] ?? '/'.config("zeusAdmin.admin_url").'/' . $sectionName}}" class="btn btn-secondary">Отмена</a>
-                    </div>
-                </div>
-            </div>
-        </div>
+        @include('SectionBuilder.Form.Panel.partials.action-buttons')
     @endif
 </form>
