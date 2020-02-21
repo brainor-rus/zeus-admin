@@ -89,7 +89,7 @@ class ZeusAdminController extends Controller
         return $this->render($html,$pagination,$meta);
     }
 
-    public function getCreate(Section $section, $sectionName, $pluginData = null)
+    public function getCreate(Section $section, $sectionName, $pluginData = null, Request $request)
     {
         $firedSection = $section->getSectionByName($sectionName, $pluginData['sectionPath'] ?? null);
         if(isset($firedSection)) {
@@ -102,7 +102,15 @@ class ZeusAdminController extends Controller
                 $meta = $display->getMeta();
                 $sectionModelSettings = $section->getSectionSettings(Str::studly($sectionName), $pluginData['sectionPath'] ?? null);
 
-                $html = $display->render($sectionModelSettings['model'] ?? config('zeusAdmin.base_models_path') . Str::studly(strtolower(Str::singular($sectionName))), $sectionName, $firedSection, null, $pluginData);
+                $html = $display->render(
+                    $sectionModelSettings['model'] ?? config('zeusAdmin.base_models_path') . Str::studly(strtolower(Str::singular($sectionName))),
+                    $sectionName,
+                    $firedSection,
+                    null,
+                    $request->get('copy'),
+                    $pluginData
+                );
+
                 $meta = [
                     'title' => $sectionModelSettings['title'] . '| Новая запись',
                     'scripts' => $meta->getScripts(),

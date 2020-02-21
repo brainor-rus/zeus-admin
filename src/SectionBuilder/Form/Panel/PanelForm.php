@@ -135,19 +135,17 @@ class PanelForm
         return $this;
     }
 
-    public function render($modelPath, $sectionName, Section $firedSection, $id = null, $pluginData = null)
+    public function render($modelPath, $sectionName, Section $firedSection, $id = null, $copyId = null, $pluginData = null)
     {
         $columns = $this->getColumns();
         $model = new $modelPath();
         $action = 'create';
 
         if(isset($id)) {
-            $model = $model->where('id', $id)->first();
-            if(!isset($model))
-            {
-                abort(404);
-            }
+            $model = $model->where('id', $id)->firstOrFail();
             $action = 'edit';
+        } elseif(isset($copyId)) {
+            $model = $model->where('id', $copyId)->firstOrFail();
         }
 
         if(!empty($pluginData)) {
