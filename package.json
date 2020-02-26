@@ -25,6 +25,7 @@
         "deparam": "^1.0.5",
         "vue-cookie": "^1.1.4",
         "vue-router": "^3.0.1",
-        "vuex": "^3.0.1"
+        "vuex": "^3.0.1",
+        "vuex-flash": "^1.0.0"
     }
 }

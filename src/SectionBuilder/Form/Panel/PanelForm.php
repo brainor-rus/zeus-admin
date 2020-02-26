@@ -15,7 +15,12 @@ use Zeus\Admin\Section;
 
 class PanelForm
 {
-    private $columns, $meta, $showButtons = true, $showTopButtons = false, $attributes;
+    private $columns,
+            $meta,
+            $showButtons = true,
+            $showTopButtons = false,
+            $attributes,
+            $copyable = false;
 
     public function __construct($columns)
     {
@@ -111,19 +116,36 @@ class PanelForm
         return $this;
     }
 
-    public function render($modelPath, $sectionName, Section $firedSection, $id = null, $pluginData = null)
+    /**
+     * @return bool
+     */
+    public function isCopyable(): bool
+    {
+        return $this->copyable;
+    }
+
+    /**
+     * @param bool $copyable
+     * @return PanelForm
+     */
+    public function setCopyable(bool $copyable): PanelForm
+    {
+        $this->copyable = $copyable;
+
+        return $this;
+    }
+
+    public function render($modelPath, $sectionName, Section $firedSection, $id = null, $copyId = null, $pluginData = null)
     {
         $columns = $this->getColumns();
         $model = new $modelPath();
         $action = 'create';
 
         if(isset($id)) {
-            $model = $model->where('id', $id)->first();
-            if(!isset($model))
-            {
-                abort(404);
-            }
+            $model = $model->where('id', $id)->firstOrFail();
             $action = 'edit';
+        } elseif(isset($copyId)) {
+            $model = $model->where('id', $copyId)->firstOrFail();
         }
 
         if(!empty($pluginData)) {
@@ -140,25 +162,10 @@ class PanelForm
             }, $pluginData);
         }
 
-//        if(isset($pluginData['editUrl'])) {
-//
-//            $rc = new \ReflectionClass($firedSection);
-//            $params['{sectionName}'] = $rc->getShortName();
-//            if(isset($id))
-//            {
-//                $params['{id}'] = $id;
-//                $params['{action}'] = 'edit';
-//            }
-//            $pluginData['editUrl'] = strtr($pluginData['redirectUrl'], $params);
-//        }
-//
-//        if(isset($pluginData['editUrl'])) {
-//
-//        }
-
         $showButtons = self::isShowButtons();
         $showTopButtons = self::isShowTopButtons();
         $attributes = $this->getAttributes();
+        $copyable = $this->isCopyable();
 
         $response = View::make('zeusAdmin::SectionBuilder/Form/Panel/panel')
             ->with(compact(
@@ -170,7 +177,8 @@ class PanelForm
                 'pluginData',
                 'showButtons',
                 'showTopButtons',
-                'attributes'
+                'attributes',
+                'copyable'
             ));
 
         return $response;
