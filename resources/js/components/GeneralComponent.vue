@@ -11,7 +11,11 @@
         <div class="messages" v-else>
             <flash-message variant="success"></flash-message>
         </div>
-        <div class="error" v-if="error">{{ error}}</div>
+        <div class="error" v-if="error">
+            <div class="alert alert-danger">
+                {{ error}}
+            </div>
+        </div>
         <component :is="{template: `<div>${responseHtml}</div>`, props:[responseHtml]}"
                    track-by="${responseHtml}"
                    @showDeleteModal="show_modal"
