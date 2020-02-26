@@ -339,9 +339,9 @@ class ZeusAdminController extends Controller
             $model->where('id', $id)->delete();
             return response()->json([
                     'data' => [
-                        'code'=>0,
-                        'message'=>'Успешно',
-                        'class'=>'success'
+                        'code' =>0,
+                        'message' => "Запись №$id успешно удалена",
+                        'class' =>'success'
                     ],
                     'redirect' => [
                         'url' => $redirectUrl

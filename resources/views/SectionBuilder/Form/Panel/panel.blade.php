@@ -1,11 +1,12 @@
 @if($showTopButtons)
     @include('zeusAdmin::SectionBuilder.Form.Panel.partials.action-buttons')
 @endif
+
 <form @submit.prevent="$emit('fireAction',$event)"
-        id="{{ $sectionName }}-edit-form"
-        action={{ $action == 'edit' ? "/".config('zeusAdmin.admin_url')."/" . $sectionName . "/" . $id . "/edit-action" : "/".config('zeusAdmin.admin_url')."/" . $sectionName . "/create-action"}}
-        method="post"
-        @if(isset($attributes)) {{ implode(" ", $attributes) }} @endif
+      id="{{ $sectionName }}-edit-form"
+      action={{ $action == 'edit' ? "/".config('zeusAdmin.admin_url')."/" . $sectionName . "/" . $id . "/edit-action" : "/".config('zeusAdmin.admin_url')."/" . $sectionName . "/create-action"}}
+      method="post"
+      @if(isset($attributes)) {{ implode(" ", $attributes) }} @endif
 >
     @csrf
     <input type="hidden" name="pluginData[deleteUrl]" value="{{ $pluginData['deleteUrl'] ?? null }}">
