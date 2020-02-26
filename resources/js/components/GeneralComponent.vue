@@ -1,7 +1,21 @@
 <template >
     <div class="content" :class="classes">
-        <div class="loading" v-if="loading">Загрузка....</div>
-        <div class="error" v-if="error">{{ error}}</div>
+        <div class="loading preloader text-center" v-if="loading">
+            <div class="text-center mt-5 text-muted">
+                <i class="fas fa-circle-notch fa-spin fa-8x"></i>
+                <br>
+                <br>
+                <span>Загрузка...</span>
+            </div>
+        </div>
+        <div class="messages" v-else>
+            <flash-message variant="success"></flash-message>
+        </div>
+        <div class="error" v-if="error">
+            <div class="alert alert-danger">
+                {{ error}}
+            </div>
+        </div>
         <component :is="{template: `<div>${responseHtml}</div>`, props:[responseHtml]}"
                    track-by="${responseHtml}"
                    @showDeleteModal="show_modal"
@@ -141,14 +155,14 @@
                     jQuery(function($) {
                         $.fn.selectpicker.Constructor.BootstrapVersion = '4';
                         $('.date input').each(function () {
-                           $(this).datetimepicker({
-                               format: $(this).data('datepicker-format'),
-                               language: $(this).data('datepicker-language'),
-                               todayHighlight: true,
-                               minuteStep: $(this).data('datepicker-minutestep'),
-                               todayBtn: ($(this).data('datepicker-todaybtn')===1) ? 'linked' : false,
-                               clearBtn: ($(this).data('datepicker-clearbtn')===1)
-                           });
+                            $(this).datetimepicker({
+                                format: $(this).data('datepicker-format'),
+                                language: $(this).data('datepicker-language'),
+                                todayHighlight: true,
+                                minuteStep: $(this).data('datepicker-minutestep'),
+                                todayBtn: ($(this).data('datepicker-todaybtn')===1) ? 'linked' : false,
+                                clearBtn: ($(this).data('datepicker-clearbtn')===1)
+                            });
                         });
                     });
 
@@ -181,26 +195,26 @@
                                 acceptedFiles: 'image/*',
                                 previewsContainer: container,
                                 previewTemplate:
-                                '<div class="col-6 col-md-auto mb-3 dz-preview dz-file-preview">\n' +
-                                '  <div class="dz-details position-relative">\n' +
-                                '      <div class="h-100 pt-4 position-absolute preload-image-hover text-center text-white w-100"><span class="position-relative">Загрузка..</span></div>' +
-                                '      <div data-dz-remove class="delete-img-btn">\n' +
-                                '          <button type="button" class="close">\n' +
-                                '              <i class="fas fa-times"></i>' +
-                                '          </button>\n' +
-                                '      </div>' +
-                                '      <img class="img-fluid w-100 sq-image" data-dz-thumbnail />\n' +
-                                '      <div class="dz-success-mark d-none"><span><i class="fas text-success fa-check"></i></span></div>' +
-                                '  </div>\n' +
-                                '  <label><input type="radio" name="zagallery[default_image]">По умолчанию</label>\n' +
-                                '</div>'
+                                    '<div class="col-6 col-md-auto mb-3 dz-preview dz-file-preview">\n' +
+                                    '  <div class="dz-details position-relative">\n' +
+                                    '      <div class="h-100 pt-4 position-absolute preload-image-hover text-center text-white w-100"><span class="position-relative">Загрузка..</span></div>' +
+                                    '      <div data-dz-remove class="delete-img-btn">\n' +
+                                    '          <button type="button" class="close">\n' +
+                                    '              <i class="fas fa-times"></i>' +
+                                    '          </button>\n' +
+                                    '      </div>' +
+                                    '      <img class="img-fluid w-100 sq-image" data-dz-thumbnail />\n' +
+                                    '      <div class="dz-success-mark d-none"><span><i class="fas text-success fa-check"></i></span></div>' +
+                                    '  </div>\n' +
+                                    '  <label><input type="radio" name="zagallery[default_image]">По умолчанию</label>\n' +
+                                    '</div>'
                             };
                             let imageDropzone = new Dropzone("#"+this.id, photosDropzoneOptions);
 
                             imageDropzone.on('sending', function (file, req, formData) {
-                                    let token = $('meta[name="csrf-token"]').attr('content');
-                                    formData.set('_token', token);
-                                    formData.set('uuid', file.upload.uuid);
+                                let token = $('meta[name="csrf-token"]').attr('content');
+                                formData.set('_token', token);
+                                formData.set('uuid', file.upload.uuid);
                             });
 
                             imageDropzone.on('success', function (file, res) {
@@ -424,26 +438,28 @@
                     url:ajaxUrl,
                     data:formData,
                     headers: {
-                      'content-type': 'multipart/form-data',
+                        'content-type': 'multipart/form-data',
                     }
                 })
-                .then(function (response) {
-                    console.log(response);
-                    if (typeof response.data.data !== 'undefined') {
-                        vm.actionResponseData = response.data.data;
+                    .then((response) => {
+                        if(response.data.data.message !== undefined) {
+                            this.flash({ message: response.data.data.message, variant: 'success' });
+                        }
+                        if (typeof response.data.data !== 'undefined') {
+                            vm.actionResponseData = response.data.data;
 
-                    }
-                    if (typeof response.data.redirect !== 'undefined') {
-                        vm.redirectUrl = response.data.redirect.url;
-                    }
-                    vm.loading = false;
-                    vm.redirectTo(null,vm.redirectUrl);
-                })
-                .catch(function (error) {
-                    console.log(error);
-                    vm.loading = false;
-                    vm.error = error.response.data.message || error.message;
-                });
+                        }
+                        if (typeof response.data.redirect !== 'undefined') {
+                            vm.redirectUrl = response.data.redirect.url;
+                        }
+                        vm.loading = false;
+                        vm.redirectTo(null,vm.redirectUrl);
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                        vm.loading = false;
+                        vm.error = error.response.data.message || error.message;
+                    });
                 this.showModal = false;
             },
             changePage: function (page) {
@@ -469,7 +485,7 @@
             sorting: function (event) {
 
                 let sortObject = {},
-                needToUpdate = true;
+                    needToUpdate = true;
 
                 if (typeof this.$route.query.sort !== 'undefined') {
                     sortObject = deparam(this.$route.query.sort);

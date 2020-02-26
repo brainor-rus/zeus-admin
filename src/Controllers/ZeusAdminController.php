@@ -215,17 +215,18 @@ class ZeusAdminController extends Controller
 
             $class->afterSave($request, $model);
 
-            if(isset($pluginUrl))
-            {
+            if(isset($pluginUrl)) {
                 $params['{id}'] = $model->id;
                 $pluginUrl = strtr($pluginUrl, $params);
                 $redirectUrl = $pluginUrl;
+            } else {
+                $redirectUrl = "$redirectUrl/$model->id/edit";
             }
 
             return response()->json([
                     'data' => [
                         'code' => 0,
-                        'message' => 'Успешно',
+                        'message' => "Запись №$model->id успешно создана",
                         'class' => 'success'
                     ],
                     'redirect' => [
@@ -293,16 +294,18 @@ class ZeusAdminController extends Controller
 
             //        $modelPath::where('id', $id)->update($request->all());
 
-            if(isset($pluginUrl))
-            {
+            if(isset($pluginUrl)) {
                 $params['{id}'] = $model->id;
                 $pluginUrl = strtr($pluginUrl, $params);
                 $redirectUrl = $pluginUrl;
+            } else {
+                $redirectUrl = "$redirectUrl/$model->id/edit";
             }
+
             return response()->json([
                     'data' => [
                         'code' => 0,
-                        'message' => 'Успешно',
+                        'message' => "Запись №$model->id успешно обновлена",
                         'class' => 'success'
                     ],
                     'redirect' => [
@@ -336,9 +339,9 @@ class ZeusAdminController extends Controller
             $model->where('id', $id)->delete();
             return response()->json([
                     'data' => [
-                        'code'=>0,
-                        'message'=>'Успешно',
-                        'class'=>'success'
+                        'code' =>0,
+                        'message' => "Запись №$id успешно удалена",
+                        'class' =>'success'
                     ],
                     'redirect' => [
                         'url' => $redirectUrl

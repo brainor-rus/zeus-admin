@@ -30,7 +30,7 @@
                     </div>
                 </div>
                 <div class="row panel-content-wrapper">
-                    <div class="col-12 panel-content">
+                    <div class="col-12 mb-5 panel-content">
                         <transition name="router">
                             <router-view :key="$route.fullPath"></router-view>
                         </transition>

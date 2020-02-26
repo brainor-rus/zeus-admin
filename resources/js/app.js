@@ -13,6 +13,10 @@ import Home from './components/Home';
 import GeneralComponent from './components/GeneralComponent';
 import './bootstrap';
 
+import VuexFlash from 'vuex-flash';
+
+Vue.use(VuexFlash, { mixin: true });
+
 const router = new VueRouter({
     mode: 'history',
     routes: [
