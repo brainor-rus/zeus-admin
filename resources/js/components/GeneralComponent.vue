@@ -543,7 +543,6 @@
                 let query = Object.assign({}, this.$route.query);
                 delete query.filter;
                 this.$router.replace({ query });
-
             },
         }
     }

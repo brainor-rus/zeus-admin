@@ -13,6 +13,8 @@ import Home from './components/Home';
 import GeneralComponent from './components/GeneralComponent';
 import './bootstrap';
 
+Vue.component('EditableCheckboxComponent', require('./components/SectionBuilder/Display/Table/EditableCheckboxComponent.vue'));
+
 import VuexFlash from 'vuex-flash';
 
 Vue.use(VuexFlash, { mixin: true });
