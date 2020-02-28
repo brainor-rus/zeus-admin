@@ -8,9 +8,9 @@
 
 namespace Zeus\Admin\SectionBuilder\Display\Table\Columns\BaseColumn;
 
-
 use Zeus\Admin\SectionBuilder\Display\Table\Columns\Types\Link;
 use Zeus\Admin\SectionBuilder\Display\Table\Columns\Types\Text;
+use Zeus\Admin\SectionBuilder\Display\Table\Columns\Types\Checkbox;
 
 class Column
 {
@@ -22,5 +22,10 @@ class Column
     public static function link($label, $name)
     {
         return new Link($label, $name);
+    }
+
+    public static function checkbox($label, $name)
+    {
+        return new Checkbox($label, $name);
     }
 }

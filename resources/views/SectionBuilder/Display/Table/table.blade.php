@@ -37,7 +37,7 @@
 </div>
 
 <div class="table-responsive display-table br-display" data-delete-redirect="{{ $pluginData['deleteUrl'] ?? null }}" data-section-path="{{ $pluginData['sectionPath'] ?? null }}">
-    <table class="table">
+    <table class="table table-hover">
         <thead>
         <tr>
             @foreach($columns as $column)
@@ -98,15 +98,26 @@
                         @else
                             @switch(basename(str_replace('\\', '/', get_class($column))))
                                 @case('Text')
-                                {!! $field[$column->getName()] !!}
-                                @break
-                                @case('Link')
-                                @if($firedSection->isEditable() && $canEdit)
-                                    <a href="{{ parse_url(Request::url(), PHP_URL_PATH) . '/' . $field['brRowId'] . '/edit' }}">{!! $field[$column->getName()] !!}</a>
-                                @else
                                     {!! $field[$column->getName()] !!}
-                                @endif
-                                @break
+                                    @break
+                                @case('Link')
+                                    @if($firedSection->isEditable() && $canEdit)
+                                        <a @click.prevent="$emit('redirectTo',$event)" href="{{ parse_url(Request::url(), PHP_URL_PATH) . '/' . $field['brRowId'] . '/edit' }}">{!! $field[$column->getName()] !!}</a>
+                                    @else
+                                        {!! $field[$column->getName()] !!}
+                                    @endif
+                                    @break
+                                @case('Checkbox')
+                                    @if($firedSection->isEditable() && $canEdit)
+                                        <EditableCheckboxComponent
+                                            :field="'{{ $column->getName() }}'"
+                                            :value="{{ $field[$column->getName()] }}"
+                                            :url="'{{ parse_url(Request::url(), PHP_URL_PATH) . '/' . $field['brRowId'] . '/change-field' }}'"
+                                        />
+                                    @else
+                                        {{ $field[$column->getName()] ? 'Да' : 'Нет' }}
+                                    @endif
+                                    @break
                                 @default
                                 {!! $field[$column->getName()] !!}
                                 @break
@@ -140,7 +151,6 @@
                         <button @click.prevent="$emit('filter')" type="button" class="btn btn-secondary"><i class="fas fa-filter"></i> Фильтровать</button>
                         <button @click.prevent="$emit('filterClear')" type="button" class="btn btn-danger"><i class="fas fa-times"></i></button>
                     </div>
-
                 </td>
             </tr>
         @endif
