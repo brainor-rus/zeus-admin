@@ -141,7 +141,7 @@ class ZeusAdminController extends Controller
                 $meta = $display->getMeta();
                 $sectionModelSettings = $section->getSectionSettings(Str::studly($sectionName), $pluginData['sectionPath'] ?? null);
 
-                $html = $display->render($sectionModelSettings['model'] ?? config('zeusAdmin.base_models_path') . Str::studly(strtolower(Str::singular($sectionName))), $sectionName, $firedSection, $id, $pluginData);
+                $html = $display->render($sectionModelSettings['model'] ?? config('zeusAdmin.base_models_path') . Str::studly(strtolower(Str::singular($sectionName))), $sectionName, $firedSection, $id, null, $pluginData);
                 $meta = [
                     'title' => $sectionModelSettings['title'] . '| Редактирование',
                     'scripts' => $meta->getScripts(),
