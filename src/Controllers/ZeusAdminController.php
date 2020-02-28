@@ -364,6 +364,36 @@ class ZeusAdminController extends Controller
         }
     }
 
+    public function changeFieldAction(Section $section, $sectionName, $id, Request $request)
+    {
+        $sectionModelSettings = $section->getSectionSettings($sectionName, $request->pluginData['sectionPath'] ?? null);
+        $modelPath = $sectionModelSettings['model'] ?? config('zeusAdmin.base_models_path') . Str::studly(strtolower(Str::singular($sectionName)));
+        $model = new $modelPath;
+        $class = $section->getSectionByName($sectionName, $request->pluginData['sectionPath'] ?? null);
+        if(!isset($class)) { abort(500); }
+
+        if($class->isCheckAccess() && Auth::user()->cant('edit', [get_class($class), $sectionName])) {
+            abort(403);
+        }
+
+        if($class->isEditable()) {
+            $field = $request->get('field');
+
+            $model = $model->where('id', $id)->first();
+            $model->{$field} = $request->get('value');
+            $model->save();
+
+            return response()->json([
+                    'data' => [
+                        'model' => $model
+                    ]
+                ]
+            );
+        } else {
+            return response(null,403);
+        }
+    }
+
     public function render($html, $pagination=null, $meta=null)
     {
         return response()->json([

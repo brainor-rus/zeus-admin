@@ -58,6 +58,11 @@ Route::group(['middleware' => config('zeusAdmin.middleware')], function () {
         'uses' => 'Zeus\Admin\Controllers\ZeusAdminController@deleteAction',
     ]);
 
+    Route::post('/'.config('zeusAdmin.admin_url').'/{section}/{id}/change-field', [
+        'as'   => 'zeusAdmin.section.change-field.action',
+        'uses' => 'Zeus\Admin\Controllers\ZeusAdminController@changeFieldAction',
+    ]);
+
     Route::post('/'.config('zeusAdmin.admin_url').'/api/media_library/insert_media/image_list', [
         'as'   => 'zeusAdmin.media_library.insert_media.image_list',
         'uses' => 'Zeus\Admin\Controllers\ZeusAdminController@imageList',

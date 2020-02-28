@@ -37,7 +37,7 @@
 </div>
 
 <div class="table-responsive display-table br-display" data-delete-redirect="{{ $pluginData['deleteUrl'] ?? null }}" data-section-path="{{ $pluginData['sectionPath'] ?? null }}">
-    <table class="table">
+    <table class="table table-hover">
         <thead>
         <tr>
             @foreach($columns as $column)
@@ -102,16 +102,21 @@
                                     @break
                                 @case('Link')
                                     @if($firedSection->isEditable() && $canEdit)
-                                        <a href="{{ parse_url(Request::url(), PHP_URL_PATH) . '/' . $field['brRowId'] . '/edit' }}">{!! $field[$column->getName()] !!}</a>
+                                        <a @click.prevent="$emit('redirectTo',$event)" href="{{ parse_url(Request::url(), PHP_URL_PATH) . '/' . $field['brRowId'] . '/edit' }}">{!! $field[$column->getName()] !!}</a>
                                     @else
                                         {!! $field[$column->getName()] !!}
                                     @endif
                                     @break
                                 @case('Checkbox')
-                                    <EditableCheckboxComponent
-                                        :value="{{ $field[$column->getName()] }}"
-                                        :id="{{ $field['brRowId'] }}"
-                                    />
+                                    @if($firedSection->isEditable() && $canEdit)
+                                        <EditableCheckboxComponent
+                                            :field="'{{ $column->getName() }}'"
+                                            :value="{{ $field[$column->getName()] }}"
+                                            :url="'{{ parse_url(Request::url(), PHP_URL_PATH) . '/' . $field['brRowId'] . '/change-field' }}'"
+                                        />
+                                    @else
+                                        {{ $field[$column->getName()] ? 'Да' : 'Нет' }}
+                                    @endif
                                     @break
                                 @default
                                 {!! $field[$column->getName()] !!}
