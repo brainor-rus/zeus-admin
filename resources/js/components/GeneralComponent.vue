@@ -531,6 +531,7 @@
 
                 if(Object.keys(filterObject).length > 0) {
                     let query = Object.assign({}, this.$route.query);
+                    delete query.page;
                     query.filter = jQuery.param(filterObject);
                     this.$router.replace({ query });
                 }else{
