@@ -173,19 +173,6 @@ $(document).ready(function () {
             description = $(this).data('elementDescription'),
             id = $(this).data('elementId');
 
-        let validation = true;
-        form.find(':input[required]').each(function () {
-            let el = $(this);
-            if(!$.trim(el.val())) {
-                el.addClass('border-danger');
-                validation = false;
-            }
-        });
-
-        if(!validation) {
-            return;
-        }
-
         $('#tree-element-id-edit').attr('value', id).val(id);
         $('#tree-element-title-edit').attr('value', title).val(title);
         $('#tree-element-slug-edit').attr('value', slug).val(slug);
@@ -200,8 +187,20 @@ $(document).ready(function () {
         let form = $(this).parent().parent(),
             method = form.attr('method'),
             action = form.attr('action'),
-            formData = form.serialize()
-        ;
+            formData = form.serialize();
+
+        let validation = true;
+        form.find(':input[required]').each(function () {
+            let el = $(this);
+            if(!$.trim(el.val())) {
+                el.addClass('border-danger');
+                validation = false;
+            }
+        });
+
+        if(!validation) {
+            return;
+        }
 
         $.ajaxSetup({
             headers: {
