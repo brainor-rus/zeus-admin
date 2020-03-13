@@ -53,20 +53,16 @@ class ZeusAdminPages extends Section
         ksort($mergedFields);
 
         $display = Display::table($mergedFields)->setPagination(10);
-        
+
         $filter = [
           FilterType::text('id', '#'),
           FilterType::text('title', 'Заголовок'),
-          null,
-          FilterType::select('tags.title')->setOptions(
-              ZeusAdminTerm::where('type', 'tag')->pluck('title', 'id')->toArray()
-          ),
-        FilterType::select('categories.title')->setOptions(
-            ZeusAdminTerm::where('type', 'category')->pluck('title', 'id')->toArray()
-        ),
-          null,
-          null,
-          null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
         ];
 
         $display->setFilter($filter);
