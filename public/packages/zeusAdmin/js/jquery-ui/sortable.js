@@ -171,8 +171,20 @@ $(document).ready(function () {
             slug = $(this).data('elementSlug'),
             url = $(this).data('elementUrl'),
             description = $(this).data('elementDescription'),
-            id = $(this).data('elementId')
-        ;
+            id = $(this).data('elementId');
+
+        let validation = true;
+        form.find(':input[required]').each(function () {
+            let el = $(this);
+            if(!$.trim(el.val())) {
+                el.addClass('border-danger');
+                validation = false;
+            }
+        });
+
+        if(!validation) {
+            return;
+        }
 
         $('#tree-element-id-edit').attr('value', id).val(id);
         $('#tree-element-title-edit').attr('value', title).val(title);
