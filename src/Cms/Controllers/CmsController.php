@@ -115,12 +115,12 @@ class CmsController extends Controller
         return $mainController->getDisplay($section, $sectionName, $this->pluginData,  $request);
     }
 
-    public function createRouteRedirect(Section $section, $sectionName)
+    public function createRouteRedirect(Section $section, $sectionName, Request $request)
     {
         $sectionName = $this->makeCustomSection($sectionName);
         $mainController = new ZeusAdminController;
 
-        return $mainController->getCreate($section, $sectionName, $this->pluginData);
+        return $mainController->getCreate($section, $sectionName, $this->pluginData, $request);
     }
 
     public function editRouteRedirect(Section $section, $sectionName, $id)
