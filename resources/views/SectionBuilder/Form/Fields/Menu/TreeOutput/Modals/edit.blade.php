@@ -14,8 +14,8 @@
                     <input id="tree-element-id-edit" type="hidden" hidden="hidden" name="element_id" value="null">
 
                     <div class="form-group">
-                        <label for="tree-element-title-edit">Заголовок</label>
-                        <input type="text" class="form-control" id="tree-element-title-edit" name="title" aria-describedby="tree-element-title-edit-help" placeholder="Заголовок">
+                        <label for="tree-element-title-edit">Заголовок <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="tree-element-title-edit" name="title" aria-describedby="tree-element-title-edit-help" placeholder="Заголовок" required>
                         <small id="tree-element-title-edit-help" class="form-text text-muted">Отображается в качестве текста пункта меню</small>
                     </div>
 
@@ -26,8 +26,8 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="tree-element-url-edit">Url</label>
-                        <input type="text" class="form-control" id="tree-element-url-edit" name="url" aria-describedby="tree-element-url-edit-help" placeholder="Url">
+                        <label for="tree-element-url-edit">Url <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="tree-element-url-edit" name="url" aria-describedby="tree-element-url-edit-help" placeholder="Url" required>
                         <small id="tree-element-url-edit-help" class="form-text text-muted">Ссылка пункта меню</small>
                     </div>
 
