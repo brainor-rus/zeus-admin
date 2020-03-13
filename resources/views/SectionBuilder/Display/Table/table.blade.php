@@ -21,7 +21,7 @@
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="showDropdown">
                                     @foreach($userPaginationArray as $val => $title)
                                         <a class="dropdown-item"
-                                           href="{{ route('zeusAdmin.section.display', ['section' => Route::getCurrentRoute()->parameters['section'], 'show' => $val]) }}"
+                                           href="{{ route(Route::getCurrentRoute()->getName(), ['section' => Route::getCurrentRoute()->parameters['section'], 'show' => $val]) }}"
                                         >
                                             {{ $title }}
                                         </a>
