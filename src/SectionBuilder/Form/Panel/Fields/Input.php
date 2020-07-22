@@ -14,7 +14,7 @@ use Zeus\Admin\SectionBuilder\Form\Panel\Fields\BaseField\FormFieldBase;
 
 class Input extends FormFieldBase
 {
-    private $name, $label, $value, $placeholder, $required, $readonly, $type, $pattern;
+    private $name, $label, $value, $placeholder, $required, $readonly, $type, $pattern, $prevText;
 
     public function __construct($name, $label)
     {
@@ -157,6 +157,24 @@ class Input extends FormFieldBase
         return $this->readonly;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getPrevText()
+    {
+        return $this->prevText;
+    }
+
+    /**
+     * @param mixed $prevText
+     * @return Input
+     */
+    public function setPrevText($prevText): Input
+    {
+        $this->prevText = $prevText;
+        return $this;
+    }
+
     public function render($value = null)
     {
         $name = $this->getName();
@@ -173,6 +191,7 @@ class Input extends FormFieldBase
         $dataAttributes = $this->getDataAttributes();
         $classes = $this->getClasses();
         $isSystem = $this->getIsSystem();
+        $prevText = $this->getPrevText();
 
         return View::make('zeusAdmin::SectionBuilder/Form/Fields/input')
             ->with(compact(
@@ -189,7 +208,8 @@ class Input extends FormFieldBase
                 'formIgnore',
                 'dataAttributes',
                 'classes',
-                'isSystem'
+                'isSystem',
+                'prevText'
             ));
     }
 }
