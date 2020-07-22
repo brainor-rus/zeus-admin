@@ -258,7 +258,7 @@
                     });
 
                     $('label.system').on('click', function () {
-                        $(this).find(".system-toggle").toggle();
+                        $(this).siblings('.input-group').find(".system-toggle").toggle();
                     })
                 });
             });
