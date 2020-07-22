@@ -258,8 +258,7 @@
                     });
 
                     $('label.system').on('click', function () {
-                        console.log('test');
-                        $(this).siblings(".system-toggle").toggle();
+                        $(this).find(".system-toggle").toggle();
                     })
                 });
             });
