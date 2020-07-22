@@ -221,7 +221,7 @@ label.system {
   cursor: pointer;
 }
 
-.system-toggle {
+label.system ~ .input-group .system-toggle {
   display: none;
 }
 
